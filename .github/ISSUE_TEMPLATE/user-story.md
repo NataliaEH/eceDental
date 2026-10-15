@@ -7,11 +7,17 @@ assignees: ''
 
 ---
 
-**Yo como** [role]
-**debo** [function]
-**para** [benefit]
+**Yo como** [rol]
+**debo** [capacidad]
+**para** [beneficio]
 ### Detalles y Suposiciones
 * [documenta lo que sabes]
+**Sprint:** [número del sprint]
+**Rol responsable (Asignado a):** [nombre del asignado]
+**Prioridad:** [Alta/Media/Baja]
+**Complejidad:** [Alta/Media/Baja]
+**Estabilidad:** [Alta/Media/Baja]
+**Caso de Prueba:** [caso de prueba exitoso]
 ### Criterios de Aceptacion
 * [ ] Criterio de Aceptacion 1
 * [ ] Criterio de Aceptacion 2
