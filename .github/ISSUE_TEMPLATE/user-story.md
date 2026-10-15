@@ -7,15 +7,15 @@ assignees: ''
 
 ---
 
-**As a** [role]
-**I need** [function]
-**So that** [benefit]
-### Details and Assumptions
-* [document what you know]
-### Acceptance Criteria
-* [ ] Acceptance Criteria1
-* [ ] Acceptance Criteria2
-* [ ] Acceptance CriteriaN
+**Yo como** [rol]
+**debo** [capacidad]
+**para** [beneficio]
+### Detalles y Suposiciones
+* [documenta lo que sabes]
+### Criterios de Aceptación
+* [ ] Criterio de Aceptación 1
+* [ ] Criterio de Aceptación 2
+* [ ] Criterio de Aceptación N
 ```gherkin
 Given [some context]
 When [certain action is taken]
