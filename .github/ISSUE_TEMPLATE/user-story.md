@@ -1,6 +1,6 @@
 ---
 name: User Story
-details: Plantilla para documentar historias de usuario.
+about: Plantilla para documentar historias de usuario.
 title: ''
 labels: ''
 assignees: ''
