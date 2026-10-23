@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title><ui:insert name="title">SAUAP</ui:insert></title>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/>
+    <link href="https://fonts.googleapis.com/css2?family=Martel+Sans:wght@400;600;800&amp;display=swap" rel="stylesheet"/>
+    <h:outputStylesheet name="style.css" />
+</h:head>
+
+<h:body>
+    <div class="app-shell">
+
+        <div class="app-topbar">
+            <p:graphicImage url="resources/logoLargoSAUAP.png"
+                            styleClass="app-logo-long" alt="SAUAP"/>
+        </div>
+
+        <div class="app-body">
+
+            <div class="app-sidebar">
+                <div class="nav-section-label">Gestión</div>
+
+                <h:outputLink value="altaProfesor.xhtml"
+                              styleClass="nav-item #{activePage == 'profesores' ? 'active' : ''}">
+                    <i class="pi pi-user"></i>
+                    <span>Profesores</span>
+                </h:outputLink>
+
+                <h:outputLink value="altaUA.xhtml"
+                              styleClass="nav-item #{activePage == 'ua' ? 'active' : ''}">
+                    <i class="pi pi-book"></i>
+                    <span>Unidades de Aprendizaje</span>
+                </h:outputLink>
+
+                <h:outputLink value="altaAsignaciones.xhtml"
+                              styleClass="nav-item #{activePage == 'asignaciones' ? 'active' : ''}">
+                    <i class="pi pi-address-book"></i>
+                    <span>Asignaciones</span>
+                </h:outputLink>
+
+                <div class="nav-section-label">Consultas y Modificaciones</div>
+
+                <h:outputLink value="consultaProfesores.xhtml"
+                              styleClass="nav-item #{activePage == 'consultaProfesores' ? 'active' : ''}">
+                    <i class="pi pi-users"></i>
+                    <span>Consulta de Profesores</span>
+                </h:outputLink>
+
+                <h:outputLink value="consultaAsignaciones.xhtml"
+                              styleClass="nav-item #{activePage == 'consultaAsignaciones' ? 'active' : ''}">
+                    <i class="pi pi-link"></i>
+                    <span>Consulta de Asignaciones</span>
+                </h:outputLink>
+
+                <h:outputLink value="consultaUA.xhtml"
+                              styleClass="nav-item #{activePage == 'consultaUA' ? 'active' : ''}">
+                    <i class="pi pi-search"></i>
+                    <span>Consulta de UA</span>
+                </h:outputLink>
+
+                <h:outputLink value="login.xhtml" styleClass="nav-footer">
+                    <i class="pi pi-sign-out"></i>
+                    <span>Salir</span>
+                </h:outputLink>
+            </div>
+
+            <div class="app-main" style="background-image: url('#{resource['fondoSAUAP.png']}');">
+
+                <div class="welcome-banner">
+                    <div class="welcome-text">
+                        <p class="welcome-date">Sabado, 12 de Septiembre, 2025</p>
+                        <p class="welcome-title">Bienvenido, <b>Administrador.</b></p>
+                    </div>
+                    <p:graphicImage url="resources/logoChicoSAUAP.png"
+                                    styleClass="welcome-icon" alt="SAUAP"/>
+                </div>
+
+                <ui:insert name="content"/>
+
+            </div>
+
+        </div>
+
+    </div>
+</h:body>
+</html>
