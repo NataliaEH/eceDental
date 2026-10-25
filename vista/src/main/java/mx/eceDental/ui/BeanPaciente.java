@@ -1,0 +1,36 @@
+package mx.eceDental.ui;
+
+import jakarta.annotation.PostConstruct;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.view.ViewScoped;
+import jakarta.inject.Named;
+import mx.eceDental.helper.HelperPaciente;
+import mx.eceDental.entity.Paciente;
+
+@Named("pacienteUI")
+@ViewScoped
+public class BeanPaciente {
+    private HelperPaciente helperPaciente;
+    private Paciente paciente;
+
+    public BeanPaciente() {
+        helperPaciente = new HelperPaciente();
+    }
+
+    @PostConstruct
+    public void init(){
+        paciente = new Paciente();
+    }
+
+    public void registrar(){
+        boolean registrado = helperPaciente.registrar(paciente.getNombre(), paciente.getEdad(), paciente.getSexo(), paciente.getTelefonos(), paciente.getCorreo(), paciente.getDomicilio(), paciente.getEdoCivil(), paciente.getOcupacion());
+        if(registrado){
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Expediente registrado:", "El expediente se agregó al sistema."));
+        }else{
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error de registro:", "Hubo un error al hacer el registro en la BD."));
+        }
+    }
+
+    public Expediente getExpediente(){ return expediente;}
+}
