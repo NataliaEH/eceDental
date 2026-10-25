@@ -17,7 +17,7 @@ public class BeanExpediente {
     private Expediente expediente;
 
     public BeanExpediente() {
-        helperExpedienteelper = new HelperExpediente();
+        helperExpediente = new HelperExpediente();
     }
 
     @PostConstruct
