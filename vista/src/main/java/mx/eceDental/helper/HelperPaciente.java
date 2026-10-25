@@ -13,4 +13,11 @@ public class HelperPaciente {
 
         return ServiceFacadeLocator.getInstanceFacadeExpediente().registrar(idPaciente);
     }
+
+    public Paciente buscar(int id){
+        return ServiceFacadeLocator.getInstanceFacadePaciente().buscar(id);
+    }
+    public List<Paciente> consultar(){
+        return ServiceFacadeLocator.getInstanceFacadePaciente().consultar();
+    }
 }

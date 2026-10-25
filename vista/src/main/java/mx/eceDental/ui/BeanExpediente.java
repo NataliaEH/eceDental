@@ -8,6 +8,8 @@ import jakarta.inject.Named;
 import mx.eceDental.helper.HelperExpediente;
 import mx.eceDental.entity.Expediente;
 
+import java.util.List;
+
 @Named("expedienteUI")
 @ViewScoped
 public class BeanExpediente {
@@ -21,6 +23,13 @@ public class BeanExpediente {
     @PostConstruct
     public void init(){
         expediente = new Expediente();
+    }
+
+    public Expediente buscar(int id){
+        return helperExpediente.buscar(id);
+    }
+    public List<Expediente> consultar(){
+        return helperExpediente.consultar();
     }
 
     public Expediente getExpediente(){ return expediente;}

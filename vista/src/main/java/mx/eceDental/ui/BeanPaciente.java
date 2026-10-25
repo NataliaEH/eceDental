@@ -8,6 +8,8 @@ import jakarta.inject.Named;
 import mx.eceDental.helper.HelperPaciente;
 import mx.eceDental.entity.Paciente;
 
+import java.util.List;
+
 @Named("pacienteUI")
 @ViewScoped
 public class BeanPaciente {
@@ -30,6 +32,13 @@ public class BeanPaciente {
         }else{
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error de registro:", "Hubo un error al hacer el registro en la BD."));
         }
+    }
+
+    public Paciente buscar(int id){
+        return helperPaciente.buscar(id);
+    }
+    public List<Paciente> consultar(){
+        return helperPaciente.consultar();
     }
 
     public Expediente getExpediente(){ return expediente;}
