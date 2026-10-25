@@ -14,6 +14,10 @@ public class HelperPaciente {
         return ServiceFacadeLocator.getInstanceFacadeExpediente().registrar(idPaciente);
     }
 
+    public boolean modificar(int idExpediente, String nombre, int edad, String sexo, List<String> telefonos, String correo, String domicilio, String edoCivil, String ocupacion){
+        return ServiceFacadeLocator.getInstanceFacadePaciente().modificar(idExpediente);
+    }
+
     public Paciente buscar(int id){
         return ServiceFacadeLocator.getInstanceFacadePaciente().buscar(id);
     }
