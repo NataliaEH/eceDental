@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<ui:composition template="/WEB-INF/plantillas/plantilla.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="jakarta.faces.html" xmlns:f="jakarta.faces.core" xmlns:ui="jakarta.faces.facelets">
+<ui:param name="tab" value="dashboardExpediente"/>
+<ui:define name="titulo">Dashboard del paciente</ui:define>
+<ui:define name="navbar"><ui:include src="/WEB-INF/includes/navbar.xhtml"/></ui:define>
+<ui:define name="contenido">
+<div class="page-header"><div><h2>Juanito Pérez Sánchez</h2><p>Dashboard del paciente</p></div></div>
+<div class="split-3">
+  <div>
+    <div class="card"><div class="card-header"><h2>Notas generales</h2></div><div class="card-body"><textarea rows="7" placeholder="Notas generales sobre el paciente..."></textarea></div></div>
+    <div class="card"><div class="card-header"><h2>Alergias</h2></div><div class="card-body"><textarea rows="7" placeholder="Alergias del paciente"></textarea></div></div>
+    <div class="card"><div class="card-header"><h2>Acciones</h2></div><div class="card-body"><div class="btn-group"><button type="button" class="btn btn-primary">Exportar expediente</button><a href="#confirmar-eliminar" class="btn btn-primary">Eliminar expediente</a></div></div></div>
+  </div>
+  <div>
+    <div class="card"><div class="card-header"><h2>Nueva nota de evolución</h2></div><div class="card-body"><form>
+      <div class="form-grid cols-1"><div class="form-group "><label>Fecha de registro *</label><input type="date" required="required"/></div><div class="form-group "><label>Contenido de la nota *</label><textarea required="required" placeholder="Descripción del procedimiento, observaciones clínicas..."></textarea></div></div>
+      <div class="btn-group" style="margin-top:14px"><button type="submit" class="btn btn-primary">Registrar nota</button><button type="reset" class="btn btn-muted">Limpiar</button></div></form></div></div>
+    <div class="card"><div class="card-header"><h2>Últimas notas de evolución</h2><a href="notas.xhtml" class="btn btn-primary btn-sm">Ver todas</a></div><div class="table-wrap"><table><thead><tr><th>Fecha</th><th>Contenido</th></tr></thead><tbody>
+      <tr><td>12/11/26</td><td>Caries en pieza 21, distal. Se le hizo una limpieza simple.</td></tr><tr><td>21/04/26</td><td>Caries en pieza 42, distal. Se le hizo una limpieza simple.</td></tr></tbody></table></div></div>
+  </div>
+  <div>
+    <div class="card"><div class="card-header"><h2>Nuevo pago</h2></div><div class="card-body"><form>
+      <div class="form-grid cols-1"><div class="form-group "><label>Fecha de pago *</label><input type="date" required="required"/></div><div class="form-group "><label>Monto *</label><input type="number" min="0" step="0.01" required="required" placeholder="0.00"/></div><div class="form-group "><label>Concepto *</label><input type="text" required="required" placeholder="Ej. Pago parcial, anticipo"/></div></div>
+      <div class="btn-group" style="margin-top:14px"><button type="submit" class="btn btn-primary">Registrar pago</button><button type="reset" class="btn btn-muted">Limpiar</button></div></form></div></div>
+    <div class="card"><div class="card-header"><h2>Últimos pagos</h2><a href="pagos.xhtml" class="btn btn-primary btn-sm">Ver todos</a></div><div class="table-wrap"><table><thead><tr><th>Fecha</th><th>Monto</th><th>Concepto</th></tr></thead><tbody>
+      <tr><td>12/11/26</td><td>$3,000</td><td>Anticipo</td></tr><tr><td>21/04/26</td><td>$4,000</td><td>Pago completo</td></tr></tbody></table></div></div>
+  </div>
+</div>
+<!-- Confirmación de eliminar: se abre con :target (solo CSS) -->
+<div id="confirmar-eliminar" class="confirm-overlay"><div class="confirm-box">
+  <h3>Confirmar eliminación</h3><p>Esta acción es <strong>permanente e irreversible</strong>. El expediente será eliminado del sistema.</p>
+  <div class="btn-group"><a href="buscarExpediente.xhtml" class="btn btn-danger">Confirmar eliminación</a><a href="#" class="btn btn-muted">Cancelar</a></div>
+</div></div>
+</ui:define>
+</ui:composition>

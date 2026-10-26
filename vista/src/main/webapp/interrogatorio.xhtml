@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<ui:composition template="/WEB-INF/plantillas/plantilla.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="jakarta.faces.html" xmlns:f="jakarta.faces.core" xmlns:ui="jakarta.faces.facelets">
+<ui:param name="tab" value="interrogatorio"/>
+<ui:define name="titulo">Interrogatorio</ui:define>
+<ui:define name="navbar"><ui:include src="/WEB-INF/includes/navbar.xhtml"/></ui:define>
+<ui:define name="contenido">
+<div class="page-header"><div><h2>Interrogatorio</h2><p>Juanito Pérez Sánchez</p></div></div>
+<div class="alert alert-info">El interrogatorio queda vinculado al expediente del paciente. Se le pedirá confirmación al guardar.</div>
+<form>
+  <fieldset class="form-section"><legend>Antecedentes Médicos</legend><div class="form-grid">
+    <div class="form-group span-2"><label>Ha padecido alguna enfermedad</label><div class="check-group"><label class="check-item"><input type="checkbox"/> Accidentes vasculares</label><label class="check-item"><input type="checkbox"/> Apoplegía</label><label class="check-item"><input type="checkbox"/> Anemia</label><label class="check-item"><input type="checkbox"/> Artritis</label><label class="check-item"><input type="checkbox"/> Cardiopatía</label><label class="check-item"><input type="checkbox"/> Diabetes</label><label class="check-item"><input type="checkbox"/> Epilepsia</label><label class="check-item"><input type="checkbox"/> Fiebre reumática</label><label class="check-item"><input type="checkbox"/> Hepatitis</label><label class="check-item"><input type="checkbox"/> Hipertensión arterial</label><label class="check-item"><input type="checkbox"/> Lesiones cardiacas</label><label class="check-item"><input type="checkbox"/> Marcapasos</label><label class="check-item"><input type="checkbox"/> Pérdida de peso</label><label class="check-item"><input type="checkbox"/> Trastorno psíquico</label><label class="check-item"><input type="checkbox"/> Trat. oncológico</label><label class="check-item"><input type="checkbox"/> Tuberculosis</label><label class="check-item"><input type="checkbox"/> Otra</label></div></div>
+    <div class="form-group "><label>Ha tenido problemas de hemorragia *</label><select><option>-- Seleccionar --</option><option>Si</option><option>No</option></select></div>
+    <div class="form-group "><label>Ha estado bajo atención médica en los últimos dos años *</label><select><option>-- Seleccionar --</option><option>Si</option><option>No</option></select></div>
+    <div class="form-group "><label>Ha sido hospitalizado en los últimos dos años *</label><select><option>-- Seleccionar --</option><option>Si</option><option>No</option></select></div>
+    <div class="form-group "><label>Motivo y fecha de hospitalización (si aplica)</label><input type="text" placeholder="Ej. Cirugía de apéndice, 2022..."/></div>
+  </div></fieldset>
+  <fieldset class="form-section"><legend>Alergias y Medicación</legend><div class="form-grid">
+    <div class="form-group "><label>Alergias</label><div class="input-row"><input type="text" placeholder="Ej. Penicilina, látex..."/><button type="button" class="btn btn-sm btn-primary">−</button></div><button type="button" class="btn btn-sm btn-muted">+ Agregar alergia</button></div>
+    <div class="form-group "><label>Medicación</label><div class="input-row"><input type="text" placeholder="Nombre del medicamento"/><button type="button" class="btn btn-sm btn-primary">−</button></div><button type="button" class="btn btn-sm btn-muted">+ Agregar medicamento</button></div>
+  </div></fieldset>
+  <fieldset class="form-section"><legend>Datos Específicos</legend><div class="form-grid"><div class="form-group "><label>Embarazada</label><select><option>NA</option><option>Si</option><option>No</option></select></div><div class="form-group "><label>Amamantando</label><select><option>NA</option><option>Si</option><option>No</option></select></div></div></fieldset>
+  <fieldset class="form-section"><legend>Contacto de Emergencia</legend><div class="form-grid">
+    <div class="form-group "><label>Tel. emergencia</label><input type="tel" placeholder="000 000 0000"/></div><div class="form-group "><label>Tel. servicio médico / IMSS / ISSSTE</label><input type="tel" placeholder="000 000 0000"/></div></div></fieldset>
+  <fieldset class="form-section"><legend>Última Consulta Dental</legend><div class="form-grid"><div class="form-group "><label>Fecha de última consulta dental</label><input type="date"/></div></div></fieldset>
+  <div class="btn-group"><button type="submit" class="btn btn-primary">Guardar interrogatorio</button><a href="dashboardExpediente.xhtml" class="btn btn-muted">Cancelar</a></div>
+</form>
+</ui:define>
+</ui:composition>
