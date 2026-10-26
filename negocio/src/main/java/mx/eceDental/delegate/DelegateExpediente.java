@@ -36,4 +36,25 @@ public class DelegateExpediente {
             return null;
         }
     }
+
+    public boolean modificar(Expediente expediente) {
+        if (expediente == null) {
+            return false;
+        }
+
+        try {
+            Expediente existente = buscar(expediente.getId());
+
+            if (existente == null) {
+                return false;
+            }
+
+            ServiceLocator.getInstanceExpedienteDAO().update(expediente);
+
+            return true;
+
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }
