@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<ui:composition template="/WEB-INF/plantillas/plantilla.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="jakarta.faces.html" xmlns:f="jakarta.faces.core" xmlns:ui="jakarta.faces.facelets">
+<ui:param name="activo" value="registrarPaciente"/>
+<ui:define name="titulo">Registrar Nuevo Paciente</ui:define>
+<ui:define name="contenido">
+<div class="page-header"><div><h2>Registrar Nuevo Paciente</h2><p>Al guardar se creará automáticamente el expediente clínico del paciente</p></div></div>
+<div class="alert alert-warn"><strong>Atención:</strong> Se le pedirá confirmación antes de guardar. El sistema registrará al paciente y creará su expediente en un solo paso.</div>
+<form>
+  <fieldset class="form-section"><legend>Datos Personales</legend><div class="form-grid">
+    <div class="form-group span-2"><label>Nombre completo *</label><input type="text" required="required" placeholder="Nombre(s) Apellido Paterno Apellido Materno"/></div>
+    <div class="form-group "><label>Edad *</label><input type="number" min="0" max="120" required="required" placeholder="Años"/></div>
+    <div class="form-group "><label>Sexo *</label><div class="check-group"><label class="check-item"><input type="radio" name="sexo" required="required"/> Masculino</label><label class="check-item"><input type="radio" name="sexo"/> Femenino</label></div></div>
+    <div class="form-group "><label>Estado civil</label><select><option>-- Seleccionar --</option><option>Soltero/a</option><option>Casado/a</option><option>Divorciado/a</option><option>Viudo/a</option><option>Unión libre</option></select></div>
+    <div class="form-group "><label>Ocupación</label><input type="text" placeholder="Ej. Empleado, Estudiante..."/></div>
+    <div class="form-group "><label>Domicilio</label><input type="text" placeholder="Calle, Número, Colonia"/></div>
+  </div></fieldset>
+  <fieldset class="form-section"><legend>Contacto</legend><div class="form-grid cols-3">
+    <div class="form-group "><label>Teléfono principal *</label><input type="tel" required="required" placeholder="664-XXX-XXXX"/></div>
+    <div class="form-group "><label>Teléfono alternativo</label><input type="tel" placeholder="664-XXX-XXXX"/></div>
+    <div class="form-group "><label>Correo *</label><input type="email" required="required" placeholder="correo@direccion.com"/></div>
+  </div></fieldset>
+  <fieldset class="form-section"><legend>Fecha de Registro</legend><div class="form-grid">
+    <div class="form-group "><label>Fecha de primera consulta *</label><input type="date" required="required"/></div>
+  </div></fieldset>
+  <div class="btn-group"><button type="submit" class="btn btn-primary">Guardar paciente y crear expediente</button><button type="reset" class="btn btn-muted">Limpiar</button></div>
+</form>
+</ui:define>
+</ui:composition>
