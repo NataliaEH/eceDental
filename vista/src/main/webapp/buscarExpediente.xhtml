@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<ui:composition template="/WEB-INF/plantillas/plantilla.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="jakarta.faces.html" xmlns:f="jakarta.faces.core" xmlns:ui="jakarta.faces.facelets">
+<ui:param name="activo" value="buscarExpediente"/>
+<ui:define name="titulo">Expedientes Clínicos</ui:define>
+<ui:define name="contenido">
+<div class="page-header"><div><h2>Expedientes Clínicos</h2><p>Búsqueda y gestión de expedientes</p></div></div>
+<form>
+<div class="card"><div class="card-header"><h2>Buscar expediente</h2></div><div class="card-body">
+  <div class="form-grid">
+    <div class="form-group "><label>Nombre paciente</label><input type="text" placeholder="Nombre o apellido..."/></div>
+    <div class="form-group "><label>Última consulta (última nota de evolución)</label><input type="date"/></div>
+  </div>
+  <div class="btn-group" style="margin-top:14px"><button type="submit" class="btn btn-primary">Buscar</button><button type="reset" class="btn btn-muted">Limpiar</button></div>
+</div></div>
+</form>
+<div class="card"><div class="table-wrap"><table>
+  <thead><tr><th>Paciente ↕</th><th>Fecha de última consulta ↕</th><th>Fecha de creación</th><th>Acciones</th></tr></thead>
+  <tbody><tr><td>Juanito Pérez Sánchez</td><td>2026-04-15</td><td>2022-04-15</td><td><a href="dashboardExpediente.xhtml" class="btn btn-sm btn-secondary">Ver</a></td></tr></tbody>
+</table></div></div>
+</ui:define>
+</ui:composition>
