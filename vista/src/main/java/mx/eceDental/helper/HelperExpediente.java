@@ -12,6 +12,10 @@ public class HelperExpediente {
         return ServiceFacadeLocator.getInstanceFacadeExpediente().exportar(idExpediente);
     }
 
+    public boolean eliminar(int id){
+        return ServiceFacadeLocator.getInstanceFacadeExpediente().eliminar(id);
+    }
+
     public List<Expediente> consultar(){
         return ServiceFacadeLocator.getInstanceFacadeExpediente().consultar();
     }

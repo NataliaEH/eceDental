@@ -34,9 +34,17 @@ public class BeanExpediente {
     public void exportar(int idExpediente){
         boolean exportado = helperExpediente.exportar(idExpediente);
         if(exportado){
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Expediente exportado:", "El expediente se exxportó correctamente."));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Expediente exportado:", "El expediente se exportó correctamente."));
         }else{
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error de exportación:", "Hubo un error al hacer las consultas de la BD."));
+        }
+    }
+    public void eliminar(int id){
+        boolean eliminado = helperExpediente.eliminar(id);
+        if(eliminado){
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Expediente eliminado:", "El expediente se eliminó correctamente."));
+        }else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error de eliminación:", "Hubo un error al hacer la eliminación en la BD."));
         }
     }
     public Expediente getExpediente(){ return expediente;}
