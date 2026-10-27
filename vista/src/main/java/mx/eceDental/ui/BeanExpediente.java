@@ -31,6 +31,13 @@ public class BeanExpediente {
     public List<Expediente> consultar(){
         return helperExpediente.consultar();
     }
-
+    public void exportar(int idExpediente){
+        boolean exportado = helperExpediente.exportar(idExpediente);
+        if(exportado){
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Expediente exportado:", "El expediente se exxportó correctamente."));
+        }else{
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error de exportación:", "Hubo un error al hacer las consultas de la BD."));
+        }
+    }
     public Expediente getExpediente(){ return expediente;}
 }
