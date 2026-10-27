@@ -1,8 +1,8 @@
+package mx.desarrollo.facade;
 
-package mx.eceDental.facade;
-
-import mx.eceDental.delegate.DelegateExpediente;
-import mx.eceDental.entity.Expediente;
+import java.util.List;
+import mx.desarrollo.delegate.DelegateExpediente;
+import mx.desarrollo.entity.Expediente;
 
 public class FacadeExpediente {
 
@@ -16,16 +16,19 @@ public class FacadeExpediente {
         return delegateExpediente.registrar(idPaciente);
     }
 
+    public boolean eliminar(int id) {
+        return delegateExpediente.eliminar(id);
+    }
+
+    public boolean exportar(int id) {
+        return delegateExpediente.exportar(id);
+    }
+
     public Expediente buscar(int id) {
         return delegateExpediente.buscar(id);
     }
 
-    public boolean modificar(Expediente expediente) {
-        return delegateExpediente.modificar(expediente);
-
-    }
-
-    public Expediente exportar(int id) {
-        return delegateExpediente.exportar(id);
+    public List<Expediente> consultar() {
+        return delegateExpediente.consultar();
     }
 }

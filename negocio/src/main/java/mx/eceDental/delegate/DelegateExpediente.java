@@ -1,46 +1,86 @@
+package mx.desarrollo.delegate;
 
-package mx.eceDental.delegate;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
-import mx.eceDental.entity.Expediente;
-import mx.eceDental.persistence.integration.ServiceLocator;
+import mx.desarrollo.entity.Expediente;
+import mx.desarrollo.entity.Paciente;
+import mx.desarrollo.persistence.integration.ServiceLocator;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+public class DelegateExpediente {
 
-public boolean registrar(int idPaciente, DiagnosticoYPlan diagnostico) {
-    if (idPaciente <= 0 || diagnostico == null) {
-        return false;
-    }
-
-    if (diagnostico.getDiagnostico() == null
-            || diagnostico.getDiagnostico().trim().isEmpty()
-            || diagnostico.getProcedimiento() == null
-            || diagnostico.getProcedimiento().trim().isEmpty()
-            || diagnostico.getFecha() == null) {
-        return false;
-    }
-
-    try {
-        Expediente expediente = buscar(idPaciente);
-
-        if (expediente == null) {
+    public boolean registrar(int idPaciente) {
+        if (idPaciente <= 0) {
             return false;
         }
 
-        diagnostico.setExpediente(expediente);
+        try {
+            Paciente paciente = ServiceLocator.getInstancePacienteDAO().find(idPaciente).orElse(null);
 
-        ServiceLocator.getInstanceDiagnosticoYPlanDAO().save(diagnostico);
+            if (paciente == null || paciente.getExpediente() != null) {
+                return false;
+            }
 
-        return true;
+            Expediente expediente = new Expediente();
+            expediente.setFechaCreacion(new Date());
+            expediente.setPaciente(paciente);
 
-    } catch (Exception e) {
-        return false;
+            ServiceLocator.getInstanceExpedienteDAO().save(expediente);
+
+            return true;
+
+        } catch (Exception e) {
+            return false;
+        }
     }
-}
+
+    public boolean eliminar(int id) {
+        if (id <= 0) {
+            return false;
+        }
+
+        try {
+            Expediente expediente = buscar(id);
+
+            if (expediente == null || expediente.getFechaCreacion() == null) {
+                return false;
+            }
+
+            // Solo se pueden eliminar expedientes con 5 años o más
+            Calendar limite = Calendar.getInstance();
+            limite.add(Calendar.YEAR, -5);
+
+            if (expediente.getFechaCreacion().after(limite.getTime())) {
+                return false;
+            }
+
+            ServiceLocator.getInstanceExpedienteDAO().delete(expediente);
+
+            return true;
+
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean exportar(int id) {
+        if (id <= 0) {
+            return false;
+        }
+
+        try {
+            Expediente expediente = buscar(id);
+
+            return expediente != null;
+
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
     public Expediente buscar(int id) {
-
         if (id <= 0) {
             return null;
         }
@@ -52,53 +92,11 @@ public boolean registrar(int idPaciente, DiagnosticoYPlan diagnostico) {
         }
     }
 
-    public boolean modificar(Expediente expediente) {
-        if (expediente == null) {
-            return false;
-        }
-
+    public List<Expediente> consultar() {
         try {
-            Expediente existente = buscar(expediente.getId());
-
-            if (existente == null) {
-                return false;
-            }
-
-            ServiceLocator.getInstanceExpedienteDAO().update(expediente);
-
-            return true;
-
+            return ServiceLocator.getInstanceExpedienteDAO().findAll();
         } catch (Exception e) {
-            return false;
-        }
-    }
-
-    public Expediente exportar(int id) {
-        if (id <= 0) {
-            return null;
-        }
-
-        Expediente expediente = buscar(id);
-
-        if (expediente == null) {
-            return null;
-        }
-
-        try {
-            File archivo = new File("Expediente_" + id + ".txt");
-
-            try (FileWriter escritor = new FileWriter(archivo)) {
-                escritor.write(expediente.toString());
-            }
-
-            if (!archivo.exists() || archivo.length() == 0) {
-                return null;
-            }
-
-            return expediente;
-
-        } catch (IOException | RuntimeException e) {
-            return null;
+            return new ArrayList<>();
         }
     }
 }
