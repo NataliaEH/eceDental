@@ -1,17 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html>
-<ui:composition template="/WEB-INF/plantillas/plantilla.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="jakarta.faces.html" xmlns:f="jakarta.faces.core" xmlns:ui="jakarta.faces.facelets">
-<ui:param name="tab" value="diagnosticos"/>
-<ui:define name="titulo">Diagnósticos y Planes de Tratamiento</ui:define>
-<ui:define name="navbar"><ui:include src="/WEB-INF/includes/navbar.xhtml"/></ui:define>
-<ui:define name="contenido">
-<div class="page-header"><div><h2>Diagnósticos y Planes de Tratamiento</h2><p>Juanito Pérez Sánchez</p></div></div>
-<div class="split">
-  <div class="card"><div class="card-header"><h2>Historial de diagnósticos y planes de tratamiento</h2></div><div class="table-wrap"><table><thead><tr><th>Fecha</th><th>Diagnóstico</th><th>Plan de tratamiento</th><th>Acciones</th></tr></thead><tbody><tr><td>12/11/26</td><td>Caries limitada al esmalte</td><td>Restauración de caries</td><td><button type="button" class="btn btn-sm btn-primary">Eliminar</button></td></tr></tbody></table></div></div>
-  <div class="card"><div class="card-header"><h2>Nuevo diagnóstico y plan de tratamiento</h2></div><div class="card-body"><form>
-    <div class="form-grid cols-1"><div class="form-group "><label>Fecha de registro *</label><input type="date" required="required"/></div><div class="form-group "><label>Diagnóstico *</label><textarea required="required" placeholder="Diagnóstico del paciente"></textarea></div><div class="form-group "><label>Plan de tratamiento *</label><textarea required="required" placeholder="Plan de tratamiento planteado"></textarea></div></div>
-    <div class="btn-group" style="margin-top:14px"><button type="submit" class="btn btn-primary">Registrar diagnóstico y plan de tratamiento</button><button type="reset" class="btn btn-muted">Limpiar</button></div>
-  </form></div></div>
-</div>
-</ui:define>
+<ui:composition template="/WEB-INF/plantillas/plantilla.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="jakarta.faces.html" xmlns:f="jakarta.faces.core" xmlns:ui="jakarta.faces.facelets" xmlns:pt="jakarta.faces.passthrough">
+    <ui:param name="tab" value="diagnosticos"/>
+    <ui:define name="titulo">Diagnósticos y Planes de Tratamiento</ui:define>
+    <ui:define name="navbar"><ui:include src="/WEB-INF/includes/navbar.xhtml"/></ui:define>
+    <ui:define name="contenido">
+        <div class="page-header"><div><h2>Diagnósticos y Planes de Tratamiento</h2><p>#{beanExpediente.buscar(param.id).paciente.nombre}</p></div></div>
+        <div class="split">
+            <div class="card"><div class="card-header"><h2>Historial de diagnósticos y planes de tratamiento</h2></div>
+                <h:form>
+                    <input type="hidden" name="id" value="#{param.id}"/>
+                    <div class="table-wrap"><table><thead><tr><th>Fecha</th><th>Diagnóstico</th><th>Plan de tratamiento</th><th>Acciones</th></tr></thead><tbody>
+                    <ui:repeat value="#{beanDiagnosticoYPlan.consultar(param.id)}" var="d">
+                        <tr><td><h:outputText value="#{d.fecha}"><f:convertDateTime pattern="dd/MM/yy"/></h:outputText></td><td>#{d.diagnostico}</td><td>#{d.procedimiento}</td><td><h:commandButton value="Eliminar" action="#{beanDiagnosticoYPlan.eliminar(d.idDiagnosticoPlan)}" styleClass="btn btn-sm btn-primary"/></td></tr>
+                    </ui:repeat>
+                    </tbody></table></div>
+                </h:form>
+            </div>
+            <div class="card"><div class="card-header"><h2>Nuevo diagnóstico y plan de tratamiento</h2></div><div class="card-body">
+                <h:form>
+                    <input type="hidden" name="id" value="#{param.id}"/>
+                    <div class="form-grid cols-1">
+                        <div class="form-group"><label>Fecha de registro *</label><h:inputText value="#{beanDiagnosticoYPlan.diagnosticoYPlan.fecha}" pt:type="date" pt:required="true"><f:convertDateTime pattern="yyyy-MM-dd"/></h:inputText></div>
+                        <div class="form-group"><label>Diagnóstico *</label><h:inputTextarea value="#{beanDiagnosticoYPlan.diagnosticoYPlan.diagnostico}" pt:required="true" pt:placeholder="Diagnóstico del paciente"/></div>
+                        <div class="form-group"><label>Plan de tratamiento *</label><h:inputTextarea value="#{beanDiagnosticoYPlan.diagnosticoYPlan.procedimiento}" pt:required="true" pt:placeholder="Plan de tratamiento planteado"/></div>
+                    </div>
+                    <div class="btn-group" style="margin-top:14px">
+                        <h:commandButton value="Registrar diagnóstico y plan de tratamiento" action="#{beanDiagnosticoYPlan.registrar}" styleClass="btn btn-primary"><f:setPropertyActionListener target="#{beanDiagnosticoYPlan.diagnosticoYPlan.expediente}" value="#{beanExpediente.buscar(param.id)}"/></h:commandButton>
+                        <h:commandButton type="reset" value="Limpiar" styleClass="btn btn-muted"/>
+                    </div>
+                </h:form>
+            </div></div>
+        </div>
+    </ui:define>
 </ui:composition>
