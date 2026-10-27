@@ -1,4 +1,4 @@
-package mx.desarrollo.facade;
+package mx.eceDental.facade;
 
 import java.util.List;
 import mx.desarrollo.delegate.DelegateExpediente;

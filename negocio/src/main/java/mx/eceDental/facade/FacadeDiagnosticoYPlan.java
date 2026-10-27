@@ -1,4 +1,5 @@
-package mx.desarrollo.facade;
+package mx.eceDental.facade;
+
 
 import java.util.Date;
 import mx.desarrollo.delegate.DelegateDiagnosticoYPlan;
