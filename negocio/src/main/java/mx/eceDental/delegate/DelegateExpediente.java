@@ -8,25 +8,36 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class DelegateExpediente {
-
-    public boolean registrar(int idPaciente) {
-        if (idPaciente <= 0) {
-            return false;
-        }
-
-        try {
-            Expediente expediente = new Expediente();
-            expediente.setIdPaciente(idPaciente);
-
-            ServiceLocator.getInstanceExpedienteDAO().save(expediente);
-
-            return true;
-
-        } catch (Exception e) {
-            return false;
-        }
+public boolean registrar(int idPaciente, DiagnosticoYPlan diagnostico) {
+    if (idPaciente <= 0 || diagnostico == null) {
+        return false;
     }
+
+    if (diagnostico.getDiagnostico() == null
+            || diagnostico.getDiagnostico().trim().isEmpty()
+            || diagnostico.getProcedimiento() == null
+            || diagnostico.getProcedimiento().trim().isEmpty()
+            || diagnostico.getFecha() == null) {
+        return false;
+    }
+
+    try {
+        Expediente expediente = buscar(idPaciente);
+
+        if (expediente == null) {
+            return false;
+        }
+
+        diagnostico.setExpediente(expediente);
+
+        ServiceLocator.getInstanceDiagnosticoYPlanDAO().save(diagnostico);
+
+        return true;
+
+    } catch (Exception e) {
+        return false;
+    }
+}
 
     public Expediente buscar(int id) {
 
