@@ -9,7 +9,7 @@
     <aside class="sidebar">
         <div class="sidebar-brand">
             <h:graphicImage name="img/logo.png" alt="eceDental - Gestión de expedientes" styleClass="sidebar-logo"/>
-            <p class="sidebar-user">Natalia Escobar Hernández</p>
+            <p class="sidebar-user">#{beanDoctor.doctor.nombreCompleto}</p>
         </div>
         <nav>
             <div class="nav-section-label">General</div>
@@ -28,7 +28,10 @@
     </aside>
     <div class="main">
         <ui:insert name="navbar"/>
-        <div class="content"><ui:insert name="contenido"/></div>
+        <div class="content">
+            <h:messages styleClass="mensajes" infoClass="alert alert-success" warnClass="alert alert-warn" errorClass="alert alert-danger" fatalClass="alert alert-danger" showDetail="false"/>
+            <ui:insert name="contenido"/>
+        </div>
     </div>
 </h:body>
 </html>

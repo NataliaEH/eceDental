@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html>
-<ui:composition template="/WEB-INF/plantillas/plantilla.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="jakarta.faces.html" xmlns:f="jakarta.faces.core" xmlns:ui="jakarta.faces.facelets">
-<ui:param name="activo" value="index"/>
-<ui:define name="titulo">Panel Principal</ui:define>
-<ui:define name="contenido">
-<div class="page-header"><div><h2>Panel Principal</h2><p>Resumen general del sistema</p></div></div>
-<div class="stats-grid">
-  <div class="stat-box"><div class="stat-val">1</div><div class="stat-label">Expedientes registrados</div></div>
-  <div class="stat-box"><div class="stat-val">0</div><div class="stat-label">Expedientes viejos</div></div>
-  <div class="stat-box"><div class="stat-val">0</div><div class="stat-label">Recordatorios pendientes</div></div>
-</div>
-<div class="card">
-  <div class="card-header"><h2>Recordatorios próximos</h2></div>
-  <div class="alert alert-info" style="margin:0">No hay recordatorios próximos.</div>
-  <div class="table-wrap"><table><thead><tr><th>Fecha límite</th><th>Urgencia</th><th>Contenido</th></tr></thead>
-  <tbody><tr><td>15/11/26</td><td><span class="badge badge-pending">Alta</span></td><td>Llamar a paciente para seguimiento</td></tr></tbody></table></div>
-</div>
-</ui:define>
+<ui:composition template="/WEB-INF/plantillas/plantilla.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="jakarta.faces.html" xmlns:f="jakarta.faces.core" xmlns:ui="jakarta.faces.facelets" xmlns:pt="jakarta.faces.passthrough">
+    <ui:param name="activo" value="index"/>
+    <ui:define name="titulo">Panel Principal</ui:define>
+    <ui:define name="contenido">
+        <div class="page-header"><div><h2>Panel Principal</h2><p>Resumen general del sistema</p></div></div>
+        <div class="stats-grid">
+            <div class="stat-box"><div class="stat-val">#{beanExpediente.consultar().size()}</div><div class="stat-label">Expedientes registrados</div></div>
+            <div class="stat-box"><div class="stat-val">0</div><div class="stat-label">Expedientes viejos</div></div>
+            <div class="stat-box"><div class="stat-val">#{beanRecordatorio.consultar().size()}</div><div class="stat-label">Recordatorios pendientes</div></div>
+        </div>
+        <div class="card">
+            <div class="card-header"><h2>Recordatorios próximos</h2></div>
+            <ui:fragment rendered="#{empty beanRecordatorio.buscarUrgentes()}"><div class="alert alert-info" style="margin:0">No hay recordatorios próximos.</div></ui:fragment>
+            <div class="table-wrap"><table><thead><tr><th>Fecha límite</th><th>Urgencia</th><th>Contenido</th></tr></thead>
+                <tbody>
+                <ui:repeat value="#{beanRecordatorio.buscarUrgentes()}" var="r">
+                    <tr><td><h:outputText value="#{r.fechaLimite}"><f:convertDateTime pattern="dd/MM/yy"/></h:outputText></td><td><span class="#{r.urgencia eq 'Alta' ? 'badge badge-inactive' : (r.urgencia eq 'Media' ? 'badge badge-pending' : 'badge badge-active')}">#{r.urgencia}</span></td><td>#{r.contenido}</td></tr>
+                </ui:repeat>
+                </tbody></table></div>
+        </div>
+    </ui:define>
 </ui:composition>
