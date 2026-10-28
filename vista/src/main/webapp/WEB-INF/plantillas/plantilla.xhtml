@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="jakarta.faces.html" xmlns:f="jakarta.faces.core" xmlns:ui="jakarta.faces.facelets">
+<h:head>
+    <title><ui:insert name="titulo">Inicio</ui:insert> - eceDental</title>
+    <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&amp;family=Source+Sans+3:wght@300;400;600&amp;display=swap" rel="stylesheet"/><h:outputStylesheet name="css/estilos.css"/>
+</h:head>
+<h:body>
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <h:graphicImage name="img/logo.png" alt="eceDental - Gestión de expedientes" styleClass="sidebar-logo"/>
+            <p class="sidebar-user">#{beanDoctor.doctor.nombreCompleto}</p>
+        </div>
+        <nav>
+            <div class="nav-section-label">General</div>
+            <a href="index.xhtml" class="#{activo eq 'index' ? 'nav-link active' : 'nav-link'}">Panel Principal</a>
+            <div class="nav-section-label">Expedientes</div>
+            <a href="registrarPaciente.xhtml" class="#{activo eq 'registrarPaciente' ? 'nav-link active' : 'nav-link'}">Registrar Paciente</a>
+            <a href="buscarExpediente.xhtml" class="#{activo eq 'buscarExpediente' ? 'nav-link active' : 'nav-link'}">Buscar Expediente</a>
+            <div class="nav-section-label">Consultas</div>
+            <a href="consultaPersonalizada.xhtml" class="#{activo eq 'consultaPersonalizada' ? 'nav-link active' : 'nav-link'}">Consulta Personalizada</a>
+            <a href="consultaRapida.xhtml" class="#{activo eq 'consultaRapida' ? 'nav-link active' : 'nav-link'}">Consulta Rápida</a>
+            <div class="nav-section-label">Herramientas</div>
+            <a href="recordatorios.xhtml" class="#{activo eq 'recordatorios' ? 'nav-link active' : 'nav-link'}">Recordatorios</a>
+            <a href="misDatos.xhtml" class="#{activo eq 'misDatos' ? 'nav-link active' : 'nav-link'}">Mis Datos</a>
+        </nav>
+        <div class="sidebar-footer">Sistema v1.2 - LSC</div>
+    </aside>
+    <div class="main">
+        <ui:insert name="navbar"/>
+        <div class="content">
+            <h:messages styleClass="mensajes" infoClass="alert alert-success" warnClass="alert alert-warn" errorClass="alert alert-danger" fatalClass="alert alert-danger" showDetail="false"/>
+            <ui:insert name="contenido"/>
+        </div>
+    </div>
+</h:body>
+</html>

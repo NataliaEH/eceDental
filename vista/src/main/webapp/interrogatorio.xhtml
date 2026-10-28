@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition template="/WEB-INF/plantillas/plantilla.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="jakarta.faces.html" xmlns:f="jakarta.faces.core" xmlns:ui="jakarta.faces.facelets" xmlns:pt="jakarta.faces.passthrough">
+    <ui:param name="tab" value="interrogatorio"/>
+    <ui:define name="titulo">Interrogatorio</ui:define>
+    <ui:define name="navbar"><ui:include src="/WEB-INF/includes/navbar.xhtml"/></ui:define>
+    <ui:define name="contenido">
+        <div class="page-header"><div><h2>Interrogatorio</h2><p>#{beanExpediente.buscar(param.id).paciente.nombre}</p></div></div>
+        <div class="alert alert-info">El interrogatorio queda vinculado al expediente del paciente. Se le pedirá confirmación al guardar.</div>
+        <h:form>
+            <input type="hidden" name="id" value="#{param.id}"/>
+            <fieldset class="form-section"><legend>Antecedentes Médicos</legend><div class="form-grid">
+                <div class="form-group span-2"><label>Ha padecido alguna enfermedad</label><h:selectManyCheckbox value="#{beanInterrogatorio.interrogatorio.enfermedades}" layout="lineDirection" styleClass="check-group"><f:selectItems value="#{['Accidentes vasculares','Apoplegía','Anemia','Artritis','Cardiopatía','Diabetes','Epilepsia','Fiebre reumática','Hepatitis','Hipertensión arterial','Lesiones cardiacas','Marcapasos','Pérdida de peso','Trastorno psíquico','Trat. oncológico','Tuberculosis','Otra']}"/></h:selectManyCheckbox></div>
+                <div class="form-group"><label>Ha tenido problemas de hemorragia *</label><h:selectOneMenu value="#{beanInterrogatorio.interrogatorio.hemorragia}"><f:selectItem itemLabel="No" itemValue="false"/><f:selectItem itemLabel="Si" itemValue="true"/></h:selectOneMenu></div>
+                <div class="form-group"><label>Ha estado bajo atención médica en los últimos dos años *</label><h:selectOneMenu value="#{beanInterrogatorio.interrogatorio.atencionMedica}"><f:selectItem itemLabel="No" itemValue="false"/><f:selectItem itemLabel="Si" itemValue="true"/></h:selectOneMenu></div>
+                <div class="form-group"><label>Ha sido hospitalizado en los últimos dos años *</label><h:selectOneMenu value="#{beanInterrogatorio.interrogatorio.hospitalizado}"><f:selectItem itemLabel="No" itemValue="false"/><f:selectItem itemLabel="Si" itemValue="true"/></h:selectOneMenu></div>
+                <div class="form-group"><label>Motivo y fecha de hospitalización (si aplica)</label><input type="text" name="motivoHospitalizacion" placeholder="Ej. Cirugía de apéndice, 2022..."/></div>
+            </div></fieldset>
+            <fieldset class="form-section"><legend>Alergias y Medicación</legend><div class="form-grid">
+                <div class="form-group"><label>Alergias</label>
+                    <ui:repeat value="#{beanInterrogatorio.interrogatorio.alergias}" var="item" varStatus="st">
+                        <div class="input-row"><h:inputText value="#{beanInterrogatorio.interrogatorio.alergias[st.index]}" pt:placeholder="Ej. Penicilina, látex..."/><h:commandButton value="−" actionListener="#{beanInterrogatorio.interrogatorio.alergias.remove(item)}" pt:formnovalidate="true" styleClass="btn btn-sm btn-primary"/></div>
+                    </ui:repeat>
+                    <h:commandButton value="+ Agregar alergia" actionListener="#{beanInterrogatorio.interrogatorio.alergias.add('')}" pt:formnovalidate="true" styleClass="btn btn-sm btn-muted"/>
+                </div>
+                <div class="form-group"><label>Medicación</label>
+                    <ui:repeat value="#{beanInterrogatorio.interrogatorio.medicacion}" var="item" varStatus="st">
+                        <div class="input-row"><h:inputText value="#{beanInterrogatorio.interrogatorio.medicacion[st.index]}" pt:placeholder="Nombre del medicamento"/><h:commandButton value="−" actionListener="#{beanInterrogatorio.interrogatorio.medicacion.remove(item)}" pt:formnovalidate="true" styleClass="btn btn-sm btn-primary"/></div>
+                    </ui:repeat>
+                    <h:commandButton value="+ Agregar medicamento" actionListener="#{beanInterrogatorio.interrogatorio.medicacion.add('')}" pt:formnovalidate="true" styleClass="btn btn-sm btn-muted"/>
+                </div>
+            </div></fieldset>
+            <fieldset class="form-section"><legend>Datos Específicos</legend><div class="form-grid"><div class="form-group"><label>Embarazada</label><h:selectOneMenu value="#{beanInterrogatorio.interrogatorio.embarazada}"><f:selectItem itemLabel="No / NA" itemValue="false"/><f:selectItem itemLabel="Si" itemValue="true"/></h:selectOneMenu></div><div class="form-group"><label>Amamantando</label><h:selectOneMenu value="#{beanInterrogatorio.interrogatorio.amamantando}"><f:selectItem itemLabel="No / NA" itemValue="false"/><f:selectItem itemLabel="Si" itemValue="true"/></h:selectOneMenu></div></div></fieldset>
+            <fieldset class="form-section"><legend>Contacto de Emergencia</legend><div class="form-grid">
+                <div class="form-group"><label>Tel. emergencia</label><h:inputText value="#{beanInterrogatorio.interrogatorio.telefonoEmergencia}" pt:type="tel" pt:placeholder="000 000 0000"/></div><div class="form-group"><label>Tel. servicio médico / IMSS / ISSSTE</label><h:inputText value="#{beanInterrogatorio.interrogatorio.telefonoServicioMedico}" pt:type="tel" pt:placeholder="000 000 0000"/></div></div></fieldset>
+            <fieldset class="form-section"><legend>Última Consulta Dental</legend><div class="form-grid"><div class="form-group"><label>Fecha de última consulta dental</label><h:inputText value="#{beanInterrogatorio.interrogatorio.ultimaConsultaDental}" pt:type="date"/></div></div></fieldset>
+            <div class="btn-group"><a href="#confirmar-guardar" class="btn btn-primary">Guardar interrogatorio</a><h:link outcome="dashboardExpediente" value="Cancelar" styleClass="btn btn-muted"><f:param name="id" value="#{param.id}"/></h:link></div>
+            <div id="confirmar-guardar" class="confirm-overlay"><div class="confirm-box info">
+                <h3>Confirmar guardado</h3><p>Se guardará el interrogatorio del paciente.</p>
+                <div class="btn-group"><h:commandButton value="Confirmar guardado" action="#{beanInterrogatorio.modificar(param.id)}" styleClass="btn btn-primary"/><a href="#" class="btn btn-muted">Cancelar</a></div>
+            </div></div>
+        </h:form>
+    </ui:define>
+</ui:composition>

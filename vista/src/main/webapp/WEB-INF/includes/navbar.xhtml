@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="jakarta.faces.html" xmlns:f="jakarta.faces.core" xmlns:ui="jakarta.faces.facelets">
+    <div class="navbar"><ul>
+        <li><h:link outcome="dashboardExpediente" value="Dashboard" styleClass="#{tab eq 'dashboardExpediente' ? 'nav-link-top active' : 'nav-link-top'}"><f:param name="id" value="#{param.id}"/></h:link></li>
+        <li><h:link outcome="datosGenerales" value="Datos Generales" styleClass="#{tab eq 'datosGenerales' ? 'nav-link-top active' : 'nav-link-top'}"><f:param name="id" value="#{param.id}"/></h:link></li>
+        <li><h:link outcome="interrogatorio" value="Interrogatorio" styleClass="#{tab eq 'interrogatorio' ? 'nav-link-top active' : 'nav-link-top'}"><f:param name="id" value="#{param.id}"/></h:link></li>
+        <li><h:link outcome="notas" value="Notas de Evolución" styleClass="#{tab eq 'notas' ? 'nav-link-top active' : 'nav-link-top'}"><f:param name="id" value="#{param.id}"/></h:link></li>
+        <li><h:link outcome="diagnosticos" value="Diagnósticos y Planes de Tratamiento" styleClass="#{tab eq 'diagnosticos' ? 'nav-link-top active' : 'nav-link-top'}"><f:param name="id" value="#{param.id}"/></h:link></li>
+        <li><h:link outcome="odontograma" value="Odontograma" styleClass="#{tab eq 'odontograma' ? 'nav-link-top active' : 'nav-link-top'}"><f:param name="id" value="#{param.id}"/></h:link></li>
+        <li><h:link outcome="pagos" value="Pagos" styleClass="#{tab eq 'pagos' ? 'nav-link-top active' : 'nav-link-top'}"><f:param name="id" value="#{param.id}"/></h:link></li>
+        <li><h:link outcome="archivos" value="Archivos" styleClass="#{tab eq 'archivos' ? 'nav-link-top active' : 'nav-link-top'}"><f:param name="id" value="#{param.id}"/></h:link></li>
+    </ul></div>
+</ui:composition>

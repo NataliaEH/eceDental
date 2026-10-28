@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition template="/WEB-INF/plantillas/plantilla.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="jakarta.faces.html" xmlns:f="jakarta.faces.core" xmlns:ui="jakarta.faces.facelets" xmlns:pt="jakarta.faces.passthrough">
+    <ui:param name="tab" value="dashboardExpediente"/>
+    <ui:define name="titulo">Dashboard del paciente</ui:define>
+    <ui:define name="navbar"><ui:include src="/WEB-INF/includes/navbar.xhtml"/></ui:define>
+    <ui:define name="contenido">
+        <div class="page-header"><div><h2>#{beanExpediente.buscar(param.id).paciente.nombre}</h2><p>Dashboard del paciente</p></div></div>
+        <div class="split-3">
+            <div>
+                <div class="card"><div class="card-header"><h2>Notas generales</h2></div><div class="card-body"><h:form>
+                    <input type="hidden" name="id" value="#{param.id}"/>
+                    <h:inputTextarea rows="7" value="#{beanPaciente.paciente.notas}" pt:placeholder="Notas generales sobre el paciente..."/>
+                    <div class="btn-group" style="margin-top:14px"><h:commandButton value="Guardar notas" action="#{beanPaciente.agregarNotas(beanPaciente.paciente.notas)}" styleClass="btn btn-primary btn-sm"/></div>
+                </h:form></div></div>
+                <div class="card"><div class="card-header"><h2>Alergias</h2></div><div class="card-body"><h:inputTextarea rows="7" readonly="true" value="#{empty beanInterrogatorio.interrogatorio.alergias ? '' : String.join(', ', beanInterrogatorio.interrogatorio.alergias)}" pt:placeholder="Alergias del paciente"/></div></div>
+                <div class="card"><div class="card-header"><h2>Acciones</h2></div><div class="card-body"><h:form>
+                    <input type="hidden" name="id" value="#{param.id}"/>
+                    <div class="btn-group"><h:commandButton value="Exportar expediente" action="#{beanExpediente.exportar(param.id)}" styleClass="btn btn-primary"/><a href="#confirmar-eliminar" class="btn btn-primary">Eliminar expediente</a></div>
+                </h:form></div></div>
+            </div>
+            <div>
+                <div class="card"><div class="card-header"><h2>Nueva nota de evolución</h2></div><div class="card-body"><h:form>
+                    <input type="hidden" name="id" value="#{param.id}"/>
+                    <div class="form-grid cols-1">
+                        <div class="form-group"><label>Fecha de registro *</label><h:inputText value="#{beanNotaEvolucion.notaEvolucion.fecha}" pt:type="date" pt:required="true"><f:convertDateTime pattern="yyyy-MM-dd"/></h:inputText></div>
+                        <div class="form-group"><label>Contenido de la nota *</label><h:inputTextarea value="#{beanNotaEvolucion.notaEvolucion.contenido}" pt:required="true" pt:placeholder="Descripción del procedimiento, observaciones clínicas..."/></div>
+                    </div>
+                    <div class="btn-group" style="margin-top:14px">
+                        <h:commandButton value="Registrar nota" action="#{beanNotaEvolucion.registrar}" styleClass="btn btn-primary"><f:setPropertyActionListener target="#{beanNotaEvolucion.notaEvolucion.expediente}" value="#{beanExpediente.buscar(param.id)}"/></h:commandButton>
+                        <h:commandButton type="reset" value="Limpiar" styleClass="btn btn-muted"/>
+                    </div>
+                </h:form></div></div>
+                <div class="card"><div class="card-header"><h2>Últimas notas de evolución</h2><h:link outcome="notas" value="Ver todas" styleClass="btn btn-primary btn-sm"><f:param name="id" value="#{param.id}"/></h:link></div><div class="table-wrap"><table><thead><tr><th>Fecha</th><th>Contenido</th></tr></thead><tbody>
+                <ui:repeat value="#{beanNotaEvolucion.consultar(param.id)}" var="n" size="5">
+                    <tr><td><h:outputText value="#{n.fecha}"><f:convertDateTime pattern="dd/MM/yy"/></h:outputText></td><td>#{n.contenido}</td></tr>
+                </ui:repeat>
+                </tbody></table></div></div>
+            </div>
+            <div>
+                <div class="card"><div class="card-header"><h2>Nuevo pago</h2></div><div class="card-body"><h:form>
+                    <input type="hidden" name="id" value="#{param.id}"/>
+                    <div class="form-grid cols-1">
+                        <div class="form-group"><label>Fecha de pago *</label><h:inputText value="#{beanAbono.abono.fecha}" pt:type="date" pt:required="true"><f:convertDateTime pattern="yyyy-MM-dd"/></h:inputText></div>
+                        <div class="form-group"><label>Monto *</label><h:inputText value="#{beanAbono.abono.abono}" pt:type="number" pt:min="0" pt:step="0.01" pt:required="true" pt:placeholder="0.00"/></div>
+                        <div class="form-group"><label>Concepto *</label><h:inputText value="#{beanAbono.abono.concepto}" pt:required="true" pt:placeholder="Ej. Pago parcial, anticipo"/></div>
+                    </div>
+                    <div class="btn-group" style="margin-top:14px">
+                        <h:commandButton value="Registrar pago" action="#{beanAbono.registrar}" styleClass="btn btn-primary"><f:setPropertyActionListener target="#{beanAbono.abono.expediente}" value="#{beanExpediente.buscar(param.id)}"/></h:commandButton>
+                        <h:commandButton type="reset" value="Limpiar" styleClass="btn btn-muted"/>
+                    </div>
+                </h:form></div></div>
+                <div class="card"><div class="card-header"><h2>Últimos pagos</h2><h:link outcome="pagos" value="Ver todos" styleClass="btn btn-primary btn-sm"><f:param name="id" value="#{param.id}"/></h:link></div><div class="table-wrap"><table><thead><tr><th>Fecha</th><th>Monto</th><th>Concepto</th></tr></thead><tbody>
+                <ui:repeat value="#{beanAbono.consultar(param.id)}" var="a" size="5">
+                    <tr><td><h:outputText value="#{a.fecha}"><f:convertDateTime pattern="dd/MM/yy"/></h:outputText></td><td><h:outputText value="#{a.abono}"><f:convertNumber pattern="$#,##0.00"/></h:outputText></td><td>#{a.concepto}</td></tr>
+                </ui:repeat>
+                </tbody></table></div></div>
+            </div>
+        </div>
+        <h:form>
+            <input type="hidden" name="id" value="#{param.id}"/>
+            <div id="confirmar-eliminar" class="confirm-overlay"><div class="confirm-box">
+                <h3>Confirmar eliminación</h3><p>Esta acción es <strong>permanente e irreversible</strong>. El expediente será eliminado del sistema.</p>
+                <div class="btn-group"><h:commandButton value="Confirmar eliminación" actionListener="#{beanExpediente.eliminar(param.id)}" action="buscarExpediente?faces-redirect=true" styleClass="btn btn-danger"/><a href="#" class="btn btn-muted">Cancelar</a></div>
+            </div></div>
+        </h:form>
+    </ui:define>
+</ui:composition>
