@@ -439,3 +439,19 @@ table.check-group td,table.check-group tbody tr:hover td{padding:0;border:none;b
 table.check-group td{display:flex;align-items:center;gap:7px}
 table.check-group label{font-size:.88rem}
 table.check-group input{width:15px;height:15px;accent-color:var(--accent)}
+.export-form{counter-reset:secciones}
+.sec-check:checked{counter-increment:secciones}
+.sec-count::before{content:counter(secciones)}
+.sec-list{padding:17px 24px 10px}
+.sec-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid #cecece}
+.sec-row:last-child{border-bottom:none}
+.sec-row label,.sec-todo{display:flex;align-items:center;gap:8px;margin:0}
+.sec-row label{text-transform:none;letter-spacing:0;font-size:.75rem;font-weight:400}
+.sec-row input[type="checkbox"],.sec-todo input[type="checkbox"]{width:15px;height:15px;accent-color:var(--accent)}
+.sec-total{font-size:.72rem;color:var(--muted)}
+.export-hint{margin-top:27px;font-size:.8rem;color:var(--muted)}
+.export-sep{border:none;border-top:2px solid #cecece;margin:28px 0 26px}
+.resumen-item{margin-bottom:21px}
+.resumen-item label{display:block;margin-bottom:11px}
+.resumen-valor{font-size:.75rem;font-weight:600;color:var(--ink)}
+.export-accion{margin-top:51px}

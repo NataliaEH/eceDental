@@ -13,10 +13,9 @@
                     <div class="btn-group" style="margin-top:14px"><h:commandButton value="Guardar notas" action="#{beanPaciente.agregarNotas(beanPaciente.paciente.notas)}" styleClass="btn btn-primary btn-sm"/></div>
                 </h:form></div></div>
                 <div class="card"><div class="card-header"><h2>Alergias</h2></div><div class="card-body"><h:inputTextarea rows="7" readonly="true" value="#{empty beanInterrogatorio.interrogatorio.alergias ? '' : String.join(', ', beanInterrogatorio.interrogatorio.alergias)}" pt:placeholder="Alergias del paciente"/></div></div>
-                <div class="card"><div class="card-header"><h2>Acciones</h2></div><div class="card-body"><h:form>
-                    <input type="hidden" name="id" value="#{param.id}"/>
-                    <div class="btn-group"><h:commandButton value="Exportar expediente" action="#{beanExpediente.exportar(param.id)}" styleClass="btn btn-primary"/><a href="#confirmar-eliminar" class="btn btn-primary">Eliminar expediente</a></div>
-                </h:form></div></div>
+                <div class="card"><div class="card-header"><h2>Acciones</h2></div><div class="card-body">
+                    <div class="btn-group"><h:link outcome="exportaciones" value="Exportar expediente" styleClass="btn btn-primary"><f:param name="id" value="#{param.id}"/></h:link><a href="#confirmar-eliminar" class="btn btn-primary">Eliminar expediente</a></div>
+                </div></div>
             </div>
             <div>
                 <div class="card"><div class="card-header"><h2>Nueva nota de evolución</h2></div><div class="card-body"><h:form>
