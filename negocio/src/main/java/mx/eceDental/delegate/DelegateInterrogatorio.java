@@ -34,10 +34,23 @@ public class DelegateInterrogatorio {
             Interrogatorio interrogatorio = new Interrogatorio();
             interrogatorio.setHospitalizado(hospitalizado);
             interrogatorio.setAtencionMedica(atencionMedica);
-            interrogatorio.setAlergias(alergias != null ? alergias : new ArrayList<>());
-            interrogatorio.setHemorragia(hemorragia);
-            interrogatorio.setEnfermedades(enfermedades != null ? enfermedades : new ArrayList<>());
-            interrogatorio.setMedicacion(medicacion != null ? medicacion : new ArrayList<>());
+            if (alergias != null) {
+                interrogatorio.setAlergias(alergias);
+            } else {
+                interrogatorio.setAlergias(new ArrayList<>());
+            }
+
+            if (enfermedades != null) {
+                interrogatorio.setEnfermedades(enfermedades);
+            } else {
+                interrogatorio.setEnfermedades(new ArrayList<>());
+            }
+
+            if (medicacion != null) {
+                interrogatorio.setMedicacion(medicacion);
+            } else {
+                interrogatorio.setMedicacion(new ArrayList<>());
+            }
             interrogatorio.setEmbarazada(embarazada);
             interrogatorio.setAmamantando(amamantando);
             interrogatorio.setTelefonoEmergencia(telefonoEmergencia.trim());
