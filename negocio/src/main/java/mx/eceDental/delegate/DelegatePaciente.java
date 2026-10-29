@@ -1,4 +1,4 @@
-package mx.desarrollo.delegate;
+package mx.eceDental.delegate;
 
 import java.util.ArrayList;
 import java.util.List;
