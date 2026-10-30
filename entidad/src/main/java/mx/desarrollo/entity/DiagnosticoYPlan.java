@@ -7,20 +7,27 @@ import jakarta.validation.constraints.Size;
 import java.util.Date;
 
 @Entity
-@Table(name = "DiagnosticoYPlan")
+@Table(name = "diagnosticoplan")
 public class DiagnosticoYPlan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "Id_DiagnosticoPlan")
     private int idDiagnosticoPlan;
 
-    @Column(name = "diagnostico")
+    @Size(max = 50)
+    @Column(name = "Diagnostico", length = 50)
     private String diagnostico;
 
-    @Column(name = "procedimiento")
+    @Size(max = 50)
+    @Column(name = "Procedimiento", length = 50)
     private String procedimiento;
 
+    @Temporal(TemporalType.DATE)
+    @Column(name = "Fecha")
     private Date fecha;
 
+    @ManyToOne
+    @JoinColumn(name = "Id_Expediente")
     private Expediente expediente;
 
     public int getIdDiagnosticoPlan() {
