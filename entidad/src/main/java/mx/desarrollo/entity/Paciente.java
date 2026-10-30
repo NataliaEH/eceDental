@@ -14,38 +14,38 @@ public class Paciente {
     @Column(name = "id_Paciente",nullable = false)
     private int idPaciente;
 
-    @Size(max=50)
+    @Size(max=100)
     @NotNull
-    @Column(name = "nombre",nullable = false,length = 50)
+    @Column(name = "Nombre",nullable = false,length = 100)
     private String nombre;
 
-    @Column(name = "edad")
+    @Column(name = "Edad")
     private int edad;
 
-    @Size(max=20)
-    @Column(name = "sexo",length = 20)
+    @Size(max=1)
+    @Column(name = "Sexo",length = 1)
     private String sexo;
 
-    @OneToMany(mappedBy = "paciente")
-    private List<String> telefonos;
+    //@OneToMany(mappedBy = "paciente")
+    //private List<TelefonoPaciente> telefonos;
 
     @Size(max=100)
-    @Column(name = "correo",length = 100)
+    @Column(name = "Correo",length = 100)
     private String correo;
 
-    @Size(max=150)
-    @Column(name = "domicilio",length = 150)
+    @Size(max=100)
+    @Column(name = "Domicilio",length = 100)
     private String domicilio;
 
     @Size(max=30)
-    @Column(name = "edo_civil",length = 30)
+    @Column(name = "Edo_Civil",length = 30)
     private String edoCivil;
 
     @Size(max=50)
-    @Column(name = "ocupacion",length = 50)
+    @Column(name = "Ocupacion",length = 50)
     private String ocupacion;
 
-    @Column(name = "notas",length = 500)
+    @Column(name = "Notas",length = 200)
     private String notas;
 
     /*@OneToOne(mappedBy = "paciente")
@@ -79,12 +79,12 @@ public class Paciente {
         this.sexo = sexo;
     }
 
-    public List<String> getTelefonos() {
+    /*public List<TelefonoPaciente> getTelefonos() {
         return telefonos;
     }
-    public void setTelefonos(List<String> telefonos) {
+    public void setTelefonos(List<TelefonoPaciente> telefonos) {
         this.telefonos = telefonos;
-    }
+    }*/
 
     public String getCorreo() {
         return correo;

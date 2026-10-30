@@ -15,7 +15,8 @@ public class Expediente {
     @Column(name = "id_Expediente",nullable = false)
     private int idExpediente;
 
-    @Column(name = "fecha_creacion")
+    @Temporal(TemporalType.DATE)
+    @Column(name = "Fecha_Creacion")
     private Date fechaCreacion;
 
     @OneToOne
@@ -25,12 +26,16 @@ public class Expediente {
     @OneToOne(mappedBy = "expediente")
     private Interrogatorio interrogatorio;
 
+    //@OneToMany(mappedBy = "expediente")
     //private List<NotaEvolucion> notasEvolucion;
 
+    //@OneToMany(mappedBy = "expediente")
     //private List<Archivos> archivos;
 
+    //@OneToMany(mappedBy = "expediente")
     //private List<Abonos> abonos;
 
+    //@OneToOne(mappedBy = "expediente")
     //private Odontograma odontograma;
 
     @OneToMany(mappedBy = "expediente")

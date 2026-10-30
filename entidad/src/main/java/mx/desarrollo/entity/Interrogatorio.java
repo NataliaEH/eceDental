@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -14,45 +15,45 @@ public class Interrogatorio {
     @Column(name = "id_Interrogatorio",nullable = false)
     private int idInterrogatorio;
 
-    @Column(name = "hospitalizado")
+    @Column(name = "Hospitalizado")
     private boolean hospitalizado;
 
-    @Column(name = "atencion_medica")
+    @Column(name = "Atencion_Medica")
     private boolean atencionMedica;
 
-    @Column(name = "alergia",length = 100)
-    private List<String> alergias;
+    //@OneToMany(mappedBy = "interrogatorio")
+    //private List<Alergia> alergias;
 
-    @Column(name = "hemorragia")
+    @Column(name = "Hemorragia")
     private boolean hemorragia;
 
-    @Column(name = "enfermedad",length = 100)
-    private List<String> enfermedades;
+    //@OneToMany(mappedBy = "interrogatorio")
+    //private List<Enfermedad> enfermedades;
 
-    @Column(name = "medicamento",length = 100)
-    private List<String> medicacion;
+    //@OneToMany(mappedBy = "interrogatorio")
+    //private List<Medicacion> medicacion;
 
-    @Column(name = "embarazada")
-    private boolean embarazada;
+    @Column(name = "Embarazada")
+    private String embarazada;
 
-    @Column(name = "amamantando")
-    private boolean amamantando;
+    @Column(name = "Amamantando")
+    private String amamantando;
 
-    @Size(max=20)
-    @Column(name = "telefono_emergencia",length = 20)
+    @Size(max=15)
+    @Column(name = "Tel_Emergencia",length = 15)
     private String telefonoEmergencia;
 
-    @Size(max=20)
-    @Column(name = "telefono_servicio_medico",length = 20)
+    @Size(max=15)
+    @Column(name = "Tel_Servicio_Med",length = 15)
     private String telefonoServicioMedico;
 
-    @Size(max=50)
-    @Column(name = "ultima_consulta_dental",length = 50)
-    private String ultimaConsultaDental;
+    @Temporal(TemporalType.DATE)
+    @Column(name = "Ultima_Consulta")
+    private Date ultimaConsultaDental;
 
-    /*@OneToOne
+    @OneToOne
     @JoinColumn(name = "Id_Expediente")
-    private Expediente expediente;*/
+    private Expediente expediente;
 
     public int getIdInterrogatorio() {
         return idInterrogatorio;
@@ -75,12 +76,12 @@ public class Interrogatorio {
         this.atencionMedica = atencionMedica;
     }
 
-    public List<String> getAlergias() {
+    /*public List<Alergia> getAlergias() {
         return alergias;
     }
-    public void setAlergias(List<String> alergias) {
+    public void setAlergias(List<Alergia> alergias) {
         this.alergias = alergias;
-    }
+    }*/
 
     public boolean isHemorragia() {
         return hemorragia;
@@ -89,31 +90,31 @@ public class Interrogatorio {
         this.hemorragia = hemorragia;
     }
 
-    public List<String> getEnfermedades() {
+    /*public List<Enfermedad> getEnfermedades() {
         return enfermedades;
     }
-    public void setEnfermedades(List<String> enfermedades) {
+    public void setEnfermedades(List<Enfermedad> enfermedades) {
         this.enfermedades = enfermedades;
     }
 
-    public List<String> getMedicacion() {
+    public List<Medicacion> getMedicacion() {
         return medicacion;
     }
-    public void setMedicacion(List<String> medicacion) {
+    public void setMedicacion(List<Medicacion> medicacion) {
         this.medicacion = medicacion;
-    }
+    }*/
 
-    public boolean isEmbarazada() {
+    public String getEmbarazada() {
         return embarazada;
     }
-    public void setEmbarazada(boolean embarazada) {
+    public void setEmbarazada(String embarazada) {
         this.embarazada = embarazada;
     }
 
-    public boolean isAmamantando() {
+    public String getAmamantando() {
         return amamantando;
     }
-    public void setAmamantando(boolean amamantando) {
+    public void setAmamantando(String amamantando) {
         this.amamantando = amamantando;
     }
 
@@ -131,17 +132,17 @@ public class Interrogatorio {
         this.telefonoServicioMedico = telefonoServicioMedico;
     }
 
-    public String getUltimaConsultaDental() {
+    public Date getUltimaConsultaDental() {
         return ultimaConsultaDental;
     }
-    public void setUltimaConsultaDental(String ultimaConsultaDental) {
+    public void setUltimaConsultaDental(Date ultimaConsultaDental) {
         this.ultimaConsultaDental = ultimaConsultaDental;
     }
 
-    /*public Expediente getExpediente() {
+    public Expediente getExpediente() {
         return expediente;
     }
     public void setExpediente(Expediente expediente) {
         this.expediente = expediente;
-    }*/
+    }
 }
