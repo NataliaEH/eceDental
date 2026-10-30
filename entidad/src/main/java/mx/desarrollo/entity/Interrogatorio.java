@@ -50,7 +50,9 @@ public class Interrogatorio {
     @Column(name = "ultima_consulta_dental",length = 50)
     private String ultimaConsultaDental;
 
-    private Expediente expediente;
+    /*@OneToOne
+    @JoinColumn(name = "Id_Expediente")
+    private Expediente expediente;*/
 
     public int getIdInterrogatorio() {
         return idInterrogatorio;
@@ -136,10 +138,10 @@ public class Interrogatorio {
         this.ultimaConsultaDental = ultimaConsultaDental;
     }
 
-    public Expediente getExpediente() {
+    /*public Expediente getExpediente() {
         return expediente;
     }
     public void setExpediente(Expediente expediente) {
         this.expediente = expediente;
-    }
+    }*/
 }

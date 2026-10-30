@@ -48,7 +48,8 @@ public class Paciente {
     @Column(name = "notas",length = 500)
     private String notas;
 
-    private Expediente expediente;
+    /*@OneToOne(mappedBy = "paciente")
+    private Expediente expediente;*/
 
     public int getIdPaciente() {
         return idPaciente;
@@ -120,10 +121,10 @@ public class Paciente {
         this.notas = notas;
     }
 
-    public Expediente getExpediente() {
+    /*public Expediente getExpediente() {
         return expediente;
     }
     public void setExpediente(Expediente expediente) {
         this.expediente = expediente;
-    }
+    }*/
 }

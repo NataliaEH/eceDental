@@ -18,18 +18,22 @@ public class Expediente {
     @Column(name = "fecha_creacion")
     private Date fechaCreacion;
 
+    @OneToOne
+    @JoinColumn(name = "Id_Paciente")
     private Paciente paciente;
 
+    @OneToOne(mappedBy = "expediente")
     private Interrogatorio interrogatorio;
 
-    private List<NotaEvolucion> notasEvolucion;
+    //private List<NotaEvolucion> notasEvolucion;
 
-    private List<Archivos> archivos;
+    //private List<Archivos> archivos;
 
-    private List<Abonos> abonos;
+    //private List<Abonos> abonos;
 
-    private Odontograma odontograma;
+    //private Odontograma odontograma;
 
+    @OneToMany(mappedBy = "expediente")
     private List<DiagnosticoYPlan> diagnosticos;
 
     public int getIdExpediente() {
@@ -60,7 +64,7 @@ public class Expediente {
         this.interrogatorio = interrogatorio;
     }
 
-    public List<NotaEvolucion> getNotasEvolucion() {
+    /*public List<NotaEvolucion> getNotasEvolucion() {
         return notasEvolucion;
     }
     public void setNotasEvolucion(List<NotaEvolucion> notasEvolucion) {
@@ -86,7 +90,7 @@ public class Expediente {
     }
     public void setOdontograma(Odontograma odontograma) {
         this.odontograma = odontograma;
-    }
+    }*/
 
     public List<DiagnosticoYPlan> getDiagnosticos() {
         return diagnosticos;

@@ -21,7 +21,9 @@ public class DiagnosticoYPlan {
 
     private Date fecha;
 
-    private Expediente expediente;
+    @ManyToOne
+    @JoinColumn(name = "Id_Expediente")
+    //private Expediente expediente;
 
     public int getIdDiagnosticoPlan() {
         return idDiagnosticoPlan;
@@ -51,10 +53,10 @@ public class DiagnosticoYPlan {
         this.fecha = fecha;
     }
 
-    public Expediente getExpediente() {
+    /*public Expediente getExpediente() {
         return expediente;
     }
     public void setExpediente(Expediente expediente) {
         this.expediente = expediente;
-    }
+    }*/
 }
