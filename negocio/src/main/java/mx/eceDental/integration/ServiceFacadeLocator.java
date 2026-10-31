@@ -1,53 +1,43 @@
 package mx.eceDental.integration;
 
+import mx.eceDental.facade.FacadeDiagnosticoYPlan;
+import mx.eceDental.facade.FacadeExpediente;
+import mx.eceDental.facade.FacadeInterrogatorio;
+import mx.eceDental.facade.FacadePaciente;
 
-import mx.eceDental.facade.FacadeAsignacion;
-import mx.eceDental.facade.FacadeProfesor;
-import mx.eceDental.facade.FacadeUA;
-import mx.eceDental.facade.FacadeUsuario;
 
 public class ServiceFacadeLocator {
 
-    private static FacadeProfesor facadeProfesor;
-    private static FacadeAsignacion facadeAsignacion;
-    private static FacadeUA facadeUA;
-    private static FacadeUsuario facadeUsuario;
+    private static FacadePaciente facadePaciente;
+    private static FacadeExpediente facadeExpediente;
+    private static FacadeInterrogatorio facadeInterrogatorio;
+    private static FacadeDiagnosticoYPlan facadeDiagnosticoYPlan;
 
-    public static FacadeProfesor getInstanceFacadeProfesor() {
-        if (facadeProfesor == null) {
-            facadeProfesor = new FacadeProfesor();
-            return facadeProfesor;
-        } else {
-            return facadeProfesor;
+    public static FacadeExpediente getInstanceFacadeExpediente() {
+        if (facadeExpediente == null) {
+            facadeExpediente = new FacadeExpediente();
         }
+        return facadeExpediente;
     }
 
-    public static FacadeAsignacion getInstanceFacadeAsignacion() {
-        if (facadeAsignacion == null) {
-            facadeAsignacion = new FacadeAsignacion();
-            return facadeAsignacion;
-        } else {
-            return facadeAsignacion;
+    public static FacadePaciente getInstanceFacadePaciente() {
+        if (facadePaciente == null) {
+            facadePaciente = new FacadePaciente();
         }
+        return facadePaciente;
+    }
+    public static FacadeInterrogatorio getInstanceFacadeInterrogatorio() {
+        if (facadeInterrogatorio == null) {
+            facadeInterrogatorio = new FacadeInterrogatorio();
+        }
+        return facadeInterrogatorio;
     }
 
-    public static FacadeUA getInstanceFacadeUA() {
-        if (facadeUA == null) {
-            facadeUA = new FacadeUA();
-            return facadeUA;
-        } else {
-            return facadeUA;
+    public static FacadeDiagnosticoYPlan getInstanceFacadeDiagnosticoYPlan() {
+        if (facadeDiagnosticoYPlan == null) {
+            facadeDiagnosticoYPlan = new FacadeDiagnosticoYPlan();
         }
+        return facadeDiagnosticoYPlan;
     }
 
-    public static FacadeUsuario getInstanceFacadeUsuario() {
-        if (facadeUsuario == null) {
-            facadeUsuario = new FacadeUsuario();
-            return facadeUsuario;
-        } else {
-            return facadeUsuario;
-        }
-    }
 }
-
-

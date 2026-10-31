@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <title>Datos Generales del Paciente - eceDental</title>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&amp;family=Source+Sans+3:wght@300;400;600&amp;display=swap" rel="stylesheet"/><link rel="stylesheet" href="resources/css/estilos.css"/>
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <img src="resources/img/logo.png" alt="eceDental - Gestión de expedientes" class="sidebar-logo"/>
+      <p class="sidebar-user">Natalia Escobar Hernández</p>
+    </div>
+    <nav>
+      <div class="nav-section-label">General</div>
+      <a href="panelPrincipal.html" class="nav-link">Panel Principal</a>
+      <div class="nav-section-label">Expedientes</div>
+      <a href="registrarPaciente.html" class="nav-link">Registrar Paciente</a>
+      <a href="buscarExpediente.html" class="nav-link">Buscar Expediente</a>
+      <div class="nav-section-label">Consultas</div>
+      <a href="consultaPersonalizada.html" class="nav-link">Consulta Personalizada</a>
+      <a href="consultaRapida.html" class="nav-link">Consulta Rápida</a>
+      <div class="nav-section-label">Herramientas</div>
+      <a href="recordatorios.html" class="nav-link">Recordatorios</a>
+      <a href="misDatos.html" class="nav-link">Mis Datos</a>
+    </nav>
+    <div class="sidebar-footer">Sistema v1.2 - LSC</div>
+  </aside>
+  <div class="main">
+    <div class="navbar"><ul>
+  <li><a href="dashboardExpediente.html" class="nav-link-top">Dashboard</a></li>
+  <li><a href="datosGenerales.html" class="nav-link-top active">Datos Generales</a></li>
+  <li><a href="interrogatorio.html" class="nav-link-top">Interrogatorio</a></li>
+  <li><a href="notas.html" class="nav-link-top">Notas de Evolución</a></li>
+  <li><a href="diagnosticos.html" class="nav-link-top">Diagnósticos y Planes de Tratamiento</a></li>
+  <li><a href="odontograma.html" class="nav-link-top">Odontograma</a></li>
+  <li><a href="pagos.html" class="nav-link-top">Pagos</a></li>
+  <li><a href="archivos.html" class="nav-link-top">Archivos</a></li>
+</ul></div>
+    <div class="content">
+<div class="page-header"><div><h2>Datos Generales del Paciente</h2><p id="nombrePaciente"></p></div></div>
+<form id="formDatosGenerales">
+  <fieldset class="form-section"><legend>Datos Personales</legend><div class="form-grid">
+    <div class="form-group span-2"><label>Nombre completo *</label><input type="text" id="nombre" value="" required="required"/></div>
+    <div class="form-group "><label>Edad *</label><input type="number" id="edad" value="36" min="0" max="120" required="required"/></div>
+    <div class="form-group "><label>Sexo *</label>
+      <div class="check-group">
+        <label class="check-item"><input type="radio" id="sexoM" value="M" name="sexo"/> Masculino</label>
+        <label class="check-item"><input type="radio" id="sexoF" value="F" name="sexo"/> Femenino</label>
+      </div>
+    </div>
+    <div class="form-group "><label>Estado civil</label>
+      <select id="edoCivil">
+        <option value="Soltero">Soltero/a</option>
+        <option value="Casado">Casado/a</option>
+        <option value="Divorciado">Divorciado/a</option>
+        <option value="Viudo">Viudo/a</option>
+        <option value="Union libre">Unión libre</option>
+      </select>
+    </div>
+    <div class="form-group "><label>Ocupación</label><input type="text" id="ocupacion" value=""/></div>
+    <div class="form-group "><label>Domicilio</label><input type="text" id="domicilio" value=""/></div>
+  </div></fieldset>
+  <fieldset class="form-section"><legend>Contacto</legend><div class="form-grid cols-3">
+    <div class="form-group "><label>Teléfono principal *</label><input type="tel" id="tel" value="" required="required"/></div>
+    <div class="form-group "><label>Teléfono alternativo</label><input type="tel" id="telAlt" value=""/></div>
+    <div class="form-group "><label>Correo *</label><input type="email" id="correo" value="" required="required"/></div>
+  </div></fieldset>
+  <div class="btn-group">
+    <button type="submit" class="btn btn-primary">Guardar datos generales</button>
+    <button type="reset" class="btn btn-muted">Cancelar</button></div>
+</form>
+</div>
+  </div>
+  <script src="resources/js/datosGenerales.js"></script>
+</body>
+</html>

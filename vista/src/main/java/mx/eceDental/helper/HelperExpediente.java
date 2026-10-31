@@ -1,0 +1,27 @@
+package mx.eceDental.helper;
+import mx.eceDental.entity.Expediente;
+import mx.eceDental.facade.FacadeExpediente;
+import mx.eceDental.integration.ServiceFacadeLocator;
+import java.io.Serializable;
+import java.util.List;
+
+public class HelperExpediente {
+    public Expediente buscar(int id){
+        return ServiceFacadeLocator.getInstanceFacadeExpediente().buscar(id);
+    }
+    public Expediente buscarPorPaciente(int idPaciente){
+        System.out.println("idpaciente "+idPaciente);
+        return ServiceFacadeLocator.getInstanceFacadeExpediente().buscarPorPaciente(idPaciente);
+    }
+    public boolean exportar(int idExpediente){
+        return ServiceFacadeLocator.getInstanceFacadeExpediente().exportar(idExpediente);
+    }
+
+    public boolean eliminar(int id){
+        return ServiceFacadeLocator.getInstanceFacadeExpediente().eliminar(id);
+    }
+
+    public List<Expediente> consultar(){
+        return ServiceFacadeLocator.getInstanceFacadeExpediente().consultar();
+    }
+}

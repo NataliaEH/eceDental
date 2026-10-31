@@ -1,13 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package mx.eceDental.persistence.integration;
 
 import jakarta.persistence.EntityManager;
-import mx.eceDental.persistence.DAO.PacienteDAO;
-import mx.eceDental.persistence.DAO.*;
+import mx.eceDental.persistence.dao.*;
 import mx.eceDental.persistence.persistence.HibernateUtil;
 
 public class ServiceLocator {
