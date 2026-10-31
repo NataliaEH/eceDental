@@ -10,10 +10,6 @@ import mx.eceDental.persistence.DAO.PacienteDAO;
 import mx.eceDental.persistence.DAO.*;
 import mx.eceDental.persistence.persistence.HibernateUtil;
 
-/**
- *
- * @author total
- */
 public class ServiceLocator {
 
     private static PacienteDAO pacienteDAO;
@@ -25,37 +21,27 @@ public class ServiceLocator {
         return HibernateUtil.getEntityManager();
     }
 
-
-    /**
-     * se crea la instancia de profesorDAO si esta no existe
-     */
     public static PacienteDAO getInstancePacienteDAO(){
         return new PacienteDAO(getEntityManager());
     }
 
-    /**
-     * se crea la instancia de horarioDAO si esta no existe
-     */
     public static ExpedienteDAO getInstanceExpedienteDAO(){
         return new ExpedienteDAO(getEntityManager());
     }
 
-    /**
-     * se crea la instancia de unidad_de_aprendizajeDAO si esta no existe
-     */
     public static InterrogatorioDAO getInstanceInterrogatorioDAO() {return new InterrogatorioDAO(getEntityManager());}
 
-    /**
-     * se crea la instancia para asignacionDAO si esta no existe
-     */
-    public static DiagnosticoYPlanDAO getInstanceDiagnosticoYPlanDAO () {
-        return new DiagnosticoYPlanDAO(getEntityManager());
-    }
+    public static DiagnosticoYPlanDAO getInstanceDiagnosticoYPlanDAO () { return new DiagnosticoYPlanDAO(getEntityManager());}
+    public static AlergiaDAO getInstanceAlergiaDAO() {return new AlergiaDAO(getEntityManager());}
 
-    /**
-     * se crea la instancia para usuarioDAO si esta no existe
-     */
+    public static MedicacionDAO getInstanceMedicacionDAO() {return new MedicacionDAO(getEntityManager());}
+
+    public static EnfermedadDAO getInstanceEnfermedadDAO() {return new EnfermedadDAO(getEntityManager());}
+
+    public static TelefonosPacienteDAO getInstanceTelefonosPacienteDAO() {return new TelefonosPacienteDAO(getEntityManager());}
+
     /*
+    Ya estaba esto, lo deje por si acaso
     public static UsuarioDAO getInstanceUsuarioDAO () {
         if (usuarioDAO == null) {
             usuarioDAO = new UsuarioDAO(getEntityManager());
