@@ -14,6 +14,7 @@ import java.util.List;
 public class BeanDiagnosticoYPlan {
     private HelperDiagnosticoYPlan helperDiagnosticoYPlan;
     private DiagnosticoYPlan diagnosticoYPlan;
+    private int idExpediente;
 
     public BeanDiagnosticoYPlan() {
         helperDiagnosticoYPlan = new HelperDiagnosticoYPlan();
@@ -25,7 +26,7 @@ public class BeanDiagnosticoYPlan {
     }
 
     public void registrar(){
-        boolean registrado = helperDiagnosticoYPlan.registrar(diagnosticoYPlan.getDiagnostico(), diagnosticoYPlan.getProcedimiento(), diagnosticoYPlan.getFechaExpediente());
+        boolean registrado = helperDiagnosticoYPlan.registrar(idExpediente, diagnosticoYPlan.getDiagnostico(), diagnosticoYPlan.getProcedimiento(), diagnosticoYPlan.getFecha());
         if(registrado){
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Diagnóstico y Plan de Tratamiento registrado:", "Se hizo el registro correctamente en el sistema."));
         }else{
@@ -33,8 +34,8 @@ public class BeanDiagnosticoYPlan {
         }
     }
 
-    public List<DiagnosticoYPlan> consultar(){
-        return helperDiagnosticoYPlan.consultar();
+    public List<DiagnosticoYPlan> consultar(int idExpediente){
+        return helperDiagnosticoYPlan.consultar(idExpediente);
     }
 
     public DiagnosticoYPlan getDiagnosticoYPlan(){ return diagnosticoYPlan;}

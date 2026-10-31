@@ -1,4 +1,4 @@
-package mx.desarrollo.entity;
+package mx.eceDental.entity;
 
 import jakarta.persistence.*;
 
@@ -14,8 +14,9 @@ public class Enfermedad {
     @Column(name = "Nombre")
     private String nombre;
 
-    @Column(name = "Id_Interrogatorio")
-    private int idInterrogatorio;
+    @ManyToOne
+    @JoinColumn(name = "Id_Interrogatorio")
+    private Interrogatorio interrogatorio;
 
     public Enfermedad() {
     }
@@ -23,24 +24,19 @@ public class Enfermedad {
     public int getIdEnfermedad() {
         return idEnfermedad;
     }
-
     public void setIdEnfermedad(int idEnfermedad) {
         this.idEnfermedad = idEnfermedad;
     }
-
     public String getNombre() {
         return nombre;
     }
-
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
-    public int getIdInterrogatorio() {
-        return idInterrogatorio;
+    public Interrogatorio getInterrogatorio() {
+        return interrogatorio;
     }
-
-    public void setIdInterrogatorio(int idInterrogatorio) {
-        this.idInterrogatorio = idInterrogatorio;
+    public void setInterrogatorio(Interrogatorio interrogatorio) {
+        this.interrogatorio = interrogatorio;
     }
 }

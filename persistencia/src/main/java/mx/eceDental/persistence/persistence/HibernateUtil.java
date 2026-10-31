@@ -4,9 +4,6 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
-/**
- * Clase utilitaria para inicializar y obtener el {@link EntityManagerFactory}.
- */
 public class HibernateUtil {
     //Issac Inzunza
     private static final EntityManagerFactory ENTITY_MANAGER_FACTORY = buildEntityManagerFactory();
@@ -19,6 +16,7 @@ public class HibernateUtil {
             return Persistence.createEntityManagerFactory("persistencePU");
         } catch (Throwable ex) {
             System.err.println("Error creando EntityManagerFactory: " + ex);
+            ex.printStackTrace();
             throw new ExceptionInInitializerError(ex);
         }
     }

@@ -1,14 +1,14 @@
-package mx.desarrollo.entity;
+package mx.eceDental.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Table(name="Expediente")
+@Table(name="expediente")
 public class Expediente {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -17,7 +17,7 @@ public class Expediente {
 
     @Temporal(TemporalType.DATE)
     @Column(name = "Fecha_Creacion")
-    private Date fechaCreacion;
+    private LocalDate fechaCreacion;
 
     @OneToOne
     @JoinColumn(name = "Id_Paciente")
@@ -48,10 +48,10 @@ public class Expediente {
         this.idExpediente = idExpediente;
     }
 
-    public Date getFechaCreacion() {
+    public LocalDate getFechaCreacion() {
         return fechaCreacion;
     }
-    public void setFechaCreacion(Date fechaCreacion) {
+    public void setFechaCreacion(LocalDate fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
 

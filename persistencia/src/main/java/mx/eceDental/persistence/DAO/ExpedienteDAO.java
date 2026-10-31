@@ -1,4 +1,4 @@
-package mx.eceDental.persistence.DAO;
+package mx.eceDental.persistence.dao;
 
 import jakarta.persistence.EntityManager;
 import mx.eceDental.entity.Expediente;
@@ -18,6 +18,16 @@ public class ExpedienteDAO extends AbstractDAO<Expediente> {
         return entityManager
                 .createQuery("SELECT u FROM Expediente u", Expediente.class)
                 .getResultList();
+    }
+
+    public Expediente obtenerPorPaciente(int idPaciente){
+        System.out.println("ID recibido: " + idPaciente);
+        String jpql = "SELECT e FROM Expediente e WHERE e.paciente.idPaciente = :idPaciente";
+        return execute(em ->
+                em.createQuery(jpql, Expediente.class)
+                        .setParameter("idPaciente", idPaciente)
+                        .getSingleResult()
+        );
     }
 
     @Override

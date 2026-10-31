@@ -1,4 +1,4 @@
-package mx.desarrollo.entity;
+package mx.eceDental.entity;
 
 import jakarta.persistence.*;
 
@@ -23,8 +23,9 @@ public class TelefonosPaciente {
     @Column(name = "Tipo")
     private TipoTelefono tipo;
 
-    @Column(name = "Id_Paciente")
-    private int idPaciente;
+    @ManyToOne
+    @JoinColumn(name = "Id_Paciente")
+    private Paciente paciente;
 
     public TelefonosPaciente() {
     }
@@ -53,11 +54,11 @@ public class TelefonosPaciente {
         this.tipo = tipo;
     }
 
-    public int getIdPaciente() {
-        return idPaciente;
+    public Paciente getPaciente() {
+        return paciente;
     }
 
-    public void setIdPaciente(int idPaciente) {
-        this.idPaciente = idPaciente;
+    public void setPaciente(Paciente paciente) {
+        this.paciente = paciente;
     }
 }

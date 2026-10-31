@@ -1,8 +1,8 @@
 package mx.eceDental.facade;
 
 import java.util.List;
-import mx.desarrollo.delegate.DelegateExpediente;
-import mx.desarrollo.entity.Expediente;
+import mx.eceDental.delegate.DelegateExpediente;
+import mx.eceDental.entity.Expediente;
 
 public class FacadeExpediente {
 
@@ -27,7 +27,10 @@ public class FacadeExpediente {
     public Expediente buscar(int id) {
         return delegateExpediente.buscar(id);
     }
-
+    public Expediente buscarPorPaciente(int idPaciente) {
+        System.out.println("idpaciente "+idPaciente);
+        return delegateExpediente.buscarPorPaciente(idPaciente);
+    }
     public List<Expediente> consultar() {
         return delegateExpediente.consultar();
     }

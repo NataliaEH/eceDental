@@ -2,12 +2,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>mx.avanti.desarrollo.autenticacion</groupId>
+        <groupId>mx.equipo.eceDental.autenticacion</groupId>
         <artifactId>eceDental</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <artifactId>vista</artifactId>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <name>web Maven Webapp</name>
     <url>http://maven.apache.org</url>
 
@@ -16,6 +16,8 @@
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <failOnMissingWebXml>false</failOnMissingWebXml>
+
+        <javafx.version>21.0.6</javafx.version>
 
         <primefaces.version>14.0.0</primefaces.version>
         <primefaces.extensions.version>14.0.0</primefaces.extensions.version>
@@ -66,9 +68,6 @@
             <classifier>jakarta</classifier>
         </dependency>
 
-
-
-
         <!-- PrimeFaces Extensions 14 -->
         <dependency>
             <groupId>org.primefaces.extensions</groupId>
@@ -96,26 +95,53 @@
             <version>5.1.1.Final</version>
         </dependency>
         <dependency>
-            <groupId>mx.avanti.desarrollo.autenticacion</groupId>
+            <groupId>mx.equipo.eceDental.autenticacion</groupId>
             <artifactId>entidad</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>mx.avanti.desarrollo.autenticacion</groupId>
+            <groupId>mx.equipo.eceDental.autenticacion</groupId>
             <artifactId>negocio</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>mx.avanti.desarrollo.autenticacion</groupId>
+            <groupId>mx.equipo.eceDental.autenticacion</groupId>
             <artifactId>persistencia</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
 
+        <!-- JavaFX -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-web</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
     </dependencies>
     <build>
-        <finalName>web</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/webapp</directory>
+                <targetPath>.</targetPath>
+            </resource>
+        </resources>
+        <finalName>app</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>0.0.8</version>
+                <configuration>
+                    <mainClass>mx.eceDental.MainApp</mainClass>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
 </project>

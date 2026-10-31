@@ -1,4 +1,4 @@
-package mx.desarrollo.entity;
+package mx.eceDental.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Size;
 import java.util.List;
 
 @Entity
-@Table(name="Paciente")
+@Table(name="paciente")
 public class Paciente {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -26,8 +26,8 @@ public class Paciente {
     @Column(name = "Sexo",length = 1)
     private String sexo;
 
-    //@OneToMany(mappedBy = "paciente")
-    //private List<TelefonoPaciente> telefonos;
+    @OneToMany(mappedBy = "paciente")
+    private List<TelefonosPaciente> telefonos;
 
     @Size(max=100)
     @Column(name = "Correo",length = 100)
@@ -48,8 +48,8 @@ public class Paciente {
     @Column(name = "Notas",length = 200)
     private String notas;
 
-    /*@OneToOne(mappedBy = "paciente")
-    private Expediente expediente;*/
+    @OneToOne(mappedBy = "paciente")
+    private Expediente expediente;
 
     public int getIdPaciente() {
         return idPaciente;
@@ -79,12 +79,12 @@ public class Paciente {
         this.sexo = sexo;
     }
 
-    /*public List<TelefonoPaciente> getTelefonos() {
+    public List<TelefonosPaciente> getTelefonos() {
         return telefonos;
     }
-    public void setTelefonos(List<TelefonoPaciente> telefonos) {
+    public void setTelefonos(List<TelefonosPaciente> telefonos) {
         this.telefonos = telefonos;
-    }*/
+    }
 
     public String getCorreo() {
         return correo;
@@ -121,10 +121,10 @@ public class Paciente {
         this.notas = notas;
     }
 
-    /*public Expediente getExpediente() {
+    public Expediente getExpediente() {
         return expediente;
     }
     public void setExpediente(Expediente expediente) {
         this.expediente = expediente;
-    }*/
+    }
 }

@@ -1,8 +1,9 @@
 package mx.eceDental.facade;
 
 import java.util.List;
-import mx.desarrollo.delegate.DelegatePaciente;
-import mx.desarrollo.entity.Paciente;
+import mx.eceDental.delegate.DelegatePaciente;
+import mx.eceDental.entity.Paciente;
+import mx.eceDental.entity.TelefonosPaciente;
 
 public class FacadePaciente {
 
@@ -12,18 +13,20 @@ public class FacadePaciente {
         this.delegatePaciente = new DelegatePaciente();
     }
 
-    public int registrar(String nombre, int edad, String sexo, List<String> telefonos,
-                         String correo, String domicilio, String edoCivil, String ocupacion, String notas) {
+    public int registrar(String nombre, int edad, String sexo,
+                         String correo, String domicilio, String edoCivil, String ocupacion) {
 
-        return delegatePaciente.registrar(nombre, edad, sexo, telefonos,
-                correo, domicilio, edoCivil, ocupacion, notas);
+        return delegatePaciente.registrar(nombre, edad, sexo, correo, domicilio, edoCivil, ocupacion);
     }
 
-    public boolean modificar(int idPaciente, String nombre, int edad, String sexo, List<String> telefonos,
-                             String correo, String domicilio, String edoCivil, String ocupacion, String notas) {
+    public boolean registrarTelefonos(int idPaciente, String telefonoPrincipal, String telefonoAlternativo){
+        return delegatePaciente.registrarTelefonos(idPaciente, telefonoPrincipal, telefonoAlternativo);
+    }
 
-        return delegatePaciente.modificar(idPaciente, nombre, edad, sexo, telefonos,
-                correo, domicilio, edoCivil, ocupacion, notas);
+    public boolean modificar(int idPaciente, String nombre, int edad, String sexo,
+                             String correo, String domicilio, String edoCivil, String ocupacion) {
+
+        return delegatePaciente.modificar(idPaciente, nombre, edad, sexo, correo, domicilio, edoCivil, ocupacion);
     }
 
     public boolean agregarNotas(int idPaciente, String texto) {

@@ -1,14 +1,14 @@
-package mx.desarrollo.entity;
+package mx.eceDental.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Table(name = "Interrogatorio")
+@Table(name = "interrogatorio")
 public class Interrogatorio {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -18,20 +18,23 @@ public class Interrogatorio {
     @Column(name = "Hospitalizado")
     private boolean hospitalizado;
 
+    @Column(name = "Hospitalizacion_Desc")
+    private String hospitalizacionDesc;
+
     @Column(name = "Atencion_Medica")
     private boolean atencionMedica;
 
-    //@OneToMany(mappedBy = "interrogatorio")
-    //private List<Alergia> alergias;
+    @OneToMany(mappedBy = "interrogatorio")
+    private List<Alergia> alergias;
 
     @Column(name = "Hemorragia")
     private boolean hemorragia;
 
-    //@OneToMany(mappedBy = "interrogatorio")
-    //private List<Enfermedad> enfermedades;
+    @OneToMany(mappedBy = "interrogatorio")
+    private List<Enfermedad> enfermedades;
 
-    //@OneToMany(mappedBy = "interrogatorio")
-    //private List<Medicacion> medicacion;
+    @OneToMany(mappedBy = "interrogatorio")
+    private List<Medicacion> medicacion;
 
     @Column(name = "Embarazada")
     private String embarazada;
@@ -49,7 +52,7 @@ public class Interrogatorio {
 
     @Temporal(TemporalType.DATE)
     @Column(name = "Ultima_Consulta")
-    private Date ultimaConsultaDental;
+    private LocalDate ultimaConsultaDental;
 
     @OneToOne
     @JoinColumn(name = "Id_Expediente")
@@ -69,6 +72,13 @@ public class Interrogatorio {
         this.hospitalizado = hospitalizado;
     }
 
+    public String getHospitalizacionDesc() {
+        return hospitalizacionDesc;
+    }
+    public void setHospitalizacionDesc(String hospitalizacionDesc) {
+        this.hospitalizacionDesc = hospitalizacionDesc;
+    }
+
     public boolean isAtencionMedica() {
         return atencionMedica;
     }
@@ -76,12 +86,12 @@ public class Interrogatorio {
         this.atencionMedica = atencionMedica;
     }
 
-    /*public List<Alergia> getAlergias() {
+    public List<Alergia> getAlergias() {
         return alergias;
     }
     public void setAlergias(List<Alergia> alergias) {
         this.alergias = alergias;
-    }*/
+    }
 
     public boolean isHemorragia() {
         return hemorragia;
@@ -90,7 +100,7 @@ public class Interrogatorio {
         this.hemorragia = hemorragia;
     }
 
-    /*public List<Enfermedad> getEnfermedades() {
+    public List<Enfermedad> getEnfermedades() {
         return enfermedades;
     }
     public void setEnfermedades(List<Enfermedad> enfermedades) {
@@ -102,7 +112,7 @@ public class Interrogatorio {
     }
     public void setMedicacion(List<Medicacion> medicacion) {
         this.medicacion = medicacion;
-    }*/
+    }
 
     public String getEmbarazada() {
         return embarazada;
@@ -132,10 +142,10 @@ public class Interrogatorio {
         this.telefonoServicioMedico = telefonoServicioMedico;
     }
 
-    public Date getUltimaConsultaDental() {
+    public LocalDate getUltimaConsultaDental() {
         return ultimaConsultaDental;
     }
-    public void setUltimaConsultaDental(Date ultimaConsultaDental) {
+    public void setUltimaConsultaDental(LocalDate ultimaConsultaDental) {
         this.ultimaConsultaDental = ultimaConsultaDental;
     }
 

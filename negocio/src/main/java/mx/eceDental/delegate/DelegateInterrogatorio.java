@@ -2,25 +2,41 @@ package mx.eceDental.delegate;
 
 
 import java.util.ArrayList;
+import java.time.LocalDate;
 import java.util.List;
 
-import mx.desarrollo.entity.Expediente;
-import mx.desarrollo.entity.Interrogatorio;
-import mx.desarrollo.persistence.integration.ServiceLocator;
+import mx.eceDental.entity.*;
+import mx.eceDental.persistence.integration.ServiceLocator;
 
 public class DelegateInterrogatorio {
+    public boolean registrar(int idExpediente){
+        try {
+            Expediente expediente = ServiceLocator.getInstanceExpedienteDAO().find(idExpediente).orElse(null);
 
-    public boolean registrar(int idExpediente, boolean hospitalizado, boolean atencionMedica,
-                             List<String> alergias, boolean hemorragia, List<String> enfermedades,
-                             List<String> medicacion, boolean embarazada, boolean amamantando,
+            if (expediente == null || expediente.getInterrogatorio() != null) {
+                return false;
+            }
+
+            Interrogatorio interrogatorio = new Interrogatorio();
+            interrogatorio.setExpediente(expediente);
+            ServiceLocator.getInstanceInterrogatorioDAO().save(interrogatorio);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean modificar(int idExpediente, boolean hospitalizado, boolean atencionMedica,
+                             List<Alergia> alergias, boolean hemorragia, List<Enfermedad> enfermedades,
+                             List<Medicacion> medicacion, String embarazada, String amamantando,
                              String telefonoEmergencia, String telefonoServicioMedico,
-                             String ultimaConsultaDental) {
+                             LocalDate ultimaConsultaDental) {
 
         if (idExpediente <= 0
                 || telefonoEmergencia == null || telefonoEmergencia.trim().isEmpty()
                 || telefonoEmergencia.trim().length() > 20
                 || (telefonoServicioMedico != null && telefonoServicioMedico.trim().length() > 20)
-                || (ultimaConsultaDental != null && ultimaConsultaDental.trim().length() > 50)) {
+                || (ultimaConsultaDental != null)) {
             return false;
         }
 
@@ -65,5 +81,11 @@ public class DelegateInterrogatorio {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    public Interrogatorio buscar(int idExpediente){
+        return ServiceLocator.getInstanceInterrogatorioDAO().findFromWhere("expediente","idExpediente", String.valueOf(idExpediente)).stream()
+                .findFirst()
+                .orElse(null);
     }
 }
