@@ -15,8 +15,8 @@ public class FacadeDiagnosticoYPlan {
         this.delegateDiagnosticoYPlan = new DelegateDiagnosticoYPlan();
     }
 
-    public boolean registrar(int idExpediente, String diagnostico, String procedimiento, LocalDate fecha) {
-        return delegateDiagnosticoYPlan.registrar(idExpediente, diagnostico, procedimiento, fecha);
+    public boolean registrar(int idExpediente, String diagnostico, String procedimiento) {
+        return delegateDiagnosticoYPlan.registrar(idExpediente, diagnostico, procedimiento);
     }
 
     public List<DiagnosticoYPlan> consultar(int idExpediente) {

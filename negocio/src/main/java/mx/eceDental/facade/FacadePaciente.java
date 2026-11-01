@@ -24,9 +24,9 @@ public class FacadePaciente {
     }
 
     public boolean modificar(int idPaciente, String nombre, int edad, String sexo,
-                             String correo, String domicilio, String edoCivil, String ocupacion) {
+                             String correo, String domicilio, String edoCivil, String ocupacion, List<TelefonosPaciente> telefonos) {
 
-        return delegatePaciente.modificar(idPaciente, nombre, edad, sexo, correo, domicilio, edoCivil, ocupacion);
+        return delegatePaciente.modificar(idPaciente, nombre, edad, sexo, correo, domicilio, edoCivil, ocupacion, telefonos);
     }
 
     public boolean agregarNotas(int idPaciente, String texto) {

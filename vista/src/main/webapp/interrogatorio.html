@@ -3,6 +3,8 @@
 <head>
   <title>Interrogatorio - eceDental</title>
   <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&amp;family=Source+Sans+3:wght@300;400;600&amp;display=swap" rel="stylesheet"/><link rel="stylesheet" href="resources/css/estilos.css"/>
+  <link rel="stylesheet" href="resources/css/flatpickr.min.css">
+  <script src="resources/js/flatpickr.min.js"></script>
 </head>
 <body>
   <aside class="sidebar">
@@ -103,24 +105,32 @@
   <fieldset class="form-section"><legend>Datos Específicos</legend><div class="form-grid"><div class="form-group ">
     <label>Embarazada</label>
     <select id="embarazada">
-      <option>NA</option>
-      <option>Si</option>
-      <option>No</option>
+      <option value="No aplica">NA</option>
+      <option value="Si">Si</option>
+      <option value="No">No</option>
     </select>
   </div>
     <div class="form-group ">
       <label>Amamantando</label>
       <select id="amamantando">
-        <option>NA</option>
-        <option>Si</option>
-        <option>No</option>
+        <option value="No aplica">NA</option>
+        <option value="Si">Si</option>
+        <option value="No">No</option>
       </select>
     </div>
   </div>
   </fieldset>
   <fieldset class="form-section"><legend>Contacto de Emergencia</legend><div class="form-grid">
     <div class="form-group "><label>Tel. emergencia</label><input type="tel" id="telefonoEmergencia" placeholder="000 000 0000"/></div><div class="form-group "><label>Tel. servicio médico / IMSS / ISSSTE</label><input type="tel" id="telefonoServicioMedico" placeholder="000 000 0000"/></div></div></fieldset>
-  <fieldset class="form-section"><legend>Última Consulta Dental</legend><div class="form-grid"><div class="form-group "><label>Fecha de última consulta dental</label><input type="date" id="ultimaConsultaDental"/></div></div></fieldset>
+  <fieldset class="form-section"><legend>Última Consulta Dental</legend><div class="form-grid"><div class="form-group ">
+    <label>Fecha de última consulta dental</label>
+    <input type="text" id="ultimaConsultaDental"/>
+    <script>
+      flatpickr("#ultimaConsultaDental", {
+        dateFormat: "Y-m-d"
+      });
+    </script>
+  </div></div></fieldset>
   <div class="btn-group"><button type="submit" class="btn btn-primary">Guardar interrogatorio</button><a href="dashboardExpediente.html" class="btn btn-muted">Cancelar</a></div>
 </form>
 </div>

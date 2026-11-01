@@ -32,7 +32,7 @@
 <div class="alert alert-warn"><strong>Atención:</strong> Se le pedirá confirmación antes de guardar. El sistema registrará al paciente y creará su expediente en un solo paso.</div>
 <form id="formPaciente">
   <fieldset class="form-section"><legend>Datos Personales</legend><div class="form-grid">
-    <div class="form-group span-2"><label>Nombre completo *</label><input type="text" id="nombre" required="required" placeholder="Nombre(s) Apellido Paterno Apellido Materno"/></div>
+    <div class="form-group span-2"><label>Nombre completo *</label><input type="text" id="nombre" required="required" pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ ]+$" placeholder="Nombre(s) Apellido Paterno Apellido Materno"/></div>
     <div class="form-group "><label>Edad *</label><input type="number" id="edad" min="0" max="120" required="required" placeholder="Años"/></div>
     <div class="form-group "><label>Sexo *</label>
       <div class="check-group">
@@ -50,13 +50,13 @@
         <option value="Union libre">Unión libre</option>
       </select>
     </div>
-    <div class="form-group "><label>Ocupación</label><input type="text" id="ocupacion" placeholder="Ej. Empleado, Estudiante..."/></div>
-    <div class="form-group "><label>Domicilio</label><input type="text" id="domicilio" placeholder="Calle, Número, Colonia"/></div>
+    <div class="form-group "><label>Ocupación</label><input type="text" id="ocupacion" maxlength="50" placeholder="Ej. Empleado, Estudiante..."/></div>
+    <div class="form-group "><label>Domicilio</label><input type="text" id="domicilio" maxlength="100" placeholder="Calle, Número, Colonia"/></div>
   </div></fieldset>
   <fieldset class="form-section"><legend>Contacto</legend><div class="form-grid cols-3">
     <div class="form-group "><label>Teléfono principal *</label><input type="tel" id="tel" required="required" placeholder="664-XXX-XXXX"/></div>
     <div class="form-group "><label>Teléfono alternativo</label><input type="tel" id="telAlt" placeholder="664-XXX-XXXX"/></div>
-    <div class="form-group "><label>Correo *</label><input type="email" id="correo" required="required" placeholder="correo@direccion.com"/></div>
+    <div class="form-group "><label>Correo *</label><input type="email" id="correo" maxlength="100" required="required" placeholder="correo@direccion.com"/></div>
   </div></fieldset>
   <div class="btn-group">
     <button type="submit" class="btn btn-primary">Guardar paciente y crear expediente</button>

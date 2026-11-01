@@ -50,14 +50,14 @@ public class DelegatePaciente {
                 principal.setNumero(telefonoPrincipal);
                 principal.setTipo(TelefonosPaciente.TipoTelefono.Principal);
                 principal.setPaciente(paciente);
-                //ServiceLocator.getInstanceTelefonoDAO().save(principal);
+                ServiceLocator.getInstanceTelefonosPacienteDAO().save(principal);
             }
             if (telefonoAlternativo != null && !telefonoAlternativo.trim().isEmpty()) {
                 TelefonosPaciente alternativo = new TelefonosPaciente();
                 alternativo.setNumero(telefonoAlternativo);
                 alternativo.setTipo(TelefonosPaciente.TipoTelefono.Alternativo);
                 alternativo.setPaciente(paciente);
-                //ServiceLocator.getInstanceTelefonoDAO().save(alternativo);
+                ServiceLocator.getInstanceTelefonosPacienteDAO().save(alternativo);
             }
             return true;
         } catch (Exception e) {
@@ -66,7 +66,7 @@ public class DelegatePaciente {
     }
 
     public boolean modificar(int idPaciente, String nombre, int edad, String sexo,
-                             String correo, String domicilio, String edoCivil, String ocupacion) {
+                             String correo, String domicilio, String edoCivil, String ocupacion, List<TelefonosPaciente> telefonos) {
         if (idPaciente <= 0
                 || nombre == null || nombre.trim().isEmpty() || nombre.trim().length() > 50
                 || edad < 0 || edad > 120
@@ -93,11 +93,25 @@ public class DelegatePaciente {
             paciente.setEdoCivil(edoCivil);
             paciente.setOcupacion(ocupacion);
 
+            if (telefonos != null) {
+                for (TelefonosPaciente nuevo : telefonos) {
+                    TelefonosPaciente existente = paciente.getTelefonos().stream()
+                            .filter(t -> t.getTipo() == nuevo.getTipo())
+                            .findFirst()
+                            .orElse(null);
+                    if (existente != null) {
+                        existente.setNumero(nuevo.getNumero());
+                    } else {
+                        nuevo.setPaciente(paciente);
+                        paciente.getTelefonos().add(nuevo);
+                    }
+                }
+            }
+
             ServiceLocator.getInstancePacienteDAO().update(paciente);
-
             return true;
-
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }

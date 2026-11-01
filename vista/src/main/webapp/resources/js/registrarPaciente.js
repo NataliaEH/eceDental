@@ -28,8 +28,8 @@ function inicializarRegistrarPaciente() {
             paciente.setCorreo(datos.correo);
 
             const registrado = pacienteUI.registrar();
-            //const registradoTels = pacienteUI.registrarTelefonos(datos.telefonoPrincipal, datos.telefonoAlternativo);
-            if(registrado){
+            const registradoTels = pacienteUI.registrarTelefonos(datos.telefonoPrincipal, datos.telefonoAlternativo);
+            if(registrado && registradoTels){
                 const pacienteId = pacienteUI.getPaciente().getIdPaciente();
                 const expediente = expedienteUI.buscarPorPaciente(pacienteId);
                 sessionStorage.setItem("expedienteActualId", expediente.getIdExpediente());

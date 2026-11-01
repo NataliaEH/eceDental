@@ -42,7 +42,12 @@
   <div>
     <div class="card"><div class="card-header"><h2>Notas generales</h2></div><div class="card-body"><textarea rows="7" placeholder="Notas generales sobre el paciente..."></textarea></div></div>
     <div class="card"><div class="card-header"><h2>Alergias</h2></div><div class="card-body"><textarea rows="7" placeholder="Alergias del paciente"></textarea></div></div>
-    <div class="card"><div class="card-header"><h2>Acciones</h2></div><div class="card-body"><div class="btn-group"><button type="button" class="btn btn-primary">Exportar expediente</button><a href="#confirmar-eliminar" class="btn btn-primary">Eliminar expediente</a></div></div></div>
+    <div class="card"><div class="card-header"><h2>Acciones</h2></div><div class="card-body">
+      <div class="btn-group">
+        <button type="button" class="btn btn-primary">Exportar expediente</button>
+        <a href="#confirmar-eliminar" id="btnEliminar" class="btn btn-primary">Eliminar expediente</a>
+      </div>
+    </div></div>
   </div>
   <div>
     <div class="card"><div class="card-header"><h2>Nueva nota de evolución</h2></div><div class="card-body"><form>
@@ -71,10 +76,18 @@
   </div>
 </div>
 <!-- Confirmación de eliminar: se abre con :target (solo CSS) -->
-<div id="confirmar-eliminar" class="confirm-overlay"><div class="confirm-box">
-  <h3>Confirmar eliminación</h3><p>Esta acción es <strong>permanente e irreversible</strong>. El expediente será eliminado del sistema.</p>
-  <div class="btn-group"><a href="buscarExpediente.html" class="btn btn-danger">Confirmar eliminación</a><a href="#" class="btn btn-muted">Cancelar</a></div>
-</div></div>
+<div id="confirmar-eliminar" class="confirm-overlay">
+  <div class="confirm-box">
+    <h3>Confirmar eliminación</h3>
+    <p>Esta acción es <strong>permanente e irreversible</strong>. El expediente será eliminado del sistema.</p>
+    <div class="btn-group">
+      <form id="formEliminarExpediente">
+        <button type="submit" class="btn btn-danger">Confirmar eliminación</button>
+        <button type="reset" class="btn btn-muted">Cancelar</button>
+      </form>
+    </div>
+  </div>
+</div>
 </div>
   </div>
 

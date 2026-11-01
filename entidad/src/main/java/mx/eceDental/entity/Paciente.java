@@ -26,7 +26,7 @@ public class Paciente {
     @Column(name = "Sexo",length = 1)
     private String sexo;
 
-    @OneToMany(mappedBy = "paciente")
+    @OneToMany(mappedBy = "paciente", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<TelefonosPaciente> telefonos;
 
     @Size(max=100)

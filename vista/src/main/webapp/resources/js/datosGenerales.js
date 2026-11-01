@@ -13,14 +13,12 @@ function cargarDatosGenerales(){
 
     try {
         const expediente = window.expedienteUI.buscar(parseInt(idExpediente));
-
         if (!expediente) {
             alert("No se encontró el expediente.");
             return;
         }
 
         const paciente = expediente.getPaciente();
-
         if (!paciente) {
             alert("El expediente no tiene un paciente asociado.");
             return;
@@ -44,7 +42,20 @@ function cargarDatosGenerales(){
         document.getElementById("domicilio").value = paciente.getDomicilio() || "";
         document.getElementById("correo").value = paciente.getCorreo() || "";
 
-        // falta telefonos
+        const telefonos = paciente.getTelefonos();
+        document.getElementById("tel").value = "";
+        document.getElementById("telAlt").value = "";
+        if (telefonos) {
+            for (let i = 0; i < telefonos.size(); i++) {
+                const telefono = telefonos.get(i);
+                const tipo = String(telefono.getTipo());
+                if (tipo === "Principal") {
+                    document.getElementById("tel").value = telefono.getNumero() || "";
+                } else if (tipo === "Alternativo") {
+                    document.getElementById("telAlt").value = telefono.getNumero() || "";
+                }
+            }
+        }
 
     } catch (error) {
         console.error("Error al cargar datos generales:", error);
@@ -84,9 +95,17 @@ function guardarDatosGenerales() {
             paciente.setCorreo(datos.correo);
 
             pacienteUI.setPaciente(paciente);
-            const registrado = pacienteUI.modificar(paciente.getIdPaciente());
-            //const registradoTels = pacienteUI.registrarTelefonos(datos.telefonoPrincipal, datos.telefonoAlternativo);
-            if(registrado){
+
+            pacienteUI.limpiarTelefonos();
+            if (datos.telefonoPrincipal) {
+                pacienteUI.agregarTelefono(datos.telefonoPrincipal, "Principal");
+            }
+            if (datos.telefonoAlternativo) {
+                pacienteUI.agregarTelefono(datos.telefonoAlternativo, "Alternativo");
+            }
+
+            const modificado = pacienteUI.modificar(paciente.getIdPaciente());
+            if(modificado){
                 //
             }else{
                 //

@@ -99,9 +99,3 @@ function inicializarBuscador() {
     });
 }
 
-function imprimir(mensaje) {
-    const debug = document.getElementById("debug");
-    if (debug) {
-        debug.innerHTML += "<br>" + mensaje;
-    }
-}

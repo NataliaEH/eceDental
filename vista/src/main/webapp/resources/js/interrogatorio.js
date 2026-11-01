@@ -1,4 +1,8 @@
 function inicializarInterrogatorio() {
+    cargarInterrogatorio();
+    guardarInterrogatorio();
+}
+function cargarInterrogatorio() {
     const formulario = document.getElementById("formInterrogatorio");
     if (!formulario) return;
 
@@ -8,10 +12,6 @@ function inicializarInterrogatorio() {
         alert("No se encontró un expediente seleccionado.");
         return;
     }
-
-    const listaAlergias = document.getElementById("listaAlergias");
-    const listaMedicamentos = document.getElementById("listaMedicamentos");
-
     function crearCampo(contenedor, valor = "", placeholder = "") {
         const fila = document.createElement("div");
         fila.className = "input-row";
@@ -43,6 +43,10 @@ function inicializarInterrogatorio() {
 
     // Cargar interrogatorio existente
     const interrogatorio = interrogatorioUI.buscar(parseInt(idExpediente));
+    if (!interrogatorio) {
+        alert("No se encontró el interrogatorio.");
+        return;
+    }
 
     if (interrogatorio) {
         document.getElementById("hemorragias").value = interrogatorio.isHemorragia() ? "Si" : "No";
@@ -54,8 +58,7 @@ function inicializarInterrogatorio() {
         document.getElementById("telefonoServicioMedico").value = interrogatorio.getTelefonoServicioMedico() || "";
         if (interrogatorio.getUltimaConsultaDental()) {
             const fecha = interrogatorio.getUltimaConsultaDental();
-            document.getElementById("ultimaConsultaDental").value =
-                fecha.toISOString().split("T")[0];
+            document.getElementById("ultimaConsultaDental").value = String(fecha);
         }
         // Enfermedades
         const enfermedades = interrogatorio.getEnfermedades();
@@ -86,11 +89,27 @@ function inicializarInterrogatorio() {
             }
         }
     }
+}
+
+function guardarInterrogatorio() {
+    const formulario = document.getElementById("formInterrogatorio");
+    if (!formulario) return;
+
+    const idExpediente = sessionStorage.getItem("expedienteActualId");
+
+    if (!idExpediente) {
+        alert("No se encontró un expediente seleccionado.");
+        return;
+    }
 
     formulario.addEventListener("submit", function(event) {
         event.preventDefault();
         try {
-            const interrogatorio = interrogatorioUI.getInterrogatorio();
+            const interrogatorio = interrogatorioUI.buscar(parseInt(idExpediente));
+            if (!interrogatorio) {
+                alert("No se encontró el interrogatorio.");
+                return;
+            }
 
             // Datos generales
             interrogatorio.setHemorragia(document.getElementById("hemorragias").value === "Si");
@@ -100,6 +119,12 @@ function inicializarInterrogatorio() {
             interrogatorio.setAmamantando(document.getElementById("amamantando").value);
             interrogatorio.setTelefonoEmergencia(document.getElementById("telefonoEmergencia").value.trim());
             interrogatorio.setTelefonoServicioMedico(document.getElementById("telefonoServicioMedico").value.trim());
+            //fecha, metodo en el bean para parsearlo a LocalDate
+            const fecha = document.getElementById("ultimaConsultaDental").value;
+            interrogatorioUI.setUltimaConsultaDental(fecha);
+
+            const listaAlergias = document.getElementById("listaAlergias");
+            const listaMedicamentos = document.getElementById("listaMedicamentos");
 
             // Enfermedades
             interrogatorioUI.limpiarEnfermedades();
@@ -122,7 +147,6 @@ function inicializarInterrogatorio() {
                 if (nombre) interrogatorioUI.agregarMedicamento(nombre);
             });
 
-            const idExpediente = parseInt(sessionStorage.getItem("expedienteActualId"));
             const registrado = interrogatorioUI.modificar(idExpediente);
             if (registrado) {
                 alert("Interrogatorio actualizado correctamente.");
