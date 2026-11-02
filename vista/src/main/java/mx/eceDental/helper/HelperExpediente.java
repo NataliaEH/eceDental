@@ -10,7 +10,6 @@ public class HelperExpediente {
         return ServiceFacadeLocator.getInstanceFacadeExpediente().buscar(id);
     }
     public Expediente buscarPorPaciente(int idPaciente){
-        System.out.println("idpaciente "+idPaciente);
         return ServiceFacadeLocator.getInstanceFacadeExpediente().buscarPorPaciente(idPaciente);
     }
     public boolean exportar(int idExpediente){

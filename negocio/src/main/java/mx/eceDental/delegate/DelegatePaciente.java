@@ -36,7 +36,6 @@ public class DelegatePaciente {
             ServiceLocator.getInstancePacienteDAO().save(paciente);
 
             return paciente.getIdPaciente();
-
         } catch (Exception e) {
             return -1;
         }

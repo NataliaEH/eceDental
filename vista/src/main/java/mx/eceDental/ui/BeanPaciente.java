@@ -42,8 +42,6 @@ public class BeanPaciente {
     }
 
     public boolean modificar(int idPaciente){
-        System.out.println(paciente.getTelefonos().get(0).getNumero());
-        System.out.println(paciente.getTelefonos().get(1).getNumero());
         return helperPaciente.modificar(idPaciente, paciente.getNombre(), paciente.getEdad(), paciente.getSexo(), paciente.getCorreo(), paciente.getDomicilio(), paciente.getEdoCivil(), paciente.getOcupacion(), paciente.getTelefonos());
     }
 

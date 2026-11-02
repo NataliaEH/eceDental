@@ -73,7 +73,6 @@ public class DelegateExpediente {
     }
     public Expediente buscarPorPaciente(int idPaciente) {
         if(idPaciente <= 0){
-            System.out.println("idpaciente menor a 0");
             return null;
         }
         try {

@@ -19,7 +19,10 @@ public class Expediente {
     @Column(name = "Fecha_Creacion")
     private LocalDate fechaCreacion;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = {
+            CascadeType.MERGE,
+            CascadeType.REMOVE
+    })
     @JoinColumn(name = "Id_Paciente")
     private Paciente paciente;
 

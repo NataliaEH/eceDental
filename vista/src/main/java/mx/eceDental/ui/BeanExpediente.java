@@ -29,7 +29,6 @@ public class BeanExpediente {
         return helperExpediente.buscar(id);
     }
     public Expediente buscarPorPaciente(int idPaciente){
-        System.out.println("idpaciente "+idPaciente);
         return helperExpediente.buscarPorPaciente(idPaciente);
     }
     public List<Expediente> consultar(){
