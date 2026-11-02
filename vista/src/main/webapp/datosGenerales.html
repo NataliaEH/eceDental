@@ -3,6 +3,8 @@
 <head>
   <title>Datos Generales del Paciente - eceDental</title>
   <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&amp;family=Source+Sans+3:wght@300;400;600&amp;display=swap" rel="stylesheet"/><link rel="stylesheet" href="resources/css/estilos.css"/>
+  <script src="resources/js/alertas.js"></script>
+  <script src="resources/js/datosGenerales.js"></script>
 </head>
 <body>
   <aside class="sidebar">
@@ -38,7 +40,8 @@
 </ul></div>
     <div class="content">
 <div class="page-header"><div><h2>Datos Generales del Paciente</h2><p id="nombrePaciente"></p></div></div>
-<form id="formDatosGenerales">
+      <div id="contenedorMensajes"></div>
+      <form id="formDatosGenerales">
   <fieldset class="form-section"><legend>Datos Personales</legend><div class="form-grid">
     <div class="form-group span-2"><label>Nombre completo *</label><input type="text" id="nombre" value="" pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ ]+$"  required="required"/></div>
     <div class="form-group "><label>Edad *</label><input type="number" id="edad" value="" min="0" max="120" required="required"/></div>
@@ -61,8 +64,8 @@
     <div class="form-group "><label>Domicilio</label><input type="text" maxlength="100"  id="domicilio" value=""/></div>
   </div></fieldset>
   <fieldset class="form-section"><legend>Contacto</legend><div class="form-grid cols-3">
-    <div class="form-group "><label>Teléfono principal *</label><input type="tel" id="tel" value="" required="required"/></div>
-    <div class="form-group "><label>Teléfono alternativo</label><input type="tel" id="telAlt" value=""/></div>
+    <div class="form-group "><label>Teléfono principal *</label><input type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" id="tel" value="" required="required"/></div>
+    <div class="form-group "><label>Teléfono alternativo</label><input type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" id="telAlt" value=""/></div>
     <div class="form-group "><label>Correo *</label><input type="email" id="correo" maxlength="100"  value="" required="required"/></div>
   </div></fieldset>
   <div class="btn-group">
@@ -71,6 +74,5 @@
 </form>
 </div>
   </div>
-  <script src="resources/js/datosGenerales.js"></script>
 </body>
 </html>

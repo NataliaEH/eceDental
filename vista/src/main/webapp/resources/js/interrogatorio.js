@@ -9,10 +9,10 @@ function cargarInterrogatorio() {
     const idExpediente = sessionStorage.getItem("expedienteActualId");
 
     if (!idExpediente) {
-        alert("No se encontró un expediente seleccionado.");
+        mostrarMensaje("No se encontró un expediente seleccionado.","danger");
         return;
     }
-    function crearCampo(contenedor, valor = "", placeholder = "") {
+    function crearCampo(contenedor, valor = "", placeholder = "", pattern="") {
         const fila = document.createElement("div");
         fila.className = "input-row";
 
@@ -20,6 +20,7 @@ function cargarInterrogatorio() {
         input.type = "text";
         input.value = valor;
         input.placeholder = placeholder;
+        input.pattern = pattern;
 
         const boton = document.createElement("button");
         boton.type = "button";
@@ -34,17 +35,14 @@ function cargarInterrogatorio() {
     }
 
     document.getElementById("agregarAlergia").addEventListener("click", () => {
-        crearCampo(listaAlergias, "", "Nombre de la alergia");
-    });
-
+        crearCampo(listaAlergias, "", "Nombre de la alergia", "^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ0-9\\s.,()\\/+\\-#%]+$");});
     document.getElementById("agregarMedicamento").addEventListener("click", () => {
-        crearCampo(listaMedicamentos, "", "Nombre del medicamento");
-    });
+        crearCampo(listaMedicamentos, "", "Nombre del medicamento", "^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ0-9\\s.,()\\/+\\-#%]+$");});
 
     // Cargar interrogatorio existente
     const interrogatorio = interrogatorioUI.buscar(parseInt(idExpediente));
     if (!interrogatorio) {
-        alert("No se encontró el interrogatorio.");
+        mostrarMensaje("No se encontró el interrogatorio.","danger");
         return;
     }
 
@@ -77,7 +75,7 @@ function cargarInterrogatorio() {
         const alergias = interrogatorio.getAlergias();
         if (alergias) {
             for (let i = 0; i < alergias.size(); i++) {
-                crearCampo(listaAlergias, alergias.get(i).getNombre(), "Nombre de la alergia");
+                crearCampo(listaAlergias, alergias.get(i).getNombre(), "Nombre de la alergia", "^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ0-9\\s.,()\\/+\\-#%]+$");
             }
         }
 
@@ -85,7 +83,7 @@ function cargarInterrogatorio() {
         const medicamentos = interrogatorio.getMedicacion();
         if (medicamentos) {
             for (let i = 0; i < medicamentos.size(); i++) {
-                crearCampo(listaMedicamentos, medicamentos.get(i).getNombre(), "Nombre del medicamento");
+                crearCampo(listaMedicamentos, medicamentos.get(i).getNombre(), "Nombre del medicamento", "^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ0-9\\s.,()\\/+\\-#%]+$");
             }
         }
     }
@@ -98,7 +96,7 @@ function guardarInterrogatorio() {
     const idExpediente = sessionStorage.getItem("expedienteActualId");
 
     if (!idExpediente) {
-        alert("No se encontró un expediente seleccionado.");
+        mostrarMensaje("No se encontró un expediente seleccionado.","danger");
         return;
     }
 
@@ -107,7 +105,7 @@ function guardarInterrogatorio() {
         try {
             const interrogatorio = interrogatorioUI.buscar(parseInt(idExpediente));
             if (!interrogatorio) {
-                alert("No se encontró el interrogatorio.");
+                mostrarMensaje("No se encontró el interrogatorio.","danger");
                 return;
             }
 
@@ -149,14 +147,12 @@ function guardarInterrogatorio() {
 
             const registrado = interrogatorioUI.modificar(idExpediente);
             if (registrado) {
-                alert("Interrogatorio actualizado correctamente.");
+                mostrarMensaje("Interrogatorio actualizado correctamente.","success");
             } else {
-                alert("No se pudo actualizar el interrogatorio.");
+                mostrarMensaje("No se pudo actualizar el interrogatorio.","danger");
             }
-
         } catch (error) {
-            console.error("Error al modificar interrogatorio:", error);
-            alert("Ocurrió un error al guardar el interrogatorio.");
+            mostrarMensaje("Ocurrió un error al guardar el interrogatorio.","danger");
         }
     });
 }

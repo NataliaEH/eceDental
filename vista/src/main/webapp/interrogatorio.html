@@ -5,6 +5,8 @@
   <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&amp;family=Source+Sans+3:wght@300;400;600&amp;display=swap" rel="stylesheet"/><link rel="stylesheet" href="resources/css/estilos.css"/>
   <link rel="stylesheet" href="resources/css/flatpickr.min.css">
   <script src="resources/js/flatpickr.min.js"></script>
+  <script src="resources/js/alertas.js"></script>
+  <script src="resources/js/interrogatorio.js"></script>
 </head>
 <body>
   <aside class="sidebar">
@@ -41,7 +43,8 @@
     <div class="content">
 <div class="page-header"><div><h2>Interrogatorio</h2><p id="nombrePaciente"></p></div></div>
 <div class="alert alert-info">El interrogatorio queda vinculado al expediente del paciente. Se le pedirá confirmación al guardar.</div>
-<form id="formInterrogatorio">
+      <div id="contenedorMensajes"></div>
+      <form id="formInterrogatorio">
   <fieldset class="form-section"><legend>Antecedentes Médicos</legend><div class="form-grid">
     <div class="form-group span-2"><label>Ha padecido alguna enfermedad</label>
       <div class="check-group">
@@ -121,7 +124,10 @@
   </div>
   </fieldset>
   <fieldset class="form-section"><legend>Contacto de Emergencia</legend><div class="form-grid">
-    <div class="form-group "><label>Tel. emergencia</label><input type="tel" id="telefonoEmergencia" placeholder="000 000 0000"/></div><div class="form-group "><label>Tel. servicio médico / IMSS / ISSSTE</label><input type="tel" id="telefonoServicioMedico" placeholder="000 000 0000"/></div></div></fieldset>
+    <div class="form-group "><label>Tel. emergencia</label>
+      <input type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" id="telefonoEmergencia" placeholder="000 000 0000"/></div>
+    <div class="form-group "><label>Tel. servicio médico / IMSS / ISSSTE</label>
+      <input type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" id="telefonoServicioMedico" placeholder="000 000 0000"/></div></div></fieldset>
   <fieldset class="form-section"><legend>Última Consulta Dental</legend><div class="form-grid"><div class="form-group ">
     <label>Fecha de última consulta dental</label>
     <input type="text" id="ultimaConsultaDental"/>
@@ -135,6 +141,5 @@
 </form>
 </div>
   </div>
-  <script src="resources/js/interrogatorio.js"></script>
 </body>
 </html>

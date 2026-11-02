@@ -19,11 +19,11 @@ public class Expediente {
     @Column(name = "Fecha_Creacion")
     private LocalDate fechaCreacion;
 
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "Id_Paciente")
     private Paciente paciente;
 
-    @OneToOne(mappedBy = "expediente", cascade = CascadeType.REMOVE)
+    @OneToOne(mappedBy = "expediente", cascade = CascadeType.ALL)
     private Interrogatorio interrogatorio;
 
     //@OneToMany(mappedBy = "expediente")
@@ -38,7 +38,7 @@ public class Expediente {
     //@OneToOne(mappedBy = "expediente")
     //private Odontograma odontograma;
 
-    @OneToMany(mappedBy = "expediente", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "expediente", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DiagnosticoYPlan> diagnosticos;
 
     public int getIdExpediente() {

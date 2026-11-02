@@ -7,20 +7,20 @@ function cargarDiagnosticos() {
     const idExpediente = sessionStorage.getItem("expedienteActualId");
 
     if (!idExpediente) {
-        alert("No se ha seleccionado ningún expediente.");
+        mostrarMensaje("No se ha seleccionado ningún expediente.","danger");
         return;
     }
 
     try {
         const expediente = window.expedienteUI.buscar(parseInt(idExpediente));
         if (!expediente) {
-            alert("No se encontró el expediente.");
+            mostrarMensaje("No se encontró el expediente.","danger");
             return;
         }
 
         const paciente = expediente.getPaciente();
         if (!paciente) {
-            alert("El expediente no tiene un paciente asociado.");
+            mostrarMensaje("El expediente no tiene un paciente asociado.","danger");
             return;
         }
 
@@ -70,8 +70,7 @@ function cargarDiagnosticos() {
             tabla.appendChild(fila);
         }
     } catch (error) {
-        console.error("Error al cargar diagnosticos y planes de tratamiento:", error);
-        alert("No fue posible cargar los datos del paciente.");
+        mostrarMensaje("No fue posible cargar los datos del paciente.","danger");
     }
 }
 
@@ -87,7 +86,7 @@ function guardarDiagnosticos() {
         try {
             const idExpediente = sessionStorage.getItem("expedienteActualId");
             if (!idExpediente) {
-                alert("No se ha seleccionado ningún expediente.");
+                mostrarMensaje("No se ha seleccionado ningún expediente.","danger");
                 return;
             }
 
@@ -102,19 +101,11 @@ function guardarDiagnosticos() {
 
             diagYPlanUI.registrar();
 
-            formulario.reset();
+            mostrarMensaje("Diagnóstico y plan registrados correctamente.","success");
             cargarDiagnosticos();
-
-            alert("Diagnóstico y plan registrados correctamente.");
-
+            formulario.reset();
         } catch (error) {
-            console.error("Error al registrar diagnóstico:", error);
-            alert("No fue posible registrar el diagnóstico.");
+            mostrarMensaje("No fue posible registrar el diagnóstico.","danger");
         }
-    });
-    formulario.addEventListener("reset", function(event) {
-        event.preventDefault();
-        formulario.reset();
-        cargarDiagnosticos();
     });
 }

@@ -1,7 +1,7 @@
 function inicializarDashboardExpediente() {
     const idExpediente = new URLSearchParams(window.location.search).get("id") || sessionStorage.getItem("expedienteActualId");
     if (!idExpediente) {
-        alert("No se encontró el expediente seleccionado.");
+        mostrarMensaje("No se encontró el expediente seleccionado.","danger");
         return;
     }
 
@@ -11,13 +11,13 @@ function inicializarDashboardExpediente() {
     try {
         expediente = window.expedienteUI.buscar(parseInt(idExpediente));
         if (!expediente) {
-            alert("No se encontró el expediente.");
+            mostrarMensaje("No se encontró el expediente.","danger");
             return;
         }
 
         const paciente = expediente.getPaciente();
         if (!paciente) {
-            alert("El expediente no tiene un paciente asociado.");
+            mostrarMensaje("El expediente no tiene un paciente asociado.","danger");
             return;
         }
 
@@ -45,8 +45,7 @@ function inicializarDashboardExpediente() {
             }
         }
     } catch (error) {
-        console.error("Error al cargar el dashboard:", error);
-        alert("Ocurrió un error al cargar el expediente.");
+        mostrarMensaje("Ocurrió un error al cargar el expediente.","danger");
     }
 }
 function inicializarEliminarExpediente(){

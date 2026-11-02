@@ -30,15 +30,17 @@ function inicializarRegistrarPaciente() {
             const registrado = pacienteUI.registrar();
             const registradoTels = pacienteUI.registrarTelefonos(datos.telefonoPrincipal, datos.telefonoAlternativo);
             if(registrado && registradoTels){
+                mostrarMensaje("Expediente registrado", "success");
+
                 const pacienteId = pacienteUI.getPaciente().getIdPaciente();
                 const expediente = expedienteUI.buscarPorPaciente(pacienteId);
                 sessionStorage.setItem("expedienteActualId", expediente.getIdExpediente());
                 window.location.href = "dashboardExpediente.html";
             }else{
-                //
+                mostrarMensaje("No se pudo registrar el paciente.", "danger");
             }
         } catch (error) {
-            //
+            mostrarMensaje("Ha ocurrido un error al registrar el paciente.", "danger");
         }
     });
 }

@@ -24,16 +24,16 @@ public class Interrogatorio {
     @Column(name = "Atencion_Medica")
     private boolean atencionMedica;
 
-    @OneToMany(mappedBy = "interrogatorio", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "interrogatorio", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Alergia> alergias;
 
     @Column(name = "Hemorragia")
     private boolean hemorragia;
 
-    @OneToMany(mappedBy = "interrogatorio", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "interrogatorio", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Enfermedad> enfermedades;
 
-    @OneToMany(mappedBy = "interrogatorio", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "interrogatorio", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Medicacion> medicacion;
 
     @Column(name = "Embarazada")
