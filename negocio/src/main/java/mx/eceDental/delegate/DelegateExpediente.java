@@ -1,5 +1,6 @@
 package mx.eceDental.delegate;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.time.LocalDate;
 import java.util.List;
@@ -72,7 +73,6 @@ public class DelegateExpediente {
     }
     public Expediente buscarPorPaciente(int idPaciente) {
         if(idPaciente <= 0){
-            System.out.println("idpaciente menor a 0");
             return null;
         }
         try {

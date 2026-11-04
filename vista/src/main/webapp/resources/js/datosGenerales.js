@@ -7,22 +7,20 @@ function cargarDatosGenerales(){
     const idExpediente = sessionStorage.getItem("expedienteActualId");
 
     if (!idExpediente) {
-        alert("No se encontró el expediente seleccionado.");
+        mostrarMensaje("No se encontró el expediente seleccionado.","danger");
         return;
     }
 
     try {
         const expediente = window.expedienteUI.buscar(parseInt(idExpediente));
-
         if (!expediente) {
-            alert("No se encontró el expediente.");
+            mostrarMensaje("No se encontró el expediente.","danger");
             return;
         }
 
         const paciente = expediente.getPaciente();
-
         if (!paciente) {
-            alert("El expediente no tiene un paciente asociado.");
+            mostrarMensaje("El expediente no tiene un paciente asociado.","danger");
             return;
         }
 
@@ -44,11 +42,22 @@ function cargarDatosGenerales(){
         document.getElementById("domicilio").value = paciente.getDomicilio() || "";
         document.getElementById("correo").value = paciente.getCorreo() || "";
 
-        // falta telefonos
-
+        const telefonos = paciente.getTelefonos();
+        document.getElementById("tel").value = "";
+        document.getElementById("telAlt").value = "";
+        if (telefonos) {
+            for (let i = 0; i < telefonos.size(); i++) {
+                const telefono = telefonos.get(i);
+                const tipo = String(telefono.getTipo());
+                if (tipo === "Principal") {
+                    document.getElementById("tel").value = telefono.getNumero() || "";
+                } else if (tipo === "Alternativo") {
+                    document.getElementById("telAlt").value = telefono.getNumero() || "";
+                }
+            }
+        }
     } catch (error) {
-        console.error("Error al cargar datos generales:", error);
-        alert("No fue posible cargar los datos del paciente.");
+        mostrarMensaje("No fue posible cargar los datos del paciente.","danger");
     }
 }
 
@@ -84,15 +93,23 @@ function guardarDatosGenerales() {
             paciente.setCorreo(datos.correo);
 
             pacienteUI.setPaciente(paciente);
-            const registrado = pacienteUI.modificar(paciente.getIdPaciente());
-            //const registradoTels = pacienteUI.registrarTelefonos(datos.telefonoPrincipal, datos.telefonoAlternativo);
-            if(registrado){
-                //
+
+            pacienteUI.limpiarTelefonos();
+            if (datos.telefonoPrincipal) {
+                pacienteUI.agregarTelefono(datos.telefonoPrincipal, "Principal");
+            }
+            if (datos.telefonoAlternativo) {
+                pacienteUI.agregarTelefono(datos.telefonoAlternativo, "Alternativo");
+            }
+
+            const modificado = pacienteUI.modificar(paciente.getIdPaciente());
+            if(modificado){
+                mostrarMensaje("Se han modificado los datos correctamente.","success");
             }else{
-                //
+                mostrarMensaje("Ha ocurrido un error en la modificación.","danger");
             }
         } catch (error) {
-            //
+            mostrarMensaje("No se pudo hacer la modificación.","danger")
         }
     });
     formulario.addEventListener("reset", function(event) {

@@ -3,6 +3,8 @@
 <head>
   <title>Panel Principal - eceDental</title>
   <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&amp;family=Source+Sans+3:wght@300;400;600&amp;display=swap" rel="stylesheet"/><link rel="stylesheet" href="resources/css/estilos.css"/>
+  <script src="resources/js/alertas.js"></script>
+  <script src="resources/js/panelPrincipal.js"></script>
 </head>
 <body>
   <aside class="sidebar">
@@ -29,7 +31,8 @@
     
     <div class="content">
 <div class="page-header"><div><h2>Panel Principal</h2><p>Resumen general del sistema</p></div></div>
-<div class="stats-grid">
+      <div id="contenedorMensajes"></div>
+      <div class="stats-grid">
   <div class="stat-box"><div class="stat-val" id="totalExpedientes">0</div><div class="stat-label">Expedientes registrados</div></div>
   <div class="stat-box"><div class="stat-val" id="expedientesViejos">0</div><div class="stat-label">Expedientes viejos</div></div>
   <div class="stat-box"><div class="stat-val" id="recordatoriosPendientes">0</div><div class="stat-label">Recordatorios pendientes</div></div>
@@ -48,6 +51,5 @@
 </div>
 </div>
   </div>
-  <script src="resources/js/panelPrincipal.js"></script>
 </body>
 </html>

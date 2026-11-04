@@ -28,7 +28,6 @@ public class FacadeExpediente {
         return delegateExpediente.buscar(id);
     }
     public Expediente buscarPorPaciente(int idPaciente) {
-        System.out.println("idpaciente "+idPaciente);
         return delegateExpediente.buscarPorPaciente(idPaciente);
     }
     public List<Expediente> consultar() {

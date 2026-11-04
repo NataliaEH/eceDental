@@ -11,6 +11,7 @@ import mx.eceDental.entity.Medicacion;
 import mx.eceDental.helper.HelperInterrogatorio;
 import mx.eceDental.entity.Interrogatorio;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,15 +30,10 @@ public class BeanInterrogatorio {
         interrogatorio = new Interrogatorio();
     }
 
-    public void modificar(int idExpediente){
-        boolean modificado = helperInterrogatorio.modificar(idExpediente, interrogatorio.isHospitalizado(), interrogatorio.isAtencionMedica(), interrogatorio.getAlergias(),
+    public boolean modificar(int idExpediente){
+        return helperInterrogatorio.modificar(idExpediente, interrogatorio.isHospitalizado(), interrogatorio.isAtencionMedica(), interrogatorio.getAlergias(),
                 interrogatorio.isHemorragia(), interrogatorio.getEnfermedades(), interrogatorio.getMedicacion(), interrogatorio.getEmbarazada(),
                 interrogatorio.getAmamantando(), interrogatorio.getTelefonoEmergencia(), interrogatorio.getTelefonoServicioMedico(), interrogatorio.getUltimaConsultaDental());
-        if(modificado){
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Antecedentes modificados:", "Se hizo la modificación correctamente."));
-        }else{
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error de modificación:", "Hubo un error al hacer la modificación en la BD."));
-        }
     }
 
     public Interrogatorio buscar(int idExpediente){
@@ -78,5 +74,13 @@ public class BeanInterrogatorio {
     public Interrogatorio getInterrogatorio(){ return interrogatorio;}
     public void setInterrogatorio(Interrogatorio interrogatorio) {
         this.interrogatorio = interrogatorio;
+    }
+
+    public void setUltimaConsultaDental(String fecha) {
+        if (fecha == null || fecha.isBlank()) {
+            interrogatorio.setUltimaConsultaDental(null);
+        } else {
+            interrogatorio.setUltimaConsultaDental(LocalDate.parse(fecha));
+        }
     }
 }

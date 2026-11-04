@@ -8,11 +8,10 @@ import mx.eceDental.persistence.integration.ServiceLocator;
 
 public class DelegateDiagnosticoYPlan {
 
-    public boolean registrar(int idExpediente, String diagnostico, String procedimiento, LocalDate fecha) {
+    public boolean registrar(int idExpediente, String diagnostico, String procedimiento) {
         if (idExpediente <= 0
                 || diagnostico == null || diagnostico.trim().isEmpty()
-                || procedimiento == null || procedimiento.trim().isEmpty()
-                || fecha == null) {
+                || procedimiento == null || procedimiento.trim().isEmpty()) {
             return false;
         }
 
@@ -26,7 +25,7 @@ public class DelegateDiagnosticoYPlan {
             DiagnosticoYPlan diagnosticoPlan = new DiagnosticoYPlan();
             diagnosticoPlan.setDiagnostico(diagnostico.trim());
             diagnosticoPlan.setProcedimiento(procedimiento.trim());
-            diagnosticoPlan.setFecha(fecha);
+            diagnosticoPlan.setFecha(LocalDate.now());
             diagnosticoPlan.setExpediente(expediente);
 
             ServiceLocator.getInstanceDiagnosticoYPlanDAO().save(diagnosticoPlan);

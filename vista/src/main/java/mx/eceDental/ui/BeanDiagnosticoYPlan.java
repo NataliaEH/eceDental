@@ -26,12 +26,7 @@ public class BeanDiagnosticoYPlan {
     }
 
     public void registrar(){
-        boolean registrado = helperDiagnosticoYPlan.registrar(idExpediente, diagnosticoYPlan.getDiagnostico(), diagnosticoYPlan.getProcedimiento(), diagnosticoYPlan.getFecha());
-        if(registrado){
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Diagnóstico y Plan de Tratamiento registrado:", "Se hizo el registro correctamente en el sistema."));
-        }else{
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error de registro:", "Hubo un error al hacer el registro en la BD."));
-        }
+        boolean registrado = helperDiagnosticoYPlan.registrar(diagnosticoYPlan.getExpediente().getIdExpediente(), diagnosticoYPlan.getDiagnostico(), diagnosticoYPlan.getProcedimiento());
     }
 
     public List<DiagnosticoYPlan> consultar(int idExpediente){
