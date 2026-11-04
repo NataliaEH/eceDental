@@ -1,14 +1,14 @@
-package mx.desarrollo.entity;
+package mx.eceDental.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Table(name="Expediente")
+@Table(name="expediente")
 public class Expediente {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -17,13 +17,16 @@ public class Expediente {
 
     @Temporal(TemporalType.DATE)
     @Column(name = "Fecha_Creacion")
-    private Date fechaCreacion;
+    private LocalDate fechaCreacion;
 
-    @OneToOne
+    @OneToOne(cascade = {
+            CascadeType.MERGE,
+            CascadeType.REMOVE
+    })
     @JoinColumn(name = "Id_Paciente")
     private Paciente paciente;
 
-    @OneToOne(mappedBy = "expediente")
+    @OneToOne(mappedBy = "expediente", cascade = CascadeType.ALL)
     private Interrogatorio interrogatorio;
 
     //@OneToMany(mappedBy = "expediente")
@@ -38,7 +41,7 @@ public class Expediente {
     //@OneToOne(mappedBy = "expediente")
     //private Odontograma odontograma;
 
-    @OneToMany(mappedBy = "expediente")
+    @OneToMany(mappedBy = "expediente", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DiagnosticoYPlan> diagnosticos;
 
     public int getIdExpediente() {
@@ -48,10 +51,10 @@ public class Expediente {
         this.idExpediente = idExpediente;
     }
 
-    public Date getFechaCreacion() {
+    public LocalDate getFechaCreacion() {
         return fechaCreacion;
     }
-    public void setFechaCreacion(Date fechaCreacion) {
+    public void setFechaCreacion(LocalDate fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
 
