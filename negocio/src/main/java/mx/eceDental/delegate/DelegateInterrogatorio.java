@@ -2,28 +2,14 @@ package mx.eceDental.delegate;
 
 
 import java.util.ArrayList;
+import java.time.LocalDate;
 import java.util.List;
 
-import mx.desarrollo.entity.Expediente;
-import mx.desarrollo.entity.Interrogatorio;
-import mx.desarrollo.persistence.integration.ServiceLocator;
+import mx.eceDental.entity.*;
+import mx.eceDental.persistence.integration.ServiceLocator;
 
 public class DelegateInterrogatorio {
-
-    public boolean registrar(int idExpediente, boolean hospitalizado, boolean atencionMedica,
-                             List<String> alergias, boolean hemorragia, List<String> enfermedades,
-                             List<String> medicacion, boolean embarazada, boolean amamantando,
-                             String telefonoEmergencia, String telefonoServicioMedico,
-                             String ultimaConsultaDental) {
-
-        if (idExpediente <= 0
-                || telefonoEmergencia == null || telefonoEmergencia.trim().isEmpty()
-                || telefonoEmergencia.trim().length() > 20
-                || (telefonoServicioMedico != null && telefonoServicioMedico.trim().length() > 20)
-                || (ultimaConsultaDental != null && ultimaConsultaDental.trim().length() > 50)) {
-            return false;
-        }
-
+    public boolean registrar(int idExpediente){
         try {
             Expediente expediente = ServiceLocator.getInstanceExpedienteDAO().find(idExpediente).orElse(null);
 
@@ -32,38 +18,76 @@ public class DelegateInterrogatorio {
             }
 
             Interrogatorio interrogatorio = new Interrogatorio();
+            interrogatorio.setExpediente(expediente);
+            ServiceLocator.getInstanceInterrogatorioDAO().save(interrogatorio);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean modificar(int idExpediente, boolean hospitalizado, boolean atencionMedica,
+                             List<Alergia> alergias, boolean hemorragia, List<Enfermedad> enfermedades,
+                             List<Medicacion> medicacion, String embarazada, String amamantando,
+                             String telefonoEmergencia, String telefonoServicioMedico,
+                             LocalDate ultimaConsultaDental) {
+
+        if (idExpediente <= 0
+                || telefonoEmergencia == null || telefonoEmergencia.trim().isEmpty()
+                || telefonoEmergencia.trim().length() > 20
+                || (telefonoServicioMedico == null && telefonoServicioMedico.trim().length() > 20)
+                || (ultimaConsultaDental == null)) {
+            return false;
+        }
+
+        try {
+            Expediente expediente = ServiceLocator.getInstanceExpedienteDAO().find(idExpediente).orElse(null);
+
+            if (expediente == null) {
+                return false;
+            }
+
+            Interrogatorio interrogatorio = expediente.getInterrogatorio();
             interrogatorio.setHospitalizado(hospitalizado);
             interrogatorio.setAtencionMedica(atencionMedica);
-            if (alergias != null) {
-                interrogatorio.setAlergias(alergias);
-            } else {
-                interrogatorio.setAlergias(new ArrayList<>());
-            }
-
-            if (enfermedades != null) {
-                interrogatorio.setEnfermedades(enfermedades);
-            } else {
-                interrogatorio.setEnfermedades(new ArrayList<>());
-            }
-
-            if (medicacion != null) {
-                interrogatorio.setMedicacion(medicacion);
-            } else {
-                interrogatorio.setMedicacion(new ArrayList<>());
-            }
             interrogatorio.setEmbarazada(embarazada);
             interrogatorio.setAmamantando(amamantando);
             interrogatorio.setTelefonoEmergencia(telefonoEmergencia.trim());
             interrogatorio.setTelefonoServicioMedico(telefonoServicioMedico);
             interrogatorio.setUltimaConsultaDental(ultimaConsultaDental);
-            interrogatorio.setExpediente(expediente);
 
-            ServiceLocator.getInstanceInterrogatorioDAO().save(interrogatorio);
+            interrogatorio.getAlergias().clear();
+            if (alergias != null) {
+                for (Alergia alergia : alergias) {
+                    alergia.setInterrogatorio(interrogatorio);
+                    interrogatorio.getAlergias().add(alergia);
+                }
+            }
+            interrogatorio.getEnfermedades().clear();
+            if (enfermedades != null) {
+                for (Enfermedad enfermedad : enfermedades) {
+                    enfermedad.setInterrogatorio(interrogatorio);
+                    interrogatorio.getEnfermedades().add(enfermedad);
+                }
+            }
+            interrogatorio.getMedicacion().clear();
+            if (medicacion != null) {
+                for (Medicacion medicamento : medicacion) {
+                    medicamento.setInterrogatorio(interrogatorio);
+                    interrogatorio.getMedicacion().add(medicamento);
+                }
+            }
 
+            ServiceLocator.getInstanceInterrogatorioDAO().update(interrogatorio);
             return true;
-
         } catch (Exception e) {
             return false;
         }
+    }
+
+    public Interrogatorio buscar(int idExpediente){
+        return ServiceLocator.getInstanceInterrogatorioDAO().findFromWhere("expediente","idExpediente", String.valueOf(idExpediente)).stream()
+                .findFirst()
+                .orElse(null);
     }
 }

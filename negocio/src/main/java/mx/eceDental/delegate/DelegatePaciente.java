@@ -3,13 +3,14 @@ package mx.eceDental.delegate;
 import java.util.ArrayList;
 import java.util.List;
 
-import mx.desarrollo.entity.Paciente;
-import mx.desarrollo.persistence.integration.ServiceLocator;
+import mx.eceDental.entity.Paciente;
+import mx.eceDental.entity.TelefonosPaciente;
+import mx.eceDental.persistence.integration.ServiceLocator;
 
 public class DelegatePaciente {
 
-    public int registrar(String nombre, int edad, String sexo, List<String> telefonos,
-                         String correo, String domicilio, String edoCivil, String ocupacion, String notas) {
+    public int registrar(String nombre, int edad, String sexo,
+                         String correo, String domicilio, String edoCivil, String ocupacion) {
 
         if (nombre == null || nombre.trim().isEmpty() || nombre.trim().length() > 50
                 || edad < 0 || edad > 120
@@ -17,8 +18,7 @@ public class DelegatePaciente {
                 || (correo != null && correo.trim().length() > 100)
                 || (domicilio != null && domicilio.trim().length() > 150)
                 || (edoCivil != null && edoCivil.trim().length() > 30)
-                || (ocupacion != null && ocupacion.trim().length() > 50)
-                || (notas != null && notas.length() > 500)) {
+                || (ocupacion != null && ocupacion.trim().length() > 50)) {
             return -1;
         }
 
@@ -27,31 +27,45 @@ public class DelegatePaciente {
             paciente.setNombre(nombre.trim());
             paciente.setEdad(edad);
             paciente.setSexo(sexo);
-
-            if (telefonos != null) {
-                paciente.setTelefonos(telefonos);
-            } else {
-                paciente.setTelefonos(new ArrayList<>());
-            }
-
             paciente.setCorreo(correo);
             paciente.setDomicilio(domicilio);
             paciente.setEdoCivil(edoCivil);
             paciente.setOcupacion(ocupacion);
-            paciente.setNotas(notas);
+            paciente.setNotas(null);
 
             ServiceLocator.getInstancePacienteDAO().save(paciente);
 
             return paciente.getIdPaciente();
-
         } catch (Exception e) {
             return -1;
         }
     }
 
-    public boolean modificar(int idPaciente, String nombre, int edad, String sexo, List<String> telefonos,
-                             String correo, String domicilio, String edoCivil, String ocupacion, String notas) {
+    public boolean registrarTelefonos(int idPaciente, String telefonoPrincipal, String telefonoAlternativo){
+        try {
+            Paciente paciente = ServiceLocator.getInstancePacienteDAO().find(idPaciente).orElse(null);
+            if (telefonoPrincipal != null && !telefonoPrincipal.trim().isEmpty()) {
+                TelefonosPaciente principal = new TelefonosPaciente();
+                principal.setNumero(telefonoPrincipal);
+                principal.setTipo(TelefonosPaciente.TipoTelefono.Principal);
+                principal.setPaciente(paciente);
+                ServiceLocator.getInstanceTelefonosPacienteDAO().save(principal);
+            }
+            if (telefonoAlternativo != null && !telefonoAlternativo.trim().isEmpty()) {
+                TelefonosPaciente alternativo = new TelefonosPaciente();
+                alternativo.setNumero(telefonoAlternativo);
+                alternativo.setTipo(TelefonosPaciente.TipoTelefono.Alternativo);
+                alternativo.setPaciente(paciente);
+                ServiceLocator.getInstanceTelefonosPacienteDAO().save(alternativo);
+            }
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
+    public boolean modificar(int idPaciente, String nombre, int edad, String sexo,
+                             String correo, String domicilio, String edoCivil, String ocupacion, List<TelefonosPaciente> telefonos) {
         if (idPaciente <= 0
                 || nombre == null || nombre.trim().isEmpty() || nombre.trim().length() > 50
                 || edad < 0 || edad > 120
@@ -59,8 +73,7 @@ public class DelegatePaciente {
                 || (correo != null && correo.trim().length() > 100)
                 || (domicilio != null && domicilio.trim().length() > 150)
                 || (edoCivil != null && edoCivil.trim().length() > 30)
-                || (ocupacion != null && ocupacion.trim().length() > 50)
-                || (notas != null && notas.length() > 500)) {
+                || (ocupacion != null && ocupacion.trim().length() > 50)) {
             return false;
         }
 
@@ -74,22 +87,30 @@ public class DelegatePaciente {
             paciente.setNombre(nombre.trim());
             paciente.setEdad(edad);
             paciente.setSexo(sexo);
-            if (telefonos != null) {
-                paciente.setTelefonos(telefonos);
-            } else {
-                paciente.setTelefonos(new ArrayList<>());
-            }
             paciente.setCorreo(correo);
             paciente.setDomicilio(domicilio);
             paciente.setEdoCivil(edoCivil);
             paciente.setOcupacion(ocupacion);
-            paciente.setNotas(notas);
+
+            if (telefonos != null) {
+                for (TelefonosPaciente nuevo : telefonos) {
+                    TelefonosPaciente existente = paciente.getTelefonos().stream()
+                            .filter(t -> t.getTipo() == nuevo.getTipo())
+                            .findFirst()
+                            .orElse(null);
+                    if (existente != null) {
+                        existente.setNumero(nuevo.getNumero());
+                    } else {
+                        nuevo.setPaciente(paciente);
+                        paciente.getTelefonos().add(nuevo);
+                    }
+                }
+            }
 
             ServiceLocator.getInstancePacienteDAO().update(paciente);
-
             return true;
-
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }
