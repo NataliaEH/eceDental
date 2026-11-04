@@ -5,9 +5,14 @@ import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
+import mx.eceDental.entity.Alergia;
+import mx.eceDental.entity.Enfermedad;
+import mx.eceDental.entity.Medicacion;
 import mx.eceDental.helper.HelperInterrogatorio;
 import mx.eceDental.entity.Interrogatorio;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Named("interrogatorioUI")
@@ -25,20 +30,57 @@ public class BeanInterrogatorio {
         interrogatorio = new Interrogatorio();
     }
 
-    public void modificar(int idExpediente){
-        boolean modificado = helperInterrogatorio.modificar(interrogatorio.getHospitalizado(), interrogatorio.getAtencionMedica(), interrogatorio.getAlergias(),
-                interrogatorio.getHemorragia(), interrogatorio.getEnfermedades(), interrogatorio.getMedicacion(), interrogatorio.getEmbarazada(),
+    public boolean modificar(int idExpediente){
+        return helperInterrogatorio.modificar(idExpediente, interrogatorio.isHospitalizado(), interrogatorio.isAtencionMedica(), interrogatorio.getAlergias(),
+                interrogatorio.isHemorragia(), interrogatorio.getEnfermedades(), interrogatorio.getMedicacion(), interrogatorio.getEmbarazada(),
                 interrogatorio.getAmamantando(), interrogatorio.getTelefonoEmergencia(), interrogatorio.getTelefonoServicioMedico(), interrogatorio.getUltimaConsultaDental());
-        if(modificado){
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Antecedentes modificados:", "Se hizo la modificación correctamente."));
-        }else{
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error de modificación:", "Hubo un error al hacer la modificación en la BD."));
-        }
     }
 
     public Interrogatorio buscar(int idExpediente){
-        return helperInterrogatorio.buscar(idExpediente);
+        interrogatorio = helperInterrogatorio.buscar(idExpediente);
+        return interrogatorio;
     }
 
+    //METODOS DE ALERGIAS, MEDS Y ENFERMEDADES (LISTAS)
+    public void limpiarAlergias() {
+        interrogatorio.setAlergias(new ArrayList<>());
+    }
+    public void agregarAlergia(String nombre) {
+        Alergia alergia = new Alergia();
+        alergia.setNombre(nombre);
+        alergia.setInterrogatorio(interrogatorio);
+        interrogatorio.getAlergias().add(alergia);
+    }
+    public void limpiarMedicacion() {
+        interrogatorio.setMedicacion(new ArrayList<>());
+    }
+    public void agregarMedicamento(String nombre) {
+        Medicacion medicamento = new Medicacion();
+        medicamento.setNombre(nombre);
+        medicamento.setInterrogatorio(interrogatorio);
+        interrogatorio.getMedicacion().add(medicamento);
+    }
+    public void limpiarEnfermedades() {
+        interrogatorio.setEnfermedades(new ArrayList<>());
+    }
+    public void agregarEnfermedad(String nombre) {
+        Enfermedad enfermedad = new Enfermedad();
+        enfermedad.setNombre(nombre);
+        enfermedad.setInterrogatorio(interrogatorio);
+        interrogatorio.getEnfermedades().add(enfermedad);
+    }
+
+    //getters y setters
     public Interrogatorio getInterrogatorio(){ return interrogatorio;}
+    public void setInterrogatorio(Interrogatorio interrogatorio) {
+        this.interrogatorio = interrogatorio;
+    }
+
+    public void setUltimaConsultaDental(String fecha) {
+        if (fecha == null || fecha.isBlank()) {
+            interrogatorio.setUltimaConsultaDental(null);
+        } else {
+            interrogatorio.setUltimaConsultaDental(LocalDate.parse(fecha));
+        }
+    }
 }

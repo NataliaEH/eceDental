@@ -5,6 +5,8 @@ import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
+import mx.eceDental.entity.Expediente;
+import mx.eceDental.entity.TelefonosPaciente;
 import mx.eceDental.helper.HelperPaciente;
 import mx.eceDental.entity.Paciente;
 
@@ -25,22 +27,22 @@ public class BeanPaciente {
         paciente = new Paciente();
     }
 
-    public void registrar(){
-        boolean registrado = helperPaciente.registrar(paciente.getNombre(), paciente.getEdad(), paciente.getSexo(), paciente.getTelefonos(), paciente.getCorreo(), paciente.getDomicilio(), paciente.getEdoCivil(), paciente.getOcupacion());
-        if(registrado){
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Expediente registrado:", "El expediente se agregó al sistema."));
-        }else{
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error de registro:", "Hubo un error al hacer el registro en la BD."));
+    public boolean registrar(){
+        int idPaciente = helperPaciente.registrar(paciente.getNombre(), paciente.getEdad(), paciente.getSexo(), paciente.getCorreo(), paciente.getDomicilio(), paciente.getEdoCivil(), paciente.getOcupacion());
+        if (idPaciente <= 0) {
+            return false;
         }
+
+        paciente.setIdPaciente(idPaciente);
+        return true;
     }
 
-    public void modificar(int idExpediente){
-        boolean modificado = helperPaciente.modificar(idExpediente, paciente.getNombre(), paciente.getEdad(), paciente.getSexo(), paciente.getTelefonos(), paciente.getCorreo(), paciente.getDomicilio(), paciente.getEdoCivil(), paciente.getOcupacion());
-        if(modificado){
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Expediente registrado:", "El expediente se agregó al sistema."));
-        }else{
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error de registro:", "Hubo un error al hacer el registro en la BD."));
-        }
+    public boolean registrarTelefonos(String telefonoPrincipal, String telefonoAlternativo){
+        return helperPaciente.registrarTelefonos(paciente.getIdPaciente(), telefonoPrincipal, telefonoAlternativo);
+    }
+
+    public boolean modificar(int idPaciente){
+        return helperPaciente.modificar(idPaciente, paciente.getNombre(), paciente.getEdad(), paciente.getSexo(), paciente.getCorreo(), paciente.getDomicilio(), paciente.getEdoCivil(), paciente.getOcupacion(), paciente.getTelefonos());
     }
 
     public Paciente buscar(int id){
@@ -50,5 +52,19 @@ public class BeanPaciente {
         return helperPaciente.consultar();
     }
 
-    public Expediente getExpediente(){ return expediente;}
+    public void limpiarTelefonos() {
+        paciente.getTelefonos().clear();
+    }
+    public void agregarTelefono(String numero, String tipo) {
+        TelefonosPaciente telefono = new TelefonosPaciente();
+        telefono.setNumero(numero);
+        telefono.setTipo(TelefonosPaciente.TipoTelefono.valueOf(tipo));
+        telefono.setPaciente(paciente);
+        paciente.getTelefonos().add(telefono);
+    }
+
+    public Paciente getPaciente(){ return paciente;}
+    public void setPaciente(Paciente paciente) {
+        this.paciente = paciente;
+    }
 }
