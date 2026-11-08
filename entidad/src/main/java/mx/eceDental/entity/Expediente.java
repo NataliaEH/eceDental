@@ -32,8 +32,8 @@ public class Expediente {
     @OneToMany(mappedBy = "expediente")
     private List<NotaEvolucion> notasEvolucion;
 
-    //@OneToMany(mappedBy = "expediente")
-    //private List<Archivos> archivos;
+    @OneToMany(mappedBy = "expediente")
+    private List<Archivo> archivo;
 
     //@OneToMany(mappedBy = "expediente")
     //private List<Abonos> abonos;
@@ -75,14 +75,10 @@ public class Expediente {
     public List<NotaEvolucion> getNotasEvolucion() {return notasEvolucion;}
     public void setNotasEvolucion(List<NotaEvolucion> notasEvolucion) {this.notasEvolucion = notasEvolucion;}
 
-    /*public List<Archivos> getArchivos() {
-        return archivos;
-    }
-    public void setArchivos(List<Archivos> archivos) {
-        this.archivos = archivos;
-    }
+    public List<Archivo> getArchivo() {return archivo;}
+    public void setArchivo(List<Archivo> archivo) {this.archivo = archivo;}
 
-    public List<Abonos> getAbonos() {
+    /*public List<Abonos> getAbonos() {
         return abonos;
     }
     public void setAbonos(List<Abonos> abonos) {
