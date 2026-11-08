@@ -1,4 +1,4 @@
-package mx.desarrollo.entity;
+package mx.eceDental.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
