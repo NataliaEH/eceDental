@@ -1,145 +1,180 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <title>Interrogatorio - eceDental</title>
-  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&amp;family=Source+Sans+3:wght@300;400;600&amp;display=swap" rel="stylesheet"/><link rel="stylesheet" href="resources/css/estilos.css"/>
-  <link rel="stylesheet" href="resources/css/flatpickr.min.css">
-  <script src="resources/js/flatpickr.min.js"></script>
-  <script src="resources/js/alertas.js"></script>
-  <script src="resources/js/interrogatorio.js"></script>
+    <title>Interrogatorio - eceDental</title>
+    <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&amp;family=Source+Sans+3:wght@300;400;600&amp;display=swap" rel="stylesheet"/><link rel="stylesheet" href="resources/css/estilos.css"/>
+    <link rel="stylesheet" href="resources/css/flatpickr.min.css">
+    <script src="resources/js/flatpickr.min.js"></script>
+    <script src="resources/js/alertas.js"></script>
+    <script src="resources/js/interrogatorio.js"></script>
 </head>
 <body>
-  <aside class="sidebar">
+<aside class="sidebar">
     <div class="sidebar-brand">
-      <img src="resources/img/logo.png" alt="eceDental - Gestión de expedientes" class="sidebar-logo"/>
-      <p class="sidebar-user">Natalia Escobar Hernández</p>
+        <img src="resources/img/logo.png" alt="eceDental - Gestión de expedientes" class="sidebar-logo"/>
+        <p class="sidebar-user">Natalia Escobar Hernández</p>
     </div>
     <nav>
-      <div class="nav-section-label">General</div>
-      <a href="panelPrincipal.html" class="nav-link">Panel Principal</a>
-      <div class="nav-section-label">Expedientes</div>
-      <a href="registrarPaciente.html" class="nav-link">Registrar Paciente</a>
-      <a href="buscarExpediente.html" class="nav-link">Buscar Expediente</a>
-      <div class="nav-section-label">Consultas</div>
-      <a href="consultaPersonalizada.html" class="nav-link">Consulta Personalizada</a>
-      <a href="consultaRapida.html" class="nav-link">Consulta Rápida</a>
-      <div class="nav-section-label">Herramientas</div>
-      <a href="recordatorios.html" class="nav-link">Recordatorios</a>
-      <a href="misDatos.html" class="nav-link">Mis Datos</a>
+        <div class="nav-section-label">General</div>
+        <a href="panelPrincipal.html" class="nav-link">Panel Principal</a>
+        <div class="nav-section-label">Expedientes</div>
+        <a href="registrarPaciente.html" class="nav-link">Registrar Paciente</a>
+        <a href="buscarExpediente.html" class="nav-link">Buscar Expediente</a>
+        <div class="nav-section-label">Herramientas</div>
+        <a href="recordatorios.html" class="nav-link">Recordatorios</a>
+        <a href="misDatos.html" class="nav-link">Mis Datos</a>
     </nav>
     <div class="sidebar-footer">Sistema v1.2 - LSC</div>
-  </aside>
-  <div class="main">
+</aside>
+<div class="main">
     <div class="navbar"><ul>
-  <li><a href="dashboardExpediente.html" class="nav-link-top">Dashboard</a></li>
-  <li><a href="datosGenerales.html" class="nav-link-top">Datos Generales</a></li>
-  <li><a href="interrogatorio.html" class="nav-link-top active">Interrogatorio</a></li>
-  <li><a href="notas.html" class="nav-link-top">Notas de Evolución</a></li>
-  <li><a href="diagnosticos.html" class="nav-link-top">Diagnósticos y Planes de Tratamiento</a></li>
-  <li><a href="odontograma.html" class="nav-link-top">Odontograma</a></li>
-  <li><a href="pagos.html" class="nav-link-top">Pagos</a></li>
-  <li><a href="archivos.html" class="nav-link-top">Archivos</a></li>
-</ul></div>
+        <li><a href="dashboardExpediente.html" class="nav-link-top">Dashboard</a></li>
+        <li><a href="datosGenerales.html" class="nav-link-top">Datos Generales</a></li>
+        <li><a href="interrogatorio.html" class="nav-link-top active">Interrogatorio</a></li>
+        <li><a href="notas.html" class="nav-link-top">Notas de Evolución</a></li>
+        <li><a href="diagnosticos.html" class="nav-link-top">Diagnósticos y Planes de Tratamiento</a></li>
+        <li><a href="odontograma.html" class="nav-link-top">Odontograma</a></li>
+        <li><a href="pagos.html" class="nav-link-top">Pagos</a></li>
+        <li><a href="archivos.html" class="nav-link-top">Archivos</a></li>
+    </ul></div>
     <div class="content">
-<div class="page-header"><div><h2>Interrogatorio</h2><p id="nombrePaciente"></p></div></div>
-<div class="alert alert-info">El interrogatorio queda vinculado al expediente del paciente. Se le pedirá confirmación al guardar.</div>
-      <div id="contenedorMensajes"></div>
-      <form id="formInterrogatorio">
-  <fieldset class="form-section"><legend>Antecedentes Médicos</legend><div class="form-grid">
-    <div class="form-group span-2"><label>Ha padecido alguna enfermedad</label>
-      <div class="check-group">
-        <label class="check-item"><input type="checkbox" name="enfermedades" value="Accidentes vasculares"/> Accidentes vasculares</label>
-        <label class="check-item"><input type="checkbox" name="enfermedades" value="Apoplegía"/> Apoplegía</label>
-        <label class="check-item"><input type="checkbox" name="enfermedades" value="Anemia"/> Anemia</label>
-        <label class="check-item"><input type="checkbox" name="enfermedades" value="Artritis"/> Artritis</label>
-        <label class="check-item"><input type="checkbox" name="enfermedades" value="Cardiopatía"/> Cardiopatía</label>
-        <label class="check-item"><input type="checkbox" name="enfermedades" value="Diabetes"/> Diabetes</label>
-        <label class="check-item"><input type="checkbox" name="enfermedades" value="Epilepsia"/> Epilepsia</label>
-        <label class="check-item"><input type="checkbox" name="enfermedades" value="Fiebre reumática"/> Fiebre reumática</label>
-        <label class="check-item"><input type="checkbox" name="enfermedades" value="Hepatitis"/> Hepatitis</label>
-        <label class="check-item"><input type="checkbox" name="enfermedades" value="Hipertensión arterial"/> Hipertensión arterial</label>
-        <label class="check-item"><input type="checkbox" name="enfermedades" value="Lesiones cardiacas"/> Lesiones cardiacas</label>
-        <label class="check-item"><input type="checkbox" name="enfermedades" value="Marcapasos"/> Marcapasos</label>
-        <label class="check-item"><input type="checkbox" name="enfermedades" value="Pérdida de peso"/> Pérdida de peso</label>
-        <label class="check-item"><input type="checkbox" name="enfermedades" value="Trastorno psíquico"/> Trastorno psíquico</label>
-        <label class="check-item"><input type="checkbox" name="enfermedades" value="Trat. oncológico"/> Trat. oncológico</label>
-        <label class="check-item"><input type="checkbox" name="enfermedades" value="Tuberculosis"/> Tuberculosis</label>
-        <label class="check-item"><input type="checkbox" name="enfermedades" value="Otra"/> Otra</label></div></div>
-    <div class="form-group "><label>Ha tenido problemas de hemorragia *</label>
-      <select id="hemorragias">
-        <option>-- Seleccionar --</option>
-        <option>Si</option>
-        <option>No</option>
-      </select>
-    </div>
-    <div class="form-group "><label>Ha estado bajo atención médica en los últimos dos años *</label>
-      <select id="atencionMedica">
-        <option>-- Seleccionar --</option>
-        <option>Si</option>
-        <option>No</option>
-      </select>
-    </div>
-    <div class="form-group "><label>Ha sido hospitalizado en los últimos dos años *</label>
-      <select id="hospitalizacion">
-        <option>-- Seleccionar --</option>
-        <option>Si</option>
-        <option>No</option>
-      </select>
-    </div>
-    <div class="form-group "><label>Motivo y fecha de hospitalización (si aplica)</label><input type="text" id="hospitalizacionDesc" placeholder="Ej. Cirugía de apéndice, 2022..."/></div>
-  </div></fieldset>
-  <fieldset class="form-section"><legend>Alergias y Medicación</legend><div class="form-grid">
-    <div class="form-group">
-      <label>Alergias</label>
-      <div id="listaAlergias"></div>
-      <button type="button" id="agregarAlergia" class="btn btn-sm btn-muted">
-        + Agregar alergia
-      </button>
-    </div>
+        <div class="page-header"><div><h2>Interrogatorio</h2><p id="nombrePaciente"></p></div></div>
+        <div class="alert alert-info">El interrogatorio queda vinculado al expediente del paciente. Se le pedirá confirmación al guardar.</div>
+        <div id="contenedorMensajes"></div>
+        <form id="formInterrogatorio">
+            <fieldset class="form-section"><legend>Antecedentes Médicos</legend><div class="form-grid">
+                <div class="form-group span-2"><label>Ha padecido alguna enfermedad</label>
+                    <div class="check-group">
+                        <label class="check-item"><input type="checkbox" name="enfermedades" value="Accidentes vasculares"/> Accidentes vasculares</label>
+                        <label class="check-item"><input type="checkbox" name="enfermedades" value="Apoplegía"/> Apoplegía</label>
+                        <label class="check-item"><input type="checkbox" name="enfermedades" value="Anemia"/> Anemia</label>
+                        <label class="check-item"><input type="checkbox" name="enfermedades" value="Artritis"/> Artritis</label>
+                        <label class="check-item"><input type="checkbox" name="enfermedades" value="Cardiopatía"/> Cardiopatía</label>
+                        <label class="check-item"><input type="checkbox" name="enfermedades" value="Diabetes"/> Diabetes</label>
+                        <label class="check-item"><input type="checkbox" name="enfermedades" value="Epilepsia"/> Epilepsia</label>
+                        <label class="check-item"><input type="checkbox" name="enfermedades" value="Fiebre reumática"/> Fiebre reumática</label>
+                        <label class="check-item"><input type="checkbox" name="enfermedades" value="Hepatitis"/> Hepatitis</label>
+                        <label class="check-item"><input type="checkbox" name="enfermedades" value="Hipertensión arterial"/> Hipertensión arterial</label>
+                        <label class="check-item"><input type="checkbox" name="enfermedades" value="Lesiones cardiacas"/> Lesiones cardiacas</label>
+                        <label class="check-item"><input type="checkbox" name="enfermedades" value="Marcapasos"/> Marcapasos</label>
+                        <label class="check-item"><input type="checkbox" name="enfermedades" value="Pérdida de peso"/> Pérdida de peso</label>
+                        <label class="check-item"><input type="checkbox" name="enfermedades" value="Trastorno psíquico"/> Trastorno psíquico</label>
+                        <label class="check-item"><input type="checkbox" name="enfermedades" value="Trat. oncológico"/> Trat. oncológico</label>
+                        <label class="check-item"><input type="checkbox" name="enfermedades" value="Tuberculosis"/> Tuberculosis</label>
+                        <label class="check-item"><input type="checkbox" name="enfermedades" value="Otra"/> Otra</label></div></div>
+                <div class="form-group "><label>Ha tenido problemas de hemorragia *</label>
+                    <select id="hemorragias">
+                        <option>-- Seleccionar --</option>
+                        <option>Si</option>
+                        <option>No</option>
+                    </select>
+                </div>
+                <div class="form-group "><label>Ha estado bajo atención médica en los últimos dos años *</label>
+                    <select id="atencionMedica">
+                        <option>-- Seleccionar --</option>
+                        <option>Si</option>
+                        <option>No</option>
+                    </select>
+                </div>
+                <div class="form-group "><label>Ha sido hospitalizado en los últimos dos años *</label>
+                    <select id="hospitalizacion">
+                        <option>-- Seleccionar --</option>
+                        <option>Si</option>
+                        <option>No</option>
+                    </select>
+                </div>
+                <div class="form-group "><label>Motivo y fecha de hospitalización (si aplica)</label><input type="text" id="hospitalizacionDesc" placeholder="Ej. Cirugía de apéndice, 2022..."/></div>
+            </div></fieldset>
+            <fieldset class="form-section"><legend>Alergias y Medicación</legend><div class="form-grid">
+                <div class="form-group">
+                    <label>Alergias</label>
+                    <div id="listaAlergias"></div>
+                    <button type="button" id="agregarAlergia" class="btn btn-sm btn-muted">
+                        + Agregar alergia
+                    </button>
+                </div>
 
-    <div class="form-group">
-      <label>Medicación</label>
-      <div id="listaMedicamentos"></div>
-      <button type="button" id="agregarMedicamento" class="btn btn-sm btn-muted">
-        + Agregar medicamento
-      </button>
+                <div class="form-group">
+                    <label>Medicación</label>
+                    <div id="listaMedicamentos"></div>
+                    <button type="button" id="agregarMedicamento" class="btn btn-sm btn-muted">
+                        + Agregar medicamento
+                    </button>
+                </div>
+            </div></fieldset>
+            <fieldset class="form-section"><legend>Datos Específicos</legend><div class="form-grid"><div class="form-group ">
+                <label>Embarazada</label>
+                <select id="embarazada">
+                    <option value="No aplica">NA</option>
+                    <option value="Si">Si</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+                <div class="form-group ">
+                    <label>Amamantando</label>
+                    <select id="amamantando">
+                        <option value="No aplica">NA</option>
+                        <option value="Si">Si</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+            </div>
+            </fieldset>
+            <fieldset class="form-section"><legend>Contacto de Emergencia</legend><div class="form-grid">
+                <div class="form-group "><label for="telefonoEmergencia">Tel. emergencia</label>
+                    <div class="phone-group">
+                        <select id="codigoTelEmergencia" name="codigoTelEmergencia" aria-label="Código de país del teléfono de emergencia">
+                            <option value="+52" selected="selected">+52 México</option>
+                            <option value="+1">+1 EE. UU. / Canadá</option>
+                            <option value="+502">+502 Guatemala</option>
+                            <option value="+503">+503 El Salvador</option>
+                            <option value="+504">+504 Honduras</option>
+                            <option value="+505">+505 Nicaragua</option>
+                            <option value="+506">+506 Costa Rica</option>
+                            <option value="+507">+507 Panamá</option>
+                            <option value="+51">+51 Perú</option>
+                            <option value="+57">+57 Colombia</option>
+                            <option value="+54">+54 Argentina</option>
+                            <option value="+56">+56 Chile</option>
+                            <option value="+58">+58 Venezuela</option>
+                            <option value="+34">+34 España</option>
+                        </select>
+                        <input type="tel" id="telefonoEmergencia" name="telefonoEmergencia" maxlength="10" pattern="[0-9]{10}" inputmode="numeric" title="Ingrese 10 dígitos sin guiones" placeholder="10 dígitos"/>
+                    </div>
+                </div>
+                <div class="form-group "><label for="telefonoServicioMedico">Tel. servicio médico / IMSS / ISSSTE</label>
+                    <div class="phone-group">
+                        <select id="codigoTelServicioMedico" name="codigoTelServicioMedico" aria-label="Código de país del teléfono del servicio médico">
+                            <option value="+52" selected="selected">+52 México</option>
+                            <option value="+1">+1 EE. UU. / Canadá</option>
+                            <option value="+502">+502 Guatemala</option>
+                            <option value="+503">+503 El Salvador</option>
+                            <option value="+504">+504 Honduras</option>
+                            <option value="+505">+505 Nicaragua</option>
+                            <option value="+506">+506 Costa Rica</option>
+                            <option value="+507">+507 Panamá</option>
+                            <option value="+51">+51 Perú</option>
+                            <option value="+57">+57 Colombia</option>
+                            <option value="+54">+54 Argentina</option>
+                            <option value="+56">+56 Chile</option>
+                            <option value="+58">+58 Venezuela</option>
+                            <option value="+34">+34 España</option>
+                        </select>
+                        <input type="tel" id="telefonoServicioMedico" name="telefonoServicioMedico" maxlength="10" pattern="[0-9]{10}" inputmode="numeric" title="Ingrese 10 dígitos sin guiones" placeholder="10 dígitos"/>
+                    </div>
+                </div></div></fieldset>
+            <fieldset class="form-section"><legend>Última Consulta Dental</legend><div class="form-grid"><div class="form-group ">
+                <label>Fecha de última consulta dental</label>
+                <input type="text" id="ultimaConsultaDental"/>
+                <script>
+                    flatpickr("#ultimaConsultaDental", {
+                        dateFormat: "Y-m-d"
+                    });
+                </script>
+            </div></div></fieldset>
+            <div class="btn-group"><button type="submit" class="btn btn-primary">Guardar interrogatorio</button><a href="dashboardExpediente.html" class="btn btn-muted">Cancelar</a></div>
+        </form>
     </div>
-  </div></fieldset>
-  <fieldset class="form-section"><legend>Datos Específicos</legend><div class="form-grid"><div class="form-group ">
-    <label>Embarazada</label>
-    <select id="embarazada">
-      <option value="No aplica">NA</option>
-      <option value="Si">Si</option>
-      <option value="No">No</option>
-    </select>
-  </div>
-    <div class="form-group ">
-      <label>Amamantando</label>
-      <select id="amamantando">
-        <option value="No aplica">NA</option>
-        <option value="Si">Si</option>
-        <option value="No">No</option>
-      </select>
-    </div>
-  </div>
-  </fieldset>
-  <fieldset class="form-section"><legend>Contacto de Emergencia</legend><div class="form-grid">
-    <div class="form-group "><label>Tel. emergencia</label>
-      <input type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" id="telefonoEmergencia" placeholder="000 000 0000"/></div>
-    <div class="form-group "><label>Tel. servicio médico / IMSS / ISSSTE</label>
-      <input type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" id="telefonoServicioMedico" placeholder="000 000 0000"/></div></div></fieldset>
-  <fieldset class="form-section"><legend>Última Consulta Dental</legend><div class="form-grid"><div class="form-group ">
-    <label>Fecha de última consulta dental</label>
-    <input type="text" id="ultimaConsultaDental"/>
-    <script>
-      flatpickr("#ultimaConsultaDental", {
-        dateFormat: "Y-m-d"
-      });
-    </script>
-  </div></div></fieldset>
-  <div class="btn-group"><button type="submit" class="btn btn-primary">Guardar interrogatorio</button><a href="dashboardExpediente.html" class="btn btn-muted">Cancelar</a></div>
-</form>
 </div>
-  </div>
 </body>
 </html>

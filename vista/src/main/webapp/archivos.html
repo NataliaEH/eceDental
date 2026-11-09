@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Archivos - eceDental</title>
+    <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&amp;family=Source+Sans+3:wght@300;400;600&amp;display=swap" rel="stylesheet"/><link rel="stylesheet" href="resources/css/estilos.css"/>
+    <script src="resources/js/alertas.js"></script>
+    <script src="resources/js/archivos.js"></script>
+</head>
+<body>
+<aside class="sidebar">
+    <div class="sidebar-brand">
+        <img src="resources/img/logo.png" alt="eceDental - Gestión de expedientes" class="sidebar-logo"/>
+        <p class="sidebar-user">Natalia Escobar Hernández</p>
+    </div>
+    <nav>
+        <div class="nav-section-label">General</div>
+        <a href="panelPrincipal.html" class="nav-link">Panel Principal</a>
+        <div class="nav-section-label">Expedientes</div>
+        <a href="registrarPaciente.html" class="nav-link">Registrar Paciente</a>
+        <a href="buscarExpediente.html" class="nav-link">Buscar Expediente</a>
+        <div class="nav-section-label">Herramientas</div>
+        <a href="recordatorios.html" class="nav-link">Recordatorios</a>
+        <a href="misDatos.html" class="nav-link">Mis Datos</a>
+    </nav>
+    <div class="sidebar-footer">Sistema v1.2 - LSC</div>
+</aside>
+<div class="main">
+    <div class="navbar"><ul>
+        <li><a href="dashboardExpediente.html" class="nav-link-top">Dashboard</a></li>
+        <li><a href="datosGenerales.html" class="nav-link-top">Datos Generales</a></li>
+        <li><a href="interrogatorio.html" class="nav-link-top">Interrogatorio</a></li>
+        <li><a href="notas.html" class="nav-link-top">Notas de Evolución</a></li>
+        <li><a href="diagnosticos.html" class="nav-link-top">Diagnósticos y Planes de Tratamiento</a></li>
+        <li><a href="odontograma.html" class="nav-link-top">Odontograma</a></li>
+        <li><a href="pagos.html" class="nav-link-top">Pagos</a></li>
+        <li><a href="archivos.html" class="nav-link-top active">Archivos</a></li>
+    </ul></div>
+    <div class="content">
+        <div class="page-header"><div><h2>Archivos</h2><p id="nombrePaciente"></p></div></div>
+        <div id="contenedorMensajes"></div>
+        <div class="split">
+            <div>
+                <div class="card">
+                    <form id="formFiltroArchivos" class="filter-bar">
+                        <h2>Filtrar tipo de archivo</h2>
+                        <select id="tipoFiltro" name="tipo">
+                            <option value="">-- Seleccionar --</option>
+                            <option value="Odontograma">Odontograma</option>
+                            <option value="Radiografía">Radiografía</option>
+                            <option value="Fotografía clínica">Fotografía clínica</option>
+                            <option value="Receta">Receta</option>
+                            <option value="Consentimiento informado">Consentimiento informado</option>
+                            <option value="Otro">Otro</option>
+                        </select>
+                        <button type="submit" class="btn btn-secondary btn-sm">Filtrar</button>
+                        <button type="reset" class="btn btn-muted btn-sm">Limpiar</button>
+                    </form>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h2>Registro de archivos</h2></div>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                            <tr><th>Fecha</th><th>Nombre / Descripción</th><th>Tipo</th><th>Acciones</th></tr>
+                            </thead>
+                            <tbody id="tablaArchivos">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header"><h2>Subir archivo</h2></div>
+                <div class="card-body">
+                    <form id="formArchivo" enctype="multipart/form-data">
+                        <div class="form-grid cols-1">
+                            <div class="form-group">
+                                <label for="tipoArchivo">Tipo de archivo *</label>
+                                <select id="tipoArchivo" name="tipo" required="required">
+                                    <option value="">-- Seleccionar --</option>
+                                    <option value="Odontograma">Odontograma</option>
+                                    <option value="Radiografía">Radiografía</option>
+                                    <option value="Fotografía clínica">Fotografía clínica</option>
+                                    <option value="Receta">Receta</option>
+                                    <option value="Consentimiento informado">Consentimiento informado</option>
+                                    <option value="Otro">Otro</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="archivo">Archivo *</label>
+                                <input type="file" id="archivo" name="archivo" accept=".pdf,.jpg,.jpeg,.png,.gif,.bmp,.doc,.docx,.xls,.xlsx" required="required"/>
+                                <span class="field-hint">PDF, imágenes o documentos. Máx. 15 MB.</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="nombreArchivo">Nombre / descripción *</label>
+                                <textarea id="nombreArchivo" name="nombreArchivo" required="required" placeholder="Ej. Rx panorámica inicial"></textarea>
+                            </div>
+                        </div>
+                        <div class="btn-group" style="margin-top:14px">
+                            <button type="submit" class="btn btn-primary">Subir archivo</button>
+                            <button type="reset" class="btn btn-muted">Limpiar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
