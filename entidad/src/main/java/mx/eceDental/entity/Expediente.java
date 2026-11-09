@@ -35,8 +35,8 @@ public class Expediente {
     @OneToMany(mappedBy = "expediente")
     private List<Archivo> archivo;
 
-    //@OneToMany(mappedBy = "expediente")
-    //private List<Abonos> abonos;
+    @OneToMany(mappedBy = "expediente")
+    private List<Abono> abono;
 
     //@OneToOne(mappedBy = "expediente")
     //private Odontograma odontograma;
@@ -78,14 +78,10 @@ public class Expediente {
     public List<Archivo> getArchivo() {return archivo;}
     public void setArchivo(List<Archivo> archivo) {this.archivo = archivo;}
 
-    /*public List<Abonos> getAbonos() {
-        return abonos;
-    }
-    public void setAbonos(List<Abonos> abonos) {
-        this.abonos = abonos;
-    }
+    public List<Abono> getAbono() {return abono;}
+    public void setAbono(List<Abono> abono) {this.abono = abono;}
 
-    public Odontograma getOdontograma() {
+    /*public Odontograma getOdontograma() {
         return odontograma;
     }
     public void setOdontograma(Odontograma odontograma) {
