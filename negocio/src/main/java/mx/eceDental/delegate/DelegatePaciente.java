@@ -1,11 +1,11 @@
 package mx.eceDental.delegate;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import mx.eceDental.entity.Paciente;
 import mx.eceDental.entity.TelefonosPaciente;
 import mx.eceDental.persistence.integration.ServiceLocator;
+
+import java.util.List;
 
 public class DelegatePaciente {
 
