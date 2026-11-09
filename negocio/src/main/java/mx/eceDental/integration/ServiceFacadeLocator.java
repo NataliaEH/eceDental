@@ -1,9 +1,6 @@
 package mx.eceDental.integration;
 
-import mx.eceDental.facade.FacadeDiagnosticoYPlan;
-import mx.eceDental.facade.FacadeExpediente;
-import mx.eceDental.facade.FacadeInterrogatorio;
-import mx.eceDental.facade.FacadePaciente;
+import mx.eceDental.facade.*;
 
 
 public class ServiceFacadeLocator {
@@ -12,6 +9,7 @@ public class ServiceFacadeLocator {
     private static FacadeExpediente facadeExpediente;
     private static FacadeInterrogatorio facadeInterrogatorio;
     private static FacadeDiagnosticoYPlan facadeDiagnosticoYPlan;
+    private static FacadeNotaEvolucion facadeNotaEvolucion;
 
     public static FacadeExpediente getInstanceFacadeExpediente() {
         if (facadeExpediente == null) {
@@ -39,5 +37,10 @@ public class ServiceFacadeLocator {
         }
         return facadeDiagnosticoYPlan;
     }
-
+    public static FacadeNotaEvolucion getInstanceFacadeNotaEvolucion() {
+        if (facadeNotaEvolucion == null) {
+            facadeNotaEvolucion = new FacadeNotaEvolucion();
+        }
+        return facadeNotaEvolucion;
+    }
 }
