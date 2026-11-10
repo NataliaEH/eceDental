@@ -49,4 +49,46 @@ public class DelegateOdontograma {
             return false;
         }
     }
+
+    public boolean modificarRegistro(int idRegistro, int piezaDental, String cara,
+                                     String diagnostico, String procedimiento, String fecha) {
+
+        if (idRegistro <= 0
+                || piezaDental <= 0
+                || cara == null || cara.trim().isEmpty()
+                || diagnostico == null || diagnostico.trim().isEmpty()
+                || procedimiento == null || procedimiento.trim().isEmpty()
+                || fecha == null || fecha.trim().isEmpty()) {
+            return false;
+        }
+
+        try {
+            RegistroOdontograma registro = ServiceLocator.getInstanceRegistroOdntDAO()
+                    .find(idRegistro).orElse(null);
+
+            if (registro == null) {
+                return false;
+            }
+
+            registro.setPiezaDental(piezaDental);
+            registro.setCara(cara.trim());
+            registro.setDiagnostico(diagnostico.trim());
+            registro.setProcedimiento(procedimiento.trim());
+            registro.setFecha(fecha.trim());
+
+            ServiceLocator.getInstanceRegistroOdntDAO().update(registro);
+
+            Odontograma odontograma = registro.getOdontograma();
+
+            if (odontograma != null) {
+                odontograma.setFechaActualizacion(new Date());
+                ServiceLocator.getInstanceOdontogramaDAO().update(odontograma);
+            }
+
+            return true;
+
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }}
