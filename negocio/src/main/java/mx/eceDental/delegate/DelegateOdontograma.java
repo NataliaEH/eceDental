@@ -1,5 +1,11 @@
 package mx.eceDental.delegate;
 
+import mx.eceDental.entity.Expediente;
+import mx.eceDental.persistence.integration.ServiceLocator;
+
+import java.util.ArrayList;
+import java.util.Date;
+
 public class DelegateOdontograma {
 
     public boolean registrarRegistro(int idExpediente, int piezaDental, String cara,
@@ -121,4 +127,23 @@ public class DelegateOdontograma {
         }
     }
 
+    public List<RegistroOdontograma> consultarReg(int idExpediente) {
+        if (idExpediente <= 0) {
+            return new ArrayList<>();
+        }
+
+        try {
+            Expediente expediente = ServiceLocator.getInstanceExpedienteDAO().find(idExpediente).orElse(null);
+
+            if (expediente == null || expediente.getOdontograma() == null
+                    || expediente.getOdontograma().getRegistros() == null) {
+                return new ArrayList<>();
+            }
+
+            return new ArrayList<>(expediente.getOdontograma().getRegistros());
+
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
+    }
 }}

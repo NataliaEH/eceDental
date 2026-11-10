@@ -26,5 +26,7 @@ public class FacadeOdontograma {
         return delegateOdontograma.eliminarRegistro(id);
     }
 
-
+    public List<RegistroOdontograma> consultarReg(int idExpediente) {
+        return delegateOdontograma.consultarReg(idExpediente);
+    }
 }
