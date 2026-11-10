@@ -18,8 +18,12 @@ public class FacadeNotaEvolucion {
         return delegateNotaEvolucion.registrar(idExpediente, fecha, contenido);
     }
 
-    public List<NotaEvolucion> buscarPorFecha(Date fecha) {
-        return delegateNotaEvolucion.buscarPorFecha(fecha);
+    public boolean modificar(int idNota, Date fecha, String contenido) {
+        return delegateNotaEvolucion.modificar(idNota, fecha, contenido);
+    }
+
+    public boolean eliminar(int id) {
+        return delegateNotaEvolucion.eliminar(id);
     }
 
     public NotaEvolucion buscarUltima() {

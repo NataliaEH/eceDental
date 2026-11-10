@@ -75,6 +75,55 @@ public class DelegateNotaEvolucion {
         }
     }
 
+    public boolean modificar(int idNota, Date fecha, String contenido) {
+        if (idNota <= 0
+                || fecha == null || fecha.after(new Date())
+                || contenido == null || contenido.trim().isEmpty()
+                || contenido.trim().length() > 1000) {
+            return false;
+        }
+
+        try {
+            NotaEvolucion nota = ServiceLocator.getInstanceNotaEvolucionDAO().find(idNota).orElse(null);
+
+            if (nota == null) {
+                return false;
+            }
+
+            nota.setFecha(fecha);
+            nota.setContenido(contenido.trim());
+
+            ServiceLocator.getInstanceNotaEvolucionDAO().update(nota);
+
+            return true;
+
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+
+    public boolean eliminar(int id) {
+        if (id <= 0) {
+            return false;
+        }
+
+        try {
+            NotaEvolucion nota = ServiceLocator.getInstanceNotaEvolucionDAO().find(id).orElse(null);
+
+            if (nota == null) {
+                return false;
+            }
+
+            ServiceLocator.getInstanceNotaEvolucionDAO().delete(nota);
+
+            return true;
+
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     public NotaEvolucion buscarUltima() {
         try {
             List<NotaEvolucion> todas = ServiceLocator.getInstanceNotaEvolucionDAO().findAll();
