@@ -49,7 +49,8 @@ public class DelegateAbono {
         if (idAbono <= 0
                 || fecha == null || fecha.after(new Date())
                 || abono <= 0
-                || concepto == null || concepto.trim().isEmpty()) {
+                || concepto == null || concepto.trim().isEmpty()
+                || concepto.trim().length() > 100) {
             return false;
         }
 
