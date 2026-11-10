@@ -45,14 +45,23 @@ function cargarDatosGenerales(){
         const telefonos = paciente.getTelefonos();
         document.getElementById("tel").value = "";
         document.getElementById("telAlt").value = "";
+        document.getElementById("codigoTel").value = "";
+        document.getElementById("codigoTelAlt").value = "";
         if (telefonos) {
             for (let i = 0; i < telefonos.size(); i++) {
                 const telefono = telefonos.get(i);
                 const tipo = String(telefono.getTipo());
+                const partes = String(telefono.getNumero() || "").trim().split(" ");
+
+                let lada = partes[0];
+                let num = partes[1];
+
                 if (tipo === "Principal") {
-                    document.getElementById("tel").value = telefono.getNumero() || "";
+                    document.getElementById("codigoTel").value = lada;
+                    document.getElementById("tel").value = num;
                 } else if (tipo === "Alternativo") {
-                    document.getElementById("telAlt").value = telefono.getNumero() || "";
+                    document.getElementById("codigoTelAlt").value = lada;
+                    document.getElementById("telAlt").value = num;
                 }
             }
         }
@@ -76,6 +85,8 @@ function guardarDatosGenerales() {
             ocupacion: document.getElementById("ocupacion").value.trim(),
             domicilio: document.getElementById("domicilio").value.trim(),
             telefonoPrincipal: document.getElementById("tel").value.trim(),
+            codigoTelPrincipal: document.getElementById("codigoTel").value.trim(),
+            codigoTelAlternativo: document.getElementById("codigoTelAlt").value.trim(),
             telefonoAlternativo: document.getElementById("telAlt").value.trim(),
             correo: document.getElementById("correo").value.trim(),
         };
@@ -95,11 +106,13 @@ function guardarDatosGenerales() {
             pacienteUI.setPaciente(paciente);
 
             pacienteUI.limpiarTelefonos();
-            if (datos.telefonoPrincipal) {
-                pacienteUI.agregarTelefono(datos.telefonoPrincipal, "Principal");
+            if (datos.telefonoPrincipal && datos.codigoTelPrincipal) {
+                const telPrincipal = datos.codigoTelPrincipal + " " + datos.telefonoPrincipal;
+                pacienteUI.agregarTelefono(telPrincipal, "Principal");
             }
-            if (datos.telefonoAlternativo) {
-                pacienteUI.agregarTelefono(datos.telefonoAlternativo, "Alternativo");
+            if (datos.telefonoAlternativo && datos.codigoTelAlternativo) {
+                const telAlternativo = datos.codigoTelAlternativo + " " + datos.telefonoAlternativo;
+                pacienteUI.agregarTelefono(telAlternativo, "Alternativo");
             }
 
             const modificado = pacienteUI.modificar(paciente.getIdPaciente());
