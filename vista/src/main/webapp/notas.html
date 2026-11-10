@@ -87,5 +87,27 @@
         </div>
     </div>
 </div>
+
+<div id="modalModificar" class="modal-overlay" style="display:none">
+    <div class="card modal-card">
+        <div class="card-header"><h2>Modificar nota de evolución</h2></div>
+        <div class="card-body">
+            <form id="formModificar">
+                <input type="hidden" id="modIdNota"/>
+                <div class="form-grid cols-1">
+                    <div class="form-group">
+                        <label>Contenido de la nota *</label>
+                        <textarea id="modContenido" name="contenido" required="required" placeholder="Descripción del procedimiento, observaciones clínicas, plan de tratamiento..."></textarea>
+                    </div>
+                </div>
+                <div class="btn-group" style="margin-top:14px">
+                    <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                    <button type="button" class="btn btn-muted" id="btnCancelarModificar">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>
