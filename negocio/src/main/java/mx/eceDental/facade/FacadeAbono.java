@@ -1,9 +1,6 @@
 package mx.eceDental.facade;
 
-import java.util.Date;
-import java.util.List;
 import mx.eceDental.delegate.DelegateAbono;
-import mx.eceDental.entity.Abono;
 
 public class FacadeAbono {
 
@@ -13,12 +10,12 @@ public class FacadeAbono {
         this.delegateAbono = new DelegateAbono();
     }
 
-    public boolean registrar(int idExpediente, Date fecha, double abono, String concepto) {
-        return delegateAbono.registrar(idExpediente, fecha, abono, concepto);
+    public boolean registrar(int idExpediente, double abono, String concepto) {
+        return delegateAbono.registrar(idExpediente, abono, concepto);
     }
 
-    public boolean modificar(int idAbono, Date fecha, double abono, String concepto) {
-        return delegateAbono.modificar(idAbono, fecha, abono, concepto);
+    public boolean modificar(int idAbono, double abono, String concepto) {
+        return delegateAbono.modificar(idAbono, abono, concepto);
     }
 
     public boolean eliminar(int id) {

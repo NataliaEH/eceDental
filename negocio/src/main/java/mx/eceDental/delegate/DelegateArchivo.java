@@ -4,25 +4,25 @@ import mx.eceDental.entity.Expediente;
 import mx.eceDental.persistence.integration.ServiceLocator;
 
 import java.io.File;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class DelegateArchivo {
 
 
-    public boolean registrar(int idExpediente, String nombreArchivo, Date fecha, String tipo, String ruta) {
+    public boolean registrar(int idExpediente, String nombreArchivo, String tipo, String ruta) {
 
         if (idExpediente <= 0
                 || nombreArchivo == null || nombreArchivo.trim().isEmpty()
                 || nombreArchivo.trim().length() > 100
-                || fecha == null || fecha.after(new Date())
                 || tipo == null || tipo.trim().isEmpty()
                 || tipo.trim().length() > 30
                 || ruta == null || ruta.trim().isEmpty()
                 || ruta.trim().length() > 255) {
             return false;
         }
+
         try {
             Expediente expediente = ServiceLocator.getInstanceExpedienteDAO().find(idExpediente).orElse(null);
 
@@ -32,7 +32,7 @@ public class DelegateArchivo {
 
             Archivo archivo = new Archivo();
             archivo.setNombreArchivo(nombreArchivo.trim());
-            archivo.setFecha(fecha);
+            archivo.setFecha(LocalDate.now());
             archivo.setTipo(tipo.trim());
             archivo.setRuta(ruta.trim());
             archivo.setExpediente(expediente);

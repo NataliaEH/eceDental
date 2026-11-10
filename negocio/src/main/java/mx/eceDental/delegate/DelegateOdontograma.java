@@ -3,20 +3,20 @@ package mx.eceDental.delegate;
 import mx.eceDental.entity.Expediente;
 import mx.eceDental.persistence.integration.ServiceLocator;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.List;
 
 public class DelegateOdontograma {
 
     public boolean registrarRegistro(int idExpediente, int piezaDental, String cara,
-                                     String diagnostico, String procedimiento, String fecha) {
+                                     String diagnostico, String procedimiento) {
 
         if (idExpediente <= 0
                 || piezaDental <= 0
                 || cara == null || cara.trim().isEmpty()
                 || diagnostico == null || diagnostico.trim().isEmpty()
-                || procedimiento == null || procedimiento.trim().isEmpty()
-                || fecha == null || fecha.trim().isEmpty()) {
+                || procedimiento == null || procedimiento.trim().isEmpty()) {
             return false;
         }
 
@@ -31,11 +31,11 @@ public class DelegateOdontograma {
 
             if (odontograma == null) {
                 odontograma = new Odontograma();
-                odontograma.setFechaActualizacion(new Date());
+                odontograma.setFechaActualizacion(LocalDate.now());
                 odontograma.setExpediente(expediente);
                 ServiceLocator.getInstanceOdontogramaDAO().save(odontograma);
             } else {
-                odontograma.setFechaActualizacion(new Date());
+                odontograma.setFechaActualizacion(LocalDate.now());
                 ServiceLocator.getInstanceOdontogramaDAO().update(odontograma);
             }
 
@@ -44,7 +44,7 @@ public class DelegateOdontograma {
             registro.setCara(cara.trim());
             registro.setDiagnostico(diagnostico.trim());
             registro.setProcedimiento(procedimiento.trim());
-            registro.setFecha(fecha.trim());
+            registro.setFecha(LocalDate.now());
             registro.setOdontograma(odontograma);
 
             ServiceLocator.getInstanceRegistroOdntDAO().save(registro);
@@ -57,14 +57,13 @@ public class DelegateOdontograma {
     }
 
     public boolean modificarRegistro(int idRegistro, int piezaDental, String cara,
-                                     String diagnostico, String procedimiento, String fecha) {
+                                     String diagnostico, String procedimiento) {
 
         if (idRegistro <= 0
                 || piezaDental <= 0
                 || cara == null || cara.trim().isEmpty()
                 || diagnostico == null || diagnostico.trim().isEmpty()
-                || procedimiento == null || procedimiento.trim().isEmpty()
-                || fecha == null || fecha.trim().isEmpty()) {
+                || procedimiento == null || procedimiento.trim().isEmpty()) {
             return false;
         }
 
@@ -80,14 +79,13 @@ public class DelegateOdontograma {
             registro.setCara(cara.trim());
             registro.setDiagnostico(diagnostico.trim());
             registro.setProcedimiento(procedimiento.trim());
-            registro.setFecha(fecha.trim());
 
             ServiceLocator.getInstanceRegistroOdntDAO().update(registro);
 
             Odontograma odontograma = registro.getOdontograma();
 
             if (odontograma != null) {
-                odontograma.setFechaActualizacion(new Date());
+                odontograma.setFechaActualizacion(LocalDate.now());
                 ServiceLocator.getInstanceOdontogramaDAO().update(odontograma);
             }
 
@@ -116,7 +114,7 @@ public class DelegateOdontograma {
             ServiceLocator.getInstanceRegistroOdntDAO().delete(registro);
 
             if (odontograma != null) {
-                odontograma.setFechaActualizacion(new Date());
+                odontograma.setFechaActualizacion(LocalDate.now());
                 ServiceLocator.getInstanceOdontogramaDAO().update(odontograma);
             }
 
@@ -146,4 +144,4 @@ public class DelegateOdontograma {
             return new ArrayList<>();
         }
     }
-}}
+}

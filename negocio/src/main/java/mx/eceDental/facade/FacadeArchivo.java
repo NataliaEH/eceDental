@@ -1,6 +1,5 @@
 package mx.eceDental.facade;
 
-import java.util.Date;
 import java.util.List;
 import mx.eceDental.delegate.DelegateArchivo;
 
@@ -13,8 +12,8 @@ public class FacadeArchivo {
         this.delegateArchivo = new DelegateArchivo();
     }
 
-    public boolean registrar(int idExpediente, String nombreArchivo, Date fecha, String tipo, String ruta) {
-        return delegateArchivo.registrar(idExpediente, nombreArchivo, fecha, tipo, ruta);
+    public boolean registrar(int idExpediente, String nombreArchivo, String tipo, String ruta) {
+        return delegateArchivo.registrar(idExpediente, nombreArchivo, tipo, ruta);
     }
 
     public boolean eliminar(int id) {

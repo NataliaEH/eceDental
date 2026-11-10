@@ -3,18 +3,14 @@ package mx.eceDental.delegate;
 import mx.eceDental.entity.Expediente;
 import mx.eceDental.persistence.integration.ServiceLocator;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-
-
 
 public class DelegateNotaEvolucion {
 
-    public boolean registrar(int idExpediente, Date fecha, String contenido) {
+    public boolean registrar(int idExpediente, String contenido) {
         if (idExpediente <= 0
-                || fecha == null || fecha.after(new Date())
                 || contenido == null || contenido.trim().isEmpty()
                 || contenido.trim().length() > 1000) {
             return false;
@@ -28,7 +24,7 @@ public class DelegateNotaEvolucion {
             }
 
             NotaEvolucion nota = new NotaEvolucion();
-            nota.setFecha(fecha);
+            nota.setFecha(LocalDate.now());
             nota.setContenido(contenido.trim());
             nota.setExpediente(expediente);
 
@@ -41,43 +37,8 @@ public class DelegateNotaEvolucion {
         }
     }
 
-    public List<NotaEvolucion> buscarPorFecha(Date fecha) {
-        List<NotaEvolucion> resultado = new ArrayList<>();
-
-        if (fecha == null) {
-            return resultado;
-        }
-
-        try {
-            Calendar buscada = Calendar.getInstance();
-            buscada.setTime(fecha);
-
-            List<NotaEvolucion> todas = ServiceLocator.getInstanceNotaEvolucionDAO().findAll();
-
-            for (NotaEvolucion nota : todas) {
-                if (nota.getFecha() == null) {
-                    continue;
-                }
-
-                Calendar actual = Calendar.getInstance();
-                actual.setTime(nota.getFecha());
-
-                if (actual.get(Calendar.YEAR) == buscada.get(Calendar.YEAR)
-                        && actual.get(Calendar.DAY_OF_YEAR) == buscada.get(Calendar.DAY_OF_YEAR)) {
-                    resultado.add(nota);
-                }
-            }
-
-            return resultado;
-
-        } catch (Exception e) {
-            return new ArrayList<>();
-        }
-    }
-
-    public boolean modificar(int idNota, Date fecha, String contenido) {
+    public boolean modificar(int idNota, String contenido) {
         if (idNota <= 0
-                || fecha == null || fecha.after(new Date())
                 || contenido == null || contenido.trim().isEmpty()
                 || contenido.trim().length() > 1000) {
             return false;
@@ -90,7 +51,6 @@ public class DelegateNotaEvolucion {
                 return false;
             }
 
-            nota.setFecha(fecha);
             nota.setContenido(contenido.trim());
 
             ServiceLocator.getInstanceNotaEvolucionDAO().update(nota);
@@ -101,7 +61,6 @@ public class DelegateNotaEvolucion {
             return false;
         }
     }
-
 
     public boolean eliminar(int id) {
         if (id <= 0) {
@@ -135,7 +94,7 @@ public class DelegateNotaEvolucion {
                 }
 
                 if (ultima == null
-                        || nota.getFecha().after(ultima.getFecha())
+                        || nota.getFecha().isAfter(ultima.getFecha())
                         || (nota.getFecha().equals(ultima.getFecha())
                         && nota.getIdNota() > ultima.getIdNota())) {
                     ultima = nota;
@@ -165,6 +124,7 @@ public class DelegateNotaEvolucion {
                     resultado.add(nota);
                 }
             }
+
             return resultado;
 
         } catch (Exception e) {

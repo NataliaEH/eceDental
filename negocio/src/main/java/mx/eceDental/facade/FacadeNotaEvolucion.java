@@ -1,9 +1,7 @@
 package mx.eceDental.facade;
 
-import mx.eceDental.delegate.DelegateNotaEvolucion;
-
-import java.util.Date;
 import java.util.List;
+import mx.eceDental.delegate.DelegateNotaEvolucion;
 
 
 public class FacadeNotaEvolucion {
@@ -14,12 +12,12 @@ public class FacadeNotaEvolucion {
         this.delegateNotaEvolucion = new DelegateNotaEvolucion();
     }
 
-    public boolean registrar(int idExpediente, Date fecha, String contenido) {
-        return delegateNotaEvolucion.registrar(idExpediente, fecha, contenido);
+    public boolean registrar(int idExpediente, String contenido) {
+        return delegateNotaEvolucion.registrar(idExpediente, contenido);
     }
 
-    public boolean modificar(int idNota, Date fecha, String contenido) {
-        return delegateNotaEvolucion.modificar(idNota, fecha, contenido);
+    public boolean modificar(int idNota, String contenido) {
+        return delegateNotaEvolucion.modificar(idNota, contenido);
     }
 
     public boolean eliminar(int id) {

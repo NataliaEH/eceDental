@@ -1,21 +1,17 @@
 package mx.eceDental.delegate;
 
 
-
 import mx.eceDental.entity.Expediente;
 import mx.eceDental.persistence.integration.ServiceLocator;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class DelegateAbono {
 
-
-    public boolean registrar(int idExpediente, Date fecha, double abono, String concepto) {
-
+    public boolean registrar(int idExpediente, double abono, String concepto) {
         if (idExpediente <= 0
-                || fecha == null || fecha.after(new Date())
                 || abono <= 0
                 || concepto == null || concepto.trim().isEmpty()
                 || concepto.trim().length() > 100) {
@@ -30,7 +26,7 @@ public class DelegateAbono {
             }
 
             Abono pago = new Abono();
-            pago.setFecha(fecha);
+            pago.setFecha(LocalDate.now());
             pago.setAbono(abono);
             pago.setConcepto(concepto.trim());
             pago.setExpediente(expediente);
@@ -44,10 +40,8 @@ public class DelegateAbono {
         }
     }
 
-    public boolean modificar(int idAbono, Date fecha, double abono, String concepto) {
-
+    public boolean modificar(int idAbono, double abono, String concepto) {
         if (idAbono <= 0
-                || fecha == null || fecha.after(new Date())
                 || abono <= 0
                 || concepto == null || concepto.trim().isEmpty()
                 || concepto.trim().length() > 100) {
@@ -61,7 +55,6 @@ public class DelegateAbono {
                 return false;
             }
 
-            pago.setFecha(fecha);
             pago.setAbono(abono);
             pago.setConcepto(concepto.trim());
 
