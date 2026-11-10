@@ -6,6 +6,7 @@ import mx.eceDental.facade.*;
 public class ServiceFacadeLocator {
 
     private static FacadeAbono facadeAbono;
+    private static FacadeArchivo facadeArchivo;
     private static FacadePaciente facadePaciente;
     private static FacadeExpediente facadeExpediente;
     private static FacadeInterrogatorio facadeInterrogatorio;
@@ -17,6 +18,13 @@ public class ServiceFacadeLocator {
             facadeAbono = new FacadeAbono();
         }
         return facadeAbono;
+    }
+
+    public static FacadeArchivo getInstanceFacadeArchivo() {
+        if (facadeArchivo == null) {
+            facadeArchivo = new FacadeArchivo();
+        }
+        return facadeArchivo;
     }
 
     public static FacadeExpediente getInstanceFacadeExpediente() {
