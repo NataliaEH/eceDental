@@ -52,8 +52,12 @@ function cargarInterrogatorio() {
         document.getElementById("hospitalizacion").value = interrogatorio.isHospitalizado() ? "Si" : "No";
         document.getElementById("embarazada").value = interrogatorio.getEmbarazada() || "NA";
         document.getElementById("amamantando").value = interrogatorio.getAmamantando() || "NA";
-        document.getElementById("telefonoEmergencia").value = interrogatorio.getTelefonoEmergencia() || "";
-        document.getElementById("telefonoServicioMedico").value = interrogatorio.getTelefonoServicioMedico() || "";
+        const partesEmergencia = String(interrogatorio.getTelefonoEmergencia() || "").trim().split(" ");
+        const partesServicioMed = String(interrogatorio.getTelefonoServicioMedico() || "").trim().split(" ");
+        document.getElementById("codigoTelEmergencia").value = partesEmergencia[0] || "";
+        document.getElementById("telefonoEmergencia").value = partesEmergencia[1] || "";
+        document.getElementById("codigoTelServicioMedico").value = partesServicioMed[0] || "";
+        document.getElementById("telefonoServicioMedico").value = partesServicioMed[1] || "";
         if (interrogatorio.getUltimaConsultaDental()) {
             const fecha = interrogatorio.getUltimaConsultaDental();
             document.getElementById("ultimaConsultaDental").value = String(fecha);
@@ -115,9 +119,12 @@ function guardarInterrogatorio() {
             interrogatorio.setHospitalizado(document.getElementById("hospitalizacion").value === "Si");
             interrogatorio.setEmbarazada(document.getElementById("embarazada").value);
             interrogatorio.setAmamantando(document.getElementById("amamantando").value);
-            interrogatorio.setTelefonoEmergencia(document.getElementById("telefonoEmergencia").value.trim());
-            interrogatorio.setTelefonoServicioMedico(document.getElementById("telefonoServicioMedico").value.trim());
-            //fecha, metodo en el bean para parsearlo a LocalDate
+            const telEmergencia = document.getElementById("telefonoEmergencia").value.trim();
+            const codigoTelEmergencia = document.getElementById("codigoTelEmergencia").value.trim();
+            interrogatorio.setTelefonoEmergencia(codigoTelEmergencia + " " + telEmergencia);
+            const telServicioMed = document.getElementById("telefonoServicioMedico").value.trim();
+            const codigoTelServicioMed = document.getElementById("codigoTelServicioMedico").value.trim();
+            interrogatorio.setTelefonoServicioMedico(codigoTelServicioMed + " " + telServicioMed);
             const fecha = document.getElementById("ultimaConsultaDental").value;
             interrogatorioUI.setUltimaConsultaDental(fecha);
 
