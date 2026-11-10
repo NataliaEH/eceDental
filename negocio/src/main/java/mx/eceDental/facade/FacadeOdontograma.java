@@ -21,4 +21,10 @@ public class FacadeOdontograma {
         return delegateOdontograma.modificarRegistro(idRegistro, piezaDental, cara,
                 diagnostico, procedimiento, fecha);
     }
+
+    public boolean eliminarRegistro(int id) {
+        return delegateOdontograma.eliminarRegistro(id);
+    }
+
+
 }

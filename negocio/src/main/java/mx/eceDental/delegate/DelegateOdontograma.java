@@ -91,4 +91,34 @@ public class DelegateOdontograma {
             return false;
         }
     }
+
+    public boolean eliminarRegistro(int id) {
+        if (id <= 0) {
+            return false;
+        }
+
+        try {
+            RegistroOdontograma registro = ServiceLocator.getInstanceRegistroOdntDAO()
+                    .find(id).orElse(null);
+
+            if (registro == null) {
+                return false;
+            }
+
+            Odontograma odontograma = registro.getOdontograma();
+
+            ServiceLocator.getInstanceRegistroOdntDAO().delete(registro);
+
+            if (odontograma != null) {
+                odontograma.setFechaActualizacion(new Date());
+                ServiceLocator.getInstanceOdontogramaDAO().update(odontograma);
+            }
+
+            return true;
+
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
 }}
