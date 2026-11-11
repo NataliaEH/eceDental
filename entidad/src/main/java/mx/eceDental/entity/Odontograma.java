@@ -3,6 +3,7 @@ package mx.eceDental.entity;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name="Odontograma")
@@ -16,6 +17,9 @@ public class Odontograma {
     @Column(name = "Fecha_Actualizacion")
     private Date fechaActualizacion;
 
+    @OneToMany(mappedBy = "odontograma")
+    private List<RegistroOdontograma> registros;
+
     @OneToOne
     @JoinColumn(name = "id_Expediente",nullable = false)
     private Expediente expediente;
@@ -25,6 +29,9 @@ public class Odontograma {
 
     public Date getFechaActualizacion() {return fechaActualizacion;}
     public void setFechaActualizacion(Date fechaActualizacion) {this.fechaActualizacion = fechaActualizacion;}
+
+    public List<RegistroOdontograma> getRegistros() {return registros;}
+    public void setRegistros(List<RegistroOdontograma> registros) {this.registros = registros;}
 
     public Expediente getExpediente() {return expediente;}
     public void setExpediente(Expediente expediente) {this.expediente = expediente;}
