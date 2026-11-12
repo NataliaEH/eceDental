@@ -47,6 +47,10 @@ public class ServiceLocator {
         return new AbonoDAO(getEntityManager());
     }
 
+    public static CaraDAO getInstanceCaraDAO(){
+        return new CaraDAO(getEntityManager());
+    }
+
     /*
     Ya estaba esto, lo deje por si acaso
     public static UsuarioDAO getInstanceUsuarioDAO () {
