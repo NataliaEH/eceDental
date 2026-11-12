@@ -1,7 +1,7 @@
 package mx.eceDental.persistence.integration;
 
 import jakarta.persistence.EntityManager;
-import mx.eceDental.persistence.dao.*;
+import mx.eceDental.persistence.DAO.*;
 import mx.eceDental.persistence.persistence.HibernateUtil;
 
 public class ServiceLocator {
@@ -26,6 +26,7 @@ public class ServiceLocator {
     public static InterrogatorioDAO getInstanceInterrogatorioDAO() {return new InterrogatorioDAO(getEntityManager());}
 
     public static DiagnosticoYPlanDAO getInstanceDiagnosticoYPlanDAO () { return new DiagnosticoYPlanDAO(getEntityManager());}
+
     public static AlergiaDAO getInstanceAlergiaDAO() {return new AlergiaDAO(getEntityManager());}
 
     public static MedicacionDAO getInstanceMedicacionDAO() {return new MedicacionDAO(getEntityManager());}
@@ -33,6 +34,30 @@ public class ServiceLocator {
     public static EnfermedadDAO getInstanceEnfermedadDAO() {return new EnfermedadDAO(getEntityManager());}
 
     public static TelefonosPacienteDAO getInstanceTelefonosPacienteDAO() {return new TelefonosPacienteDAO(getEntityManager());}
+
+    public static NotaEvolucionDAO getInstanceNotaEvolucionDAO(){
+        return new NotaEvolucionDAO(getEntityManager());
+    }
+
+    public static ArchivoDAO getInstanceArchivoDAO(){
+        return new ArchivoDAO(getEntityManager());
+    }
+
+    public static AbonoDAO getInstanceAbonoDAO(){
+        return new AbonoDAO(getEntityManager());
+    }
+
+    public static OdontogramaDAO getInstanceCaraDAO(){
+        return new CaraDAO(getEntityManager());
+    }
+
+    public static RegistroOdontDAO getInstanceCaraDAO(){
+        return new CaraDAO(getEntityManager());
+    }
+
+    public static CaraDAO getInstanceCaraDAO(){
+        return new CaraDAO(getEntityManager());
+    }
 
     /*
     Ya estaba esto, lo deje por si acaso
