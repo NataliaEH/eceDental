@@ -7,5 +7,7 @@ public class HelperOdontograma {
     public boolean registrarRegistro(int idExpediente, int piezaDental, String cara, String diagnostico, String procedimiento){
         return ServiceFacadeLocator.getInstanceFacadeOdontograma().registrarRegistro(idExpediente, piezaDental, cara, diagnostico, procedimiento);
     }
-
+    public boolean modificarRegistro(int idRegistro, int piezaDental, String cara, String diagnostico, String procedimiento){
+        return ServiceFacadeLocator.getInstanceFacadeOdontograma().modificarRegistro(idRegistro, piezaDental, cara, diagnostico, procedimiento);
+    }
 }
