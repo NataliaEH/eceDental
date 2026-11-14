@@ -3,7 +3,6 @@ package mx.eceDental.delegate;
 
 import mx.eceDental.entity.Abono;
 import mx.eceDental.entity.Expediente;
-import mx.eceDental.entity.NotaEvolucion;
 import mx.eceDental.persistence.integration.ServiceLocator;
 
 import java.time.LocalDate;
@@ -47,13 +46,14 @@ public class DelegateAbono {
                 || monto <= 0
                 || concepto == null || concepto.trim().isEmpty()
                 || concepto.trim().length() > 100) {
+            System.out.println("First if");
             return false;
         }
-
         try {
             Abono pago = ServiceLocator.getInstanceAbonoDAO().find(idAbono).orElse(null);
 
             if (pago == null) {
+                System.out.println("Pago null");
                 return false;
             }
 
@@ -61,10 +61,9 @@ public class DelegateAbono {
             pago.setConcepto(concepto.trim());
 
             ServiceLocator.getInstanceAbonoDAO().update(pago);
-
             return true;
-
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }
@@ -81,10 +80,12 @@ public class DelegateAbono {
                 return false;
             }
 
-            ServiceLocator.getInstanceAbonoDAO().delete(pago);
-
+            Expediente exp = pago.getExpediente();
+            if (exp != null && exp.getAbono() != null) {
+                exp.getAbono().removeIf(d -> d.getIdAbono() == id);
+                ServiceLocator.getInstanceExpedienteDAO().update(exp);
+            }
             return true;
-
         } catch (Exception e) {
             return false;
         }

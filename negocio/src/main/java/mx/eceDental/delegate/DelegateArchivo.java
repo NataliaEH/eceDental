@@ -2,7 +2,6 @@ package mx.eceDental.delegate;
 
 import mx.eceDental.entity.Archivo;
 import mx.eceDental.entity.Expediente;
-import mx.eceDental.entity.NotaEvolucion;
 import mx.eceDental.persistence.integration.ServiceLocator;
 
 import java.awt.*;
@@ -11,7 +10,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -87,8 +85,11 @@ public class DelegateArchivo {
             if (archivo == null) {
                 return false;
             }
-
-            ServiceLocator.getInstanceArchivoDAO().delete(archivo);
+            Expediente exp = archivo.getExpediente();
+            if (exp != null && exp.getArchivo() != null) {
+                exp.getArchivo().removeIf(d -> d.getIdArchivo() == id);
+                ServiceLocator.getInstanceExpedienteDAO().update(exp);
+            }
             return true;
         } catch (Exception e) {
             return false;
@@ -98,22 +99,19 @@ public class DelegateArchivo {
 
     public boolean descargar(int id, File destino) {
         if (id <= 0 || destino == null) {
-            System.out.println("descargar: id=" + id + " destino=" + destino);
             return false;
         }
         try {
             Archivo archivo = ServiceLocator.getInstanceArchivoDAO().find(id).orElse(null);
             if (archivo == null || archivo.getRuta() == null || archivo.getRuta().trim().isEmpty()) {
-                System.out.println("descargar: archivo o ruta null");
                 return false;
             }
             Path origen = Paths.get(System.getProperty("user.home"), "eceDental").resolve(archivo.getRuta());
-            System.out.println("descargar: origen = " + origen + " -> destino = " + destino);
             if (!Files.exists(origen) || !Files.isRegularFile(origen)) {
-                System.out.println("descargar: no existe en disco");
                 return false;
             }
-            Files.copy(origen, destino.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            byte[] bytes = Files.readAllBytes(origen);
+            Files.write(destino.toPath(), bytes);
             return true;
         } catch (Throwable e) {
             e.printStackTrace();

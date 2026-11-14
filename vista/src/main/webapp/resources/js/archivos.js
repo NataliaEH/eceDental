@@ -1,10 +1,13 @@
+let ordenFecha = "desc";
+let idArchivoAEliminar = 0;
 function inicializarArchivos() {
     cargarArchivos();
     guardarArchivos();
     inicializarFiltro();
+    inicializarOrden();
+    inicializarEliminar();
 
     document.getElementById("archivo").addEventListener("click", function (event) {
-        event.preventDefault();
         const nombreElegido = archivoUI.seleccionarArchivo();
         if (nombreElegido) {
             document.getElementById("nombreArchivoElegido").textContent = nombreElegido;
@@ -44,27 +47,46 @@ function cargarArchivos() {
         }
         tabla.innerHTML = "";
 
+        const lista = [];
         for (let i = 0; i < registros.size(); i++) {
             const registro = registros.get(i);
 
             if (Number(registro.getExpediente().getIdExpediente()) !== Number(idExpediente)) {
                 continue;
             }
-            if (Number(registro.getExpediente().getIdExpediente()) !== Number(idExpediente)) {
-                continue;
+
+            lista.push({
+                id: Number(registro.getIdArchivo()),
+                fecha: String(registro.getFecha()),
+                nombre: String(registro.getNombre()),
+                tipo: String(registro.getTipo())
+            });
+        }
+
+        lista.sort(function (a, b) {
+            let resultado = 0;
+            if (a.fecha < b.fecha) {
+                resultado = -1;
+            } else if (a.fecha > b.fecha) {
+                resultado = 1;
             }
-            const idArchivo = Number(registro.getIdArchivo());
+            if (ordenFecha === "desc") {
+                resultado = -resultado;
+            }
+            return resultado;
+        });
+
+        for (let i = 0; i < lista.length; i++) {
+            const archivo = lista[i];
 
             const fila = document.createElement("tr");
-            const fechaTexto = registro.getFecha();
             const tdFecha = document.createElement("td");
-            tdFecha.textContent = fechaTexto;
+            tdFecha.textContent = archivo.fecha;
             const tdNombre = document.createElement("td");
-            tdNombre.textContent = registro.getNombre();
+            tdNombre.textContent = archivo.nombre;
             const tdTipo = document.createElement("td");
-            tdTipo.textContent = registro.getTipo();
+            tdTipo.textContent = archivo.tipo;
 
-            //ACCIONES (MODIFICAR Y ELIMINAR)
             const tdAcciones = document.createElement("td");
 
             const botonVer = document.createElement("button");
@@ -74,8 +96,7 @@ function cargarArchivos() {
             botonVer.textContent = "Ver";
             botonVer.addEventListener("click", function () {
                 try{
-                    const ver = window.archivoUI.abrirArchivo(idArchivo);
-                    mostrarMensaje(idArchivo.toString());
+                    const ver = window.archivoUI.abrirArchivo(archivo.id);
                     if(ver)
                         mostrarMensaje("Archivo abierto","success");
                     else
@@ -91,8 +112,7 @@ function cargarArchivos() {
             botonDescargar.textContent = "Descargar";
             botonDescargar.addEventListener("click", function () {
                 try{
-                    const descargado = window.archivoUI.descargar(idArchivo);
-                    mostrarMensaje(idArchivo.toString());
+                    const descargado = window.archivoUI.descargar(archivo.id);
                     if(descargado)
                         mostrarMensaje("Archivo descargado","success");
                     else
@@ -106,8 +126,8 @@ function cargarArchivos() {
             botonEliminar.className = "btn btn-sm btn-muted";
             botonEliminar.textContent = "Eliminar";
             botonEliminar.addEventListener("click", function () {
+                idArchivoAEliminar = archivo.id;
                 document.getElementById("confirmar-eliminar").style.display = "flex";
-                inicializarEliminar(registro);
             });
 
             tdAcciones.appendChild(botonVer);
@@ -121,6 +141,7 @@ function cargarArchivos() {
 
             tabla.appendChild(fila);
         }
+        actualizarIconoOrden();
     } catch (error) {
         mostrarMensaje("No fue posible cargar los datos del paciente.","danger");
     }
@@ -155,6 +176,7 @@ function guardarArchivos() {
                 mostrarMensaje("Archivo registrado correctamente.","success");
                 cargarArchivos();
                 formulario.reset();
+                document.getElementById("nombreArchivoElegido").textContent = "Ningún archivo seleccionado";
             }else{
                 mostrarMensaje("No fue posible registrar el archivo.","danger");
             }
@@ -166,13 +188,13 @@ function guardarArchivos() {
 }
 
 //ELIMINACION
-function inicializarEliminar(registro){
+function inicializarEliminar(){
     const formulario = document.getElementById("formEliminar");
     if (!formulario) return;
 
     formulario.addEventListener("submit", function(event) {
         event.preventDefault();
-        window.archivoUI.eliminar(registro.getIdArchivo());
+        window.archivoUI.eliminar(idArchivoAEliminar);
         document.getElementById("confirmar-eliminar").style.display = "none";
         cargarArchivos();
     });
@@ -183,6 +205,23 @@ function inicializarEliminar(registro){
     });
 }
 
+function inicializarOrden() {
+    const enlace = document.querySelector(".sort-link");
+    if (!enlace) return;
+
+    enlace.addEventListener("click", function (event) {
+        event.preventDefault();
+        ordenFecha = ordenFecha === "asc" ? "desc" : "asc";
+        cargarArchivos();
+    });
+}
+
+function actualizarIconoOrden() {
+    const icono = document.querySelector(".sort-link .sort-icon");
+    if (icono) {
+        icono.textContent = ordenFecha === "asc" ? "▲" : "▼";
+    }
+}
 function inicializarFiltro(){
     const formulario = document.getElementById("formFiltroArchivos");
     if (!formulario) return;
