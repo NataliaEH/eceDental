@@ -1,8 +1,6 @@
 package mx.eceDental.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -29,20 +27,20 @@ public class Expediente {
     @OneToOne(mappedBy = "expediente", cascade = CascadeType.ALL)
     private Interrogatorio interrogatorio;
 
-    @OneToMany(mappedBy = "expediente")
+    @OneToMany(mappedBy = "expediente", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<NotaEvolucion> notasEvolucion;
-
-    @OneToMany(mappedBy = "expediente")
-    private List<Archivo> archivo;
-
-    @OneToMany(mappedBy = "expediente")
-    private List<Abono> abono;
-
-    @OneToOne(mappedBy = "expediente")
-    private Odontograma odontograma;
 
     @OneToMany(mappedBy = "expediente", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DiagnosticoYPlan> diagnosticos;
+
+    @OneToMany(mappedBy = "expediente", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Archivo> archivo;
+
+    @OneToMany(mappedBy = "expediente", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Abono> abono;
+
+    @OneToOne(mappedBy = "expediente", cascade = CascadeType.ALL)
+    private Odontograma odontograma;
 
     public int getIdExpediente() {
         return idExpediente;

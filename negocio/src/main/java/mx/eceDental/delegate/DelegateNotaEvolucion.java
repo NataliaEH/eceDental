@@ -2,7 +2,6 @@ package mx.eceDental.delegate;
 
 import mx.eceDental.entity.Expediente;
 import mx.eceDental.entity.NotaEvolucion;
-import mx.eceDental.entity.RegistroOdontograma;
 import mx.eceDental.persistence.integration.ServiceLocator;
 
 import java.time.LocalDate;
@@ -43,6 +42,7 @@ public class DelegateNotaEvolucion {
         if (idNota <= 0
                 || contenido == null || contenido.trim().isEmpty()
                 || contenido.trim().length() > 1000) {
+            System.out.println("First if");
             return false;
         }
 
@@ -50,16 +50,15 @@ public class DelegateNotaEvolucion {
             NotaEvolucion nota = ServiceLocator.getInstanceNotaEvolucionDAO().find(idNota).orElse(null);
 
             if (nota == null) {
+                System.out.println("Nota null");
                 return false;
             }
 
             nota.setContenido(contenido.trim());
-
             ServiceLocator.getInstanceNotaEvolucionDAO().update(nota);
-
             return true;
-
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }
@@ -76,10 +75,12 @@ public class DelegateNotaEvolucion {
                 return false;
             }
 
-            ServiceLocator.getInstanceNotaEvolucionDAO().delete(nota);
-
+            Expediente exp = nota.getExpediente();
+            if (exp != null && exp.getNotasEvolucion() != null) {
+                exp.getNotasEvolucion().removeIf(d -> d.getIdNota() == id);
+                ServiceLocator.getInstanceExpedienteDAO().update(exp);
+            }
             return true;
-
         } catch (Exception e) {
             return false;
         }

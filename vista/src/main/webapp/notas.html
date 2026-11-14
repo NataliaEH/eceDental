@@ -44,7 +44,10 @@
                 <div class="table-wrap">
                     <table>
                         <thead>
-                        <tr><th>Fecha</th><th>Contenido</th><th>Acciones</th></tr>
+                        <tr>
+                            <th><a href="#" class="sort-link" data-sort="fecha" data-order="desc">Fecha <span class="sort-icon" aria-hidden="true"></span></a></th>
+                            <th>Contenido</th><th>Acciones</th>
+                        </tr>
                         </thead>
                         <tbody id="tablaNotas">
                         </tbody>
@@ -92,7 +95,7 @@
                 <input type="hidden" id="modIdNota"/>
                 <div class="form-grid cols-1">
                     <div class="form-group">
-                        <label>Contenido de la nota *</label>
+                        <label for="modContenido">Contenido de la nota *</label>
                         <textarea id="modContenido" name="contenido" required="required" placeholder="Descripción del procedimiento, observaciones clínicas, plan de tratamiento..."></textarea>
                     </div>
                 </div>

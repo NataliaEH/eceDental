@@ -1,35 +1,40 @@
+let ordenFecha = "desc";
+let idAbonoAEliminar = 0;
 function inicializarPagos() {
     cargarPagos();
     guardarPagos();
     modificarPagos();
+    inicializarOrden();
+    inicializarEliminar();
 }
 
 function cargarPagos() {
     const idExpediente = sessionStorage.getItem("expedienteActualId");
 
     if (!idExpediente) {
-        mostrarMensaje("No se ha seleccionado ningún expediente.","danger");
+        mostrarMensaje("No se ha seleccionado ningún expediente.", "danger");
         return;
     }
 
     try {
         const expediente = window.expedienteUI.buscar(parseInt(idExpediente));
         if (!expediente) {
-            mostrarMensaje("No se encontró el expediente.","danger");
+            mostrarMensaje("No se encontró el expediente.", "danger");
             return;
         }
 
         const paciente = expediente.getPaciente();
         if (!paciente) {
-            mostrarMensaje("El expediente no tiene un paciente asociado.","danger");
+            mostrarMensaje("El expediente no tiene un paciente asociado.", "danger");
             return;
         }
 
         document.getElementById("nombrePaciente").textContent = paciente.getNombre();
         const tabla = document.getElementById("tablaPagos");
-        let registros = abonoUI.consultar(idExpediente);
+        const registros = abonoUI.consultar(idExpediente);
         tabla.innerHTML = "";
 
+        const lista = [];
         for (let i = 0; i < registros.size(); i++) {
             const registro = registros.get(i);
 
@@ -37,16 +42,38 @@ function cargarPagos() {
                 continue;
             }
 
-            const fila = document.createElement("tr");
-            const fechaTexto = registro.getFecha();
-            const tdFecha = document.createElement("td");
-            tdFecha.textContent = fechaTexto;
-            const tdMonto = document.createElement("td");
-            tdMonto.textContent = registro.getMonto();
-            const tdConcepto = document.createElement("td");
-            tdConcepto.textContent = registro.getConcepto();
+            lista.push({
+                id: Number(registro.getIdAbono()),
+                fecha: String(registro.getFecha()),
+                monto: String(registro.getMonto()),
+                concepto: String(registro.getConcepto())
+            });
+        }
 
-            //ACCIONES (MODIFICAR Y ELIMINAR)
+        lista.sort(function (a, b) {
+            let resultado = 0;
+            if (a.fecha < b.fecha) {
+                resultado = -1;
+            } else if (a.fecha > b.fecha) {
+                resultado = 1;
+            }
+            if (ordenFecha === "desc") {
+                resultado = -resultado;
+            }
+            return resultado;
+        });
+
+        for (let i = 0; i < lista.length; i++) {
+            const pago = lista[i];
+
+            const fila = document.createElement("tr");
+            const tdFecha = document.createElement("td");
+            tdFecha.textContent = pago.fecha;
+            const tdMonto = document.createElement("td");
+            tdMonto.textContent = pago.monto;
+            const tdConcepto = document.createElement("td");
+            tdConcepto.textContent = pago.concepto;
+
             const tdAcciones = document.createElement("td");
 
             const botonModificar = document.createElement("button");
@@ -55,17 +82,15 @@ function cargarPagos() {
             botonModificar.style.marginRight = "6px";
             botonModificar.textContent = "Modificar";
             botonModificar.addEventListener("click", function () {
-                const id = registro.getIdAbono();
-                const registroModificar = abonoUI.buscar(id);
-                abrirModalModificar(registroModificar);
+                abrirModalModificar(abonoUI.buscar(pago.id));
             });
             const botonEliminar = document.createElement("button");
             botonEliminar.type = "button";
             botonEliminar.className = "btn btn-sm btn-muted";
             botonEliminar.textContent = "Eliminar";
             botonEliminar.addEventListener("click", function () {
+                idAbonoAEliminar = pago.id;
                 document.getElementById("confirmar-eliminar").style.display = "flex";
-                inicializarEliminar(registro);
             });
 
             tdAcciones.appendChild(botonModificar);
@@ -75,12 +100,12 @@ function cargarPagos() {
             fila.appendChild(tdMonto);
             fila.appendChild(tdConcepto);
             fila.appendChild(tdAcciones);
-
             tabla.appendChild(fila);
         }
+        actualizarIconoOrden();
     } catch (error) {
-        mostrarMensaje("No fue posible cargar los datos del paciente.","danger");
-        mostrarMensaje(error, "danger")
+        mostrarMensaje("No fue posible cargar los datos del paciente.", "danger");
+        mostrarMensaje(error, "danger");
     }
 }
 
@@ -109,17 +134,38 @@ function guardarPagos() {
             pago.setConcepto(concepto);
             pago.setExpediente(expediente);
 
-            abonoUI.registrar();
-
-            mostrarMensaje("Diagnóstico y plan registrados correctamente.","success");
-            cargarPagos();
-            formulario.reset();
+            const registrado = abonoUI.registrar();
+            if(registrado){
+                mostrarMensaje("Pago registrado correctamente.","success");
+                cargarPagos();
+                formulario.reset();
+            }else
+                mostrarMensaje("No fue posible registrar el pago.","danger");
         } catch (error) {
             mostrarMensaje("No fue posible registrar el pago.","danger");
             mostrarMensaje(error, "danger")
         }
     });
 }
+
+function inicializarOrden() {
+    const enlace = document.querySelector(".sort-link");
+    if (!enlace) return;
+
+    enlace.addEventListener("click", function (event) {
+        event.preventDefault();
+        ordenFecha = ordenFecha === "asc" ? "desc" : "asc";
+        cargarPagos();
+    });
+}
+
+function actualizarIconoOrden() {
+    const icono = document.querySelector(".sort-link .sort-icon");
+    if (icono) {
+        icono.textContent = ordenFecha === "asc" ? "▲" : "▼";
+    }
+}
+
 //ESTAS SON PARA LA MODIFICACION
 function abrirModalModificar(registro) {
     try{
@@ -160,14 +206,17 @@ function modificarPagos() {
             const monto = document.getElementById("modMonto").value.trim();
             const concepto = document.getElementById("modConcepto").value.trim();
 
-            const registro = abonoUI.buscar(id);
+            const registro = abonoUI.getAbono();
+            registro.setIdAbono(id);
             registro.setMonto(monto);
             registro.setConcepto(concepto);
-            abonoUI.modificar(registro);
-
-            cerrarModalModificar();
-            mostrarMensaje("Pago modificado correctamente.", "success");
-            cargarPagos();
+            const modificado = abonoUI.modificar();
+            if (modificado){
+                cerrarModalModificar();
+                mostrarMensaje("Pago modificado correctamente.", "success");
+                cargarPagos();
+            }else
+                mostrarMensaje("No fue posible modificar el pago.", "danger");
         } catch (error) {
             mostrarMensaje("No fue posible modificar el pago.", "danger");
         }
@@ -175,17 +224,17 @@ function modificarPagos() {
 }
 
 //ELIMINACION
-function inicializarEliminar(registro){
+function inicializarEliminar() {
     const formulario = document.getElementById("formEliminar");
     if (!formulario) return;
 
-    formulario.addEventListener("submit", function(event) {
+    formulario.addEventListener("submit", function (event) {
         event.preventDefault();
-        window.abonoUI.eliminar(registro.getIdAbono());
+        window.abonoUI.eliminar(idAbonoAEliminar);
         document.getElementById("confirmar-eliminar").style.display = "none";
         cargarPagos();
     });
-    formulario.addEventListener("reset", function(event) {
+    formulario.addEventListener("reset", function (event) {
         event.preventDefault();
         document.getElementById("confirmar-eliminar").style.display = "none";
         window.location.hash = "";

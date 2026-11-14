@@ -44,7 +44,6 @@ function mostrarTabla() {
         if (orden.campo === "nombre") {
             resultado = a.nombre.localeCompare(b.nombre, "es", { sensitivity: "base" });
         } else {
-            // Fechas en formato yyyy-MM-dd: se comparan como texto
             if (a.fechaConsulta < b.fechaConsulta) {
                 resultado = -1;
             } else if (a.fechaConsulta > b.fechaConsulta) {
