@@ -1,47 +1,135 @@
+let expedientesCache = [];
+let orden = { campo: "ultimaConsulta", direccion: "desc" };
+
 function inicializarBuscarExpedientes() {
     cargarExpedientes();
     inicializarBuscador();
+    inicializarOrden();
 }
 
 function cargarExpedientes() {
-    const tabla = document.getElementById("tablaExpedientes");
     try {
-        const expedientesJava = window.expedienteUI.consultar();
-        tabla.innerHTML = "";
-        if (expedientesJava.size() === 0) {
-            tabla.innerHTML = `
-                <tr>
-                    <td colspan="4">No hay expedientes registrados.</td>
-                </tr>
-            `;
-            return;
-        }
+        const lista = window.expedienteUI.consultar();
+        expedientesCache = [];
 
-        for (let i = 0; i < expedientesJava.size(); i++) {
-            const expediente = expedientesJava.get(i);
-            const paciente = expediente.getPaciente();
-            const nombrePaciente = paciente.getNombre();
-            const fechaUltimaConsulta = "Sin consultas";
-            const fechaCreacion = expediente.getFechaCreacion();
-            const fila = document.createElement("tr");
-            const idExpediente = expediente.getIdExpediente();
+        for (let i = 0; i < lista.size(); i++) {
+            const expediente = lista.get(i);
+            const id = Number(expediente.getIdExpediente());
+            const ultima = window.notaEvolucionUI.buscarUltima(id);
 
-            fila.innerHTML = `
-                <td>${nombrePaciente}</td>
-                <td>${fechaUltimaConsulta}</td>
-                <td>${fechaCreacion}</td>
-                <td>
-                    <a href="dashboardExpediente.html"
-                        onclick="sessionStorage.setItem('expedienteActualId', '${idExpediente}')"
-                       class="btn btn-sm btn-secondary">
-                        Ver
-                    </a>
-                </td>
-            `;
-            tabla.appendChild(fila);
+            expedientesCache.push({
+                id: id,
+                nombre: String(expediente.getPaciente().getNombre()),
+                fechaConsulta: ultima != null ? String(ultima.getFecha()) : "",
+                fechaCreacion: String(expediente.getFechaCreacion())
+            });
         }
+        mostrarTabla();
     } catch (error) {
-        //
+        mostrarMensaje("No fue posible cargar los expedientes.", "danger");
+    }
+}
+
+function mostrarTabla() {
+    const tabla = document.getElementById("tablaExpedientes");
+    const nombre = document.getElementById("nombrePaciente").value.trim().toLowerCase();
+
+    const lista = expedientesCache.filter(function (e) {
+        return e.nombre.toLowerCase().includes(nombre);
+    });
+
+    lista.sort(function (a, b) {
+        let resultado = 0;
+
+        if (orden.campo === "nombre") {
+            resultado = a.nombre.localeCompare(b.nombre, "es", { sensitivity: "base" });
+        } else {
+            // Fechas en formato yyyy-MM-dd: se comparan como texto
+            if (a.fechaConsulta < b.fechaConsulta) {
+                resultado = -1;
+            } else if (a.fechaConsulta > b.fechaConsulta) {
+                resultado = 1;
+            }
+        }
+
+        if (resultado === 0) {
+            resultado = a.nombre.localeCompare(b.nombre, "es", { sensitivity: "base" });
+        } else if (orden.direccion === "desc") {
+            resultado = -resultado;
+        }
+        return resultado;
+    });
+
+    tabla.innerHTML = "";
+
+    if (lista.length === 0) {
+        const fila = document.createElement("tr");
+        const td = document.createElement("td");
+        td.colSpan = 4;
+        td.textContent = expedientesCache.length === 0
+            ? "No hay expedientes registrados."
+            : "No se encontraron expedientes.";
+        fila.appendChild(td);
+        tabla.appendChild(fila);
+    }
+
+    for (let i = 0; i < lista.length; i++) {
+        const e = lista[i];
+        const fila = document.createElement("tr");
+
+        const tdNombre = document.createElement("td");
+        tdNombre.textContent = e.nombre;
+        const tdConsulta = document.createElement("td");
+        tdConsulta.textContent = e.fechaConsulta === "" ? "Sin consultas" : e.fechaConsulta;
+        const tdCreacion = document.createElement("td");
+        tdCreacion.textContent = e.fechaCreacion;
+
+        const tdAcciones = document.createElement("td");
+        const enlace = document.createElement("a");
+        enlace.href = "dashboardExpediente.html";
+        enlace.className = "btn btn-sm btn-secondary";
+        enlace.textContent = "Ver";
+        enlace.addEventListener("click", function () {
+            sessionStorage.setItem("expedienteActualId", String(e.id));
+        });
+        tdAcciones.appendChild(enlace);
+
+        fila.appendChild(tdNombre);
+        fila.appendChild(tdConsulta);
+        fila.appendChild(tdCreacion);
+        fila.appendChild(tdAcciones);
+        tabla.appendChild(fila);
+    }
+
+    actualizarIconosOrden();
+}
+
+function inicializarOrden() {
+    const enlaces = document.querySelectorAll(".sort-link");
+    for (let i = 0; i < enlaces.length; i++) {
+        enlaces[i].addEventListener("click", function (event) {
+            event.preventDefault();
+            const campo = this.dataset.sort;
+
+            if (orden.campo === campo) {
+                orden.direccion = orden.direccion === "asc" ? "desc" : "asc";
+            } else {
+                orden.campo = campo;
+                orden.direccion = this.dataset.order;
+            }
+            mostrarTabla();
+        });
+    }
+}
+function actualizarIconosOrden() {
+    const enlaces = document.querySelectorAll(".sort-link");
+    for (let i = 0; i < enlaces.length; i++) {
+        const icono = enlaces[i].querySelector(".sort-icon");
+        if (enlaces[i].dataset.sort === orden.campo) {
+            icono.textContent = orden.direccion === "asc" ? "▲" : "▼";
+        } else {
+            icono.textContent = "▼";
+        }
     }
 }
 
@@ -49,78 +137,15 @@ function inicializarBuscador() {
     const formulario = document.getElementById("formBuscarExpediente");
     if (!formulario) return;
 
-    formulario.addEventListener("submit", function(event) {
+    formulario.addEventListener("submit", function (event) {
         event.preventDefault();
-
-        const nombre = document.getElementById("nombrePaciente").value.trim();
-        const tabla = document.getElementById("tablaExpedientes");
-
-        try {
-            const expedientesJava = expedienteUI.consultar();
-            tabla.innerHTML = "";
-            for (let i = 0; i < expedientesJava.size(); i++) {
-                const expediente = expedientesJava.get(i);
-                const paciente = expediente.getPaciente();
-                if (paciente.getNombre().toLowerCase().includes(nombre.toLowerCase())) {
-                    const idExpediente = expediente.getIdExpediente();
-                    const fila = document.createElement("tr");
-                    fila.innerHTML = `
-                        <td>${paciente.getNombre()}</td>
-                        <td>Sin consultas</td>
-                        <td>${expediente.getFechaCreacion()}</td>
-                        <td>
-                            <a href="dashboardExpediente.html?id=${idExpediente}"
-                               onclick="sessionStorage.setItem('expedienteActualId', '${idExpediente}')"
-                               class="btn btn-sm btn-secondary">
-                                Ver
-                            </a>
-                        </td>
-                    `;
-                    tabla.appendChild(fila);
-                }
-            }
-
-            if (tabla.innerHTML === "") {
-                tabla.innerHTML = `
-                    <tr>
-                        <td colspan="4">No se encontraron expedientes.</td>
-                    </tr>
-                `;
-            }
-        } catch (error) {
-            //
-        }
+        mostrarTabla();
     });
-    formulario.addEventListener("reset", function(event) {
+
+    formulario.addEventListener("reset", function (event) {
         event.preventDefault();
-        cargarExpedientes()
         document.getElementById("nombrePaciente").value = "";
-        document.getElementById("fechaUltimaConsulta").value = "";
-        document.getElementById("ordenExpedientes").value = "ultimaConsulta-desc";
-    });
-}
-//para el orden del buscador
-function ordenarExpedientes(lista, criterio) {
-    lista.sort(function (a, b) {
-        let resultado = 0;
-
-        if (criterio === "nombre-asc" || criterio === "nombre-desc") {
-            const nombreA = a.getPaciente().getNombre();
-            const nombreB = b.getPaciente().getNombre();
-            resultado = nombreA.localeCompare(nombreB, "es", { sensitivity: "base" });
-        } else {
-            const fechaA = obtenerFechaConsulta(a);
-            const fechaB = obtenerFechaConsulta(b);
-            if (fechaA < fechaB) {
-                resultado = -1;
-            } else if (fechaA > fechaB) {
-                resultado = 1;
-            }
-        }
-
-        if (criterio.endsWith("-desc")) {
-            resultado = -resultado;
-        }
-        return resultado;
+        orden = { campo: "ultimaConsulta", direccion: "desc" };
+        mostrarTabla();
     });
 }

@@ -30,7 +30,6 @@ function inicializarDashboardExpediente() {
         });
 
         const hoy = new Date();
-        let viejo = false;
         const fechaCreacion = expediente.getFechaCreacion().toString();
 
         if (fechaCreacion) {
@@ -38,7 +37,6 @@ function inicializarDashboardExpediente() {
             const fechaLimite = new Date(fecha);
             fechaLimite.setFullYear(fechaLimite.getFullYear() + 5);
             if (hoy >= fechaLimite) {
-                viejo = true;
                 document.getElementById("btnEliminar").style.display = "flex";
             }else{
                 document.getElementById("btnEliminar").style.display = "none";
@@ -48,8 +46,7 @@ function inicializarDashboardExpediente() {
         inicializarNotasGenerales(paciente);
         document.getElementById("notas").value = paciente.getNotas();
         //alergias
-        const alergias = expediente.getInterrogatorio().getAlergiasString();
-        document.getElementById("alergias").value = alergias;
+        document.getElementById("alergias").value = expediente.getInterrogatorio().getAlergiasString();
 
         //notaevolucion
         const tabla = document.getElementById("tablaNotas");
@@ -75,7 +72,7 @@ function inicializarDashboardExpediente() {
         mostrarMensaje(error, "danger")
     }
 }
-function inicializarEliminarExpediente(paciente){
+function inicializarEliminarExpediente(){
     const formulario = document.getElementById("formEliminarExpediente");
     if (!formulario) return;
 
@@ -99,9 +96,13 @@ function inicializarNotasGenerales(paciente){
         event.preventDefault();
         try{
             const texto = document.getElementById("notas").value.trim();
-            pacienteUI.agregarNotas(paciente.getIdPaciente(), texto);
-            window.location.hash = "";
-            mostrarMensaje("Notas generales guardadas correctamente.","success");
+            const guardado = pacienteUI.agregarNotas(paciente.getIdPaciente(), texto);
+            if (guardado) {
+                mostrarMensaje("Notas generales guardadas correctamente.", "success");
+                window.location.hash = "";
+            } else {
+                mostrarMensaje("No fue posible guardar las notas generales.", "danger");
+            }
         } catch (error) {
             mostrarMensaje("No fue posible guardar las notas generales.","danger");
         }
@@ -133,7 +134,7 @@ function guardarNotas() {
             notaEvolucionUI.registrar();
 
             mostrarMensaje("Nota de evolución registrada correctamente.","success");
-            cargarNotas();
+            inicializarDashboardExpediente();
             formulario.reset();
         } catch (error) {
             mostrarMensaje("No fue posible registrar la nota de evolución.","danger");

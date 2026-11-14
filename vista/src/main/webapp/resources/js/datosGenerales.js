@@ -30,13 +30,6 @@ function cargarDatosGenerales(){
         const sexo = paciente.getSexo();
         document.getElementById("sexoM").checked = sexo === "M";
         document.getElementById("sexoF").checked = sexo === "F";
-        const estadosCivil = {
-            "Soltero": "Soltero/a",
-            "Casado": "Casado/a",
-            "Divorciado": "Divorciado/a",
-            "Viudo": "Viudo/a",
-            "Union libre": "Unión libre"
-        };
         document.getElementById("edoCivil").value = paciente.getEdoCivil() || "";
         document.getElementById("ocupacion").value = paciente.getOcupacion() || "";
         document.getElementById("domicilio").value = paciente.getDomicilio() || "";
@@ -54,7 +47,11 @@ function cargarDatosGenerales(){
                 const partes = String(telefono.getNumero() || "").trim().split(" ");
 
                 let lada = partes[0];
-                let num = partes[1];
+                let num = "";
+
+                if (partes.length === 2) {
+                    num = partes[1];
+                }
 
                 if (tipo === "Principal") {
                     document.getElementById("codigoTel").value = lada;
