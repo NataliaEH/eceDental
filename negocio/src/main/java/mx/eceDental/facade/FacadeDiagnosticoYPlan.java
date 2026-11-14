@@ -3,6 +3,9 @@ package mx.eceDental.facade;
 
 import mx.eceDental.delegate.DelegateDiagnosticoYPlan;
 import mx.eceDental.entity.DiagnosticoYPlan;
+import mx.eceDental.entity.NotaEvolucion;
+
+import java.util.List;
 
 public class FacadeDiagnosticoYPlan {
 
@@ -15,16 +18,16 @@ public class FacadeDiagnosticoYPlan {
     public boolean registrar(int idExpediente, String diagnostico, String procedimiento) {
         return delegateDiagnosticoYPlan.registrar(idExpediente, diagnostico, procedimiento);
     }
-
     public boolean modificar(int idDiagnosticoPlan, String diagnostico, String procedimiento) {
         return delegateDiagnosticoYPlan.modificar(idDiagnosticoPlan, diagnostico, procedimiento);
     }
-
     public boolean eliminar(int id) {
         return delegateDiagnosticoYPlan.eliminar(id);
     }
-
     public List<DiagnosticoYPlan> consultar(int idExpediente) {
         return delegateDiagnosticoYPlan.consultar(idExpediente);
+    }
+    public DiagnosticoYPlan buscar(int idRegistro){
+        return delegateDiagnosticoYPlan.buscar(idRegistro);
     }
 }

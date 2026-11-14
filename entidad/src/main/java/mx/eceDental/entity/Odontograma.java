@@ -2,20 +2,20 @@ package mx.eceDental.entity;
 
 import jakarta.persistence.*;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Table(name="Odontograma")
+@Table(name="odontograma")
 public class Odontograma {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "id_Odontograma",nullable = false)
+    @Column(name = "Id_Odontograma",nullable = false)
     private int idOdontograma;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "Fecha_Actualizacion")
-    private Date fechaActualizacion;
+    private LocalDate fechaActualizacion;
 
     @OneToMany(mappedBy = "odontograma")
     private List<RegistroOdontograma> registros;
@@ -27,8 +27,8 @@ public class Odontograma {
     public int getIdOdontograma() {return idOdontograma;}
     public void setIdOdontograma(int idOdontograma) {this.idOdontograma = idOdontograma;}
 
-    public Date getFechaActualizacion() {return fechaActualizacion;}
-    public void setFechaActualizacion(Date fechaActualizacion) {this.fechaActualizacion = fechaActualizacion;}
+    public LocalDate getFechaActualizacion() {return fechaActualizacion;}
+    public void setFechaActualizacion(LocalDate fechaActualizacion) {this.fechaActualizacion = fechaActualizacion;}
 
     public List<RegistroOdontograma> getRegistros() {return registros;}
     public void setRegistros(List<RegistroOdontograma> registros) {this.registros = registros;}

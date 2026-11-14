@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 import mx.eceDental.entity.DiagnosticoYPlan;
 import mx.eceDental.entity.Expediente;
+import mx.eceDental.entity.NotaEvolucion;
 import mx.eceDental.persistence.integration.ServiceLocator;
 
 public class DelegateDiagnosticoYPlan {
@@ -74,17 +75,14 @@ public class DelegateDiagnosticoYPlan {
         }
 
         try {
-            DiagnosticoYPlan diagnosticoPlan = ServiceLocator.getInstanceDiagnosticoYPlanDAO()
-                    .find(id).orElse(null);
+            DiagnosticoYPlan diagnosticoPlan = ServiceLocator.getInstanceDiagnosticoYPlanDAO().find(id).orElse(null);
 
             if (diagnosticoPlan == null) {
                 return false;
             }
 
             ServiceLocator.getInstanceDiagnosticoYPlanDAO().delete(diagnosticoPlan);
-
             return true;
-
         } catch (Exception e) {
             return false;
         }
@@ -106,6 +104,16 @@ public class DelegateDiagnosticoYPlan {
             return ServiceLocator.getInstanceDiagnosticoYPlanDAO()
                     .findFromWhere("expediente", "idExpediente", String.valueOf(idExpediente));
 
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    public DiagnosticoYPlan buscar(int idRegistro){
+        if (idRegistro <= 0) {
+            return null;
+        }
+        try {
+            return ServiceLocator.getInstanceDiagnosticoYPlanDAO().find(idRegistro).orElse(null);
         } catch (Exception e) {
             return null;
         }

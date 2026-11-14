@@ -1,6 +1,7 @@
 function inicializarDiagnosticos() {
     cargarDiagnosticos();
     guardarDiagnosticos();
+    modificarDiagnosticos();
 }
 
 function cargarDiagnosticos() {
@@ -44,28 +45,36 @@ function cargarDiagnosticos() {
             tdDiagnostico.textContent = registro.getDiagnostico();
             const tdPlan = document.createElement("td");
             tdPlan.textContent = registro.getProcedimiento();
-            /*const tdAcciones = document.createElement("td");
+
+            //ACCIONES (MODIFICAR Y ELIMINAR)
+            const tdAcciones = document.createElement("td");
+
+            const botonModificar = document.createElement("button");
+            botonModificar.type = "button";
+            botonModificar.className = "btn btn-sm btn-primary";
+            botonModificar.style.marginRight = "6px";
+            botonModificar.textContent = "Modificar";
+            botonModificar.addEventListener("click", function () {
+                const id = registro.getIdDiagnosticoPlan();
+                const registroModificar = diagYPlanUI.buscar(id);
+                abrirModalModificar(registroModificar);
+            });
             const botonEliminar = document.createElement("button");
-
             botonEliminar.type = "button";
-            botonEliminar.className = "btn btn-sm btn-primary";
+            botonEliminar.className = "btn btn-sm btn-muted";
             botonEliminar.textContent = "Eliminar";
-
             botonEliminar.addEventListener("click", function () {
-                //if (!confirm("¿Deseas eliminar este diagnóstico y plan?")) {
-                //    return;
-                //}
-
-                window.diagYPlanUI.eliminar(registro.getIdDiagnosticoPlan());
-                cargarDiagnosticos();
+                document.getElementById("confirmar-eliminar").style.display = "flex";
+                inicializarEliminar(registro);
             });
 
-            tdAcciones.appendChild(botonEliminar);*/
+            tdAcciones.appendChild(botonModificar);
+            tdAcciones.appendChild(botonEliminar);
 
             fila.appendChild(tdFecha);
             fila.appendChild(tdDiagnostico);
             fila.appendChild(tdPlan);
-            //fila.appendChild(tdAcciones);
+            fila.appendChild(tdAcciones);
 
             tabla.appendChild(fila);
         }
@@ -107,5 +116,72 @@ function guardarDiagnosticos() {
         } catch (error) {
             mostrarMensaje("No fue posible registrar el diagnóstico.","danger");
         }
+    });
+}
+//ESTAS SON PARA LA MODIFICACION
+function abrirModalModificar(registro) {
+    document.getElementById("modIdDiagnostico").value = registro.getIdDiagnosticoPlan();
+    document.getElementById("modDiagnostico").value = registro.getDiagnostico();
+    document.getElementById("modPlanTratamiento").value = registro.getProcedimiento();
+    document.getElementById("modalModificar").style.display = "flex";
+}
+
+function cerrarModalModificar() {
+    document.getElementById("modalModificar").style.display = "none";
+}
+
+function modificarDiagnosticos() {
+    const modal = document.getElementById("modalModificar");
+    const formulario = document.getElementById("formModificar");
+
+    document.getElementById("btnCancelarModificar").addEventListener("click", cerrarModalModificar);
+
+    modal.addEventListener("click", function (event) {
+        if (event.target === modal) {
+            cerrarModalModificar();
+        }
+    });
+
+    formulario.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        if (!formulario.reportValidity()) {
+            return;
+        }
+
+        try {
+            const id = parseInt(document.getElementById("modIdDiagnostico").value);
+            const diagnostico = document.getElementById("modDiagnostico").value.trim();
+            const plan = document.getElementById("modPlanTratamiento").value.trim();
+
+            const registro = diagYPlanUI.buscar(id);
+            registro.setDiagnostico(diagnostico);
+            registro.setProcedimiento(plan);
+            diagYPlanUI.modificar(registro);
+
+            cerrarModalModificar();
+            mostrarMensaje("Diagnóstico y plan modificados correctamente.", "success");
+            cargarDiagnosticos();
+        } catch (error) {
+            mostrarMensaje("No fue posible modificar el diagnóstico.", "danger");
+        }
+    });
+}
+
+//ELIMINACION
+function inicializarEliminar(registro){
+    const formulario = document.getElementById("formEliminar");
+    if (!formulario) return;
+
+    formulario.addEventListener("submit", function(event) {
+        event.preventDefault();
+        window.diagYPlanUI.eliminarRegistro(registro.getIdDiagnosticoPlan());
+        document.getElementById("confirmar-eliminar").style.display = "none";
+        cargarDiagnosticos();
+    });
+    formulario.addEventListener("reset", function(event) {
+        event.preventDefault();
+        document.getElementById("confirmar-eliminar").style.display = "none";
+        window.location.hash = "";
     });
 }

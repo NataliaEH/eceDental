@@ -3,41 +3,39 @@ package mx.eceDental.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
-@Table(name="Abono")
+@Table(name="abono")
 public class Abono {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "id_Abono",nullable = false)
+    @Column(name = "Id_Abono",nullable = false)
     private int idAbono;
 
     @NotNull
-    @Temporal(TemporalType.DATE)
     @Column(name = "Fecha",nullable = false)
-    private Date fecha;
+    private LocalDate fecha;
 
     @Column(name = "Abono",nullable = false)
-    private double abono;
+    private double monto;
 
     @Size(max=100)
     @Column(name = "Concepto",length = 100)
     private String concepto;
 
     @ManyToOne
-    @JoinColumn(name = "id_Expediente",nullable = false)
+    @JoinColumn(name = "Id_Expediente",nullable = false)
     private Expediente expediente;
 
     public int getIdAbono() {return idAbono;}
     public void setIdAbono(int idAbono) {this.idAbono = idAbono;}
 
-    public Date getFecha() {return fecha;}
-    public void setFecha(Date fecha) {this.fecha = fecha;}
+    public LocalDate getFecha() {return fecha;}
+    public void setFecha(LocalDate fecha) {this.fecha = fecha;}
 
-    public double getAbono() {return abono;}
-    public void setAbono(double abono) {this.abono = abono;}
+    public double getMonto() {return monto;}
+    public void setMonto(double monto) {this.monto = monto;}
 
     public String getConcepto() {return concepto;}
     public void setConcepto(String concepto) {this.concepto = concepto;}

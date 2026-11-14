@@ -45,8 +45,8 @@
                         <thead>
                         <tr>
                             <th><a href="#" class="sort-link" data-sort="fecha" data-order="desc">Fecha <span class="sort-icon" aria-hidden="true">↕</span></a></th>
-                            <th><a href="#" class="sort-link" data-sort="diagnostico" data-order="asc">Diagnóstico <span class="sort-icon" aria-hidden="true">↕</span></a></th>
-                            <th><a href="#" class="sort-link" data-sort="planTratamiento" data-order="asc">Plan de tratamiento <span class="sort-icon" aria-hidden="true">↕</span></a></th>
+                            <th>Diagnóstico</th>
+                            <th>Plan de tratamiento </th>
                             <th>Acciones</th>
                         </tr>
                         </thead>
@@ -76,5 +76,45 @@
         </div>
     </div>
 </div>
+
+<div id="modalModificar" class="modal-overlay" style="display:none">
+  <div class="card modal-card">
+    <div class="card-header"><h2>Modificar diagnóstico y plan de tratamiento</h2></div>
+    <div class="card-body">
+      <form id="formModificar">
+        <input type="hidden" id="modIdDiagnostico"/>
+        <div class="form-grid cols-1">
+          <div class="form-group">
+            <label>Diagnóstico *</label>
+            <textarea id="modDiagnostico" required="required" placeholder="Diagnóstico del paciente"></textarea>
+          </div>
+          <div class="form-group">
+            <label>Plan de tratamiento *</label>
+            <textarea id="modPlanTratamiento" required="required" placeholder="Plan de tratamiento planteado"></textarea>
+          </div>
+        </div>
+        <div class="btn-group" style="margin-top:14px">
+          <button type="submit" class="btn btn-primary">Guardar cambios</button>
+          <button type="button" class="btn btn-muted" id="btnCancelarModificar">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Confirmación de eliminar: se abre con :target (solo CSS) -->
+<div id="confirmar-eliminar" class="confirm-overlay">
+    <div class="confirm-box">
+        <h3>Confirmar eliminación</h3>
+        <p>Esta acción es <strong>permanente e irreversible</strong>. El diagnostico y plan serán eliminados del sistema.</p>
+        <div class="btn-group">
+            <form id="formEliminar">
+                <button type="submit" class="btn btn-danger">Confirmar eliminación</button>
+                <button type="reset" class="btn btn-muted">Cancelar</button>
+            </form>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>

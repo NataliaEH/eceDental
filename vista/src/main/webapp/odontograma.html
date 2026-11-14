@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Odontograma - eceDental</title>
+    <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&amp;family=Source+Sans+3:wght@300;400;600&amp;display=swap" rel="stylesheet"/><link rel="stylesheet" href="resources/css/estilos.css"/>
+    <script src="resources/js/alertas.js"></script>
+    <script src="resources/js/odontograma.js"></script>
+</head>
+<body>
+<aside class="sidebar">
+    <div class="sidebar-brand">
+        <img src="resources/img/logo.png" alt="eceDental - Gestión de expedientes" class="sidebar-logo"/>
+        <p class="sidebar-user">Natalia Escobar Hernández</p>
+    </div>
+    <nav>
+        <div class="nav-section-label">General</div>
+        <a href="panelPrincipal.html" class="nav-link">Panel Principal</a>
+        <div class="nav-section-label">Expedientes</div>
+        <a href="registrarPaciente.html" class="nav-link">Registrar Paciente</a>
+        <a href="buscarExpediente.html" class="nav-link">Buscar Expediente</a>
+        <div class="nav-section-label">Herramientas</div>
+        <a href="recordatorios.html" class="nav-link">Recordatorios</a>
+        <a href="misDatos.html" class="nav-link">Mis Datos</a>
+    </nav>
+    <div class="sidebar-footer">Sistema v1.2 - LSC</div>
+</aside>
+<div class="main">
+    <div class="navbar"><ul>
+        <li><a href="dashboardExpediente.html" class="nav-link-top">Dashboard</a></li>
+        <li><a href="datosGenerales.html" class="nav-link-top">Datos Generales</a></li>
+        <li><a href="interrogatorio.html" class="nav-link-top">Interrogatorio</a></li>
+        <li><a href="notas.html" class="nav-link-top">Notas de Evolución</a></li>
+        <li><a href="diagnosticos.html" class="nav-link-top">Diagnósticos y Planes de Tratamiento</a></li>
+        <li><a href="odontograma.html" class="nav-link-top active">Odontograma</a></li>
+        <li><a href="pagos.html" class="nav-link-top">Pagos</a></li>
+        <li><a href="archivos.html" class="nav-link-top">Archivos</a></li>
+    </ul></div>
+    <div class="content">
+        <div class="page-header"><div><h2>Odontograma</h2><p id="nombrePaciente"></p></div></div>
+        <div id="contenedorMensajes"></div>
+        <div class="split">
+            <div>
+                <div class="card">
+                    <div class="card-body">
+                        <div id="contenedorOdontograma" class="odontograma">
+                            <div class="odonto-leyenda">
+                                <span><i class="odonto-dot rojo"></i>Caries/Fractura</span>
+                                <span><i class="odonto-dot azul"></i>Restauración</span>
+                                <span><i class="odonto-dot amarillo"></i>Puente</span>
+                                <span><i class="odonto-dot negro"></i>Ausencia</span>
+                                <span><i class="odonto-dot verde"></i>Implante</span>
+                            </div>
+                            <div class="odonto-cuadrantes">
+                                <div class="odonto-cuadrante">
+                                    <div class="odonto-fila">
+                                        <span>18</span><span>17</span><span>16</span><span>15</span><span>14</span><span>13</span><span>12</span><span>11</span>
+                                    </div>
+                                </div>
+                                <div class="odonto-cuadrante">
+                                    <div class="odonto-fila">
+                                        <span>21</span><span>22</span><span>23</span><span>24</span><span>25</span><span>26</span><span>27</span><span>28</span>
+                                    </div>
+                                </div>
+                                <div class="odonto-cuadrante inferior">
+                                    <div class="odonto-fila">
+                                        <span>48</span><span>47</span><span>46</span><span>45</span><span>44</span><span>43</span><span>42</span><span>41</span>
+                                    </div>
+                                </div>
+                                <div class="odonto-cuadrante inferior">
+                                    <div class="odonto-fila">
+                                        <span>31</span><span>32</span><span>33</span><span>34</span><span>35</span><span>36</span><span>37</span><span>38</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h2>Registros del odontograma</h2></div>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                            <tr><th>Fecha</th><th>Pieza</th><th>Cara</th><th>Diagnóstico</th><th>Color</th><th>Procedimiento</th><th>Acciones</th></tr>
+                            </thead>
+                            <tbody id="tablaOdontograma">
+                            </tbody>
+                        </table>
+                    </div>
+                    <template id="plantillaFilaOdontograma">
+                        <tr>
+                            <td class="celda-fecha"></td>
+                            <td class="celda-pieza"></td>
+                            <td class="celda-cara"></td>
+                            <td class="celda-diagnostico"></td>
+                            <td class="celda-color"><i class="odonto-dot"></i><span class="color-nombre"></span></td>
+                            <td class="celda-procedimiento"></td>
+                            <td>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-sm btn-secondary" data-accion="modificar">Modificar</button>
+                                    <button type="button" class="btn btn-sm btn-primary" data-accion="eliminar">Eliminar</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </template>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header"><h2>Nuevo registro del odontograma</h2></div>
+                <div class="card-body">
+                    <form id="formRegistroOdontograma">
+                        <div class="form-grid cols-1">
+                            <div class="form-group">
+                                <label for="piezaDental">Pieza *</label>
+                                <select id="piezaDental" name="piezaDental" required="required">
+                                    <option value="">-- Seleccionar --</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                    <option value="13">13</option>
+                                    <option value="14">14</option>
+                                    <option value="15">15</option>
+                                    <option value="16">16</option>
+                                    <option value="17">17</option>
+                                    <option value="18">18</option>
+                                    <option value="21">21</option>
+                                    <option value="22">22</option>
+                                    <option value="23">23</option>
+                                    <option value="24">24</option>
+                                    <option value="25">25</option>
+                                    <option value="26">26</option>
+                                    <option value="27">27</option>
+                                    <option value="28">28</option>
+                                    <option value="31">31</option>
+                                    <option value="32">32</option>
+                                    <option value="33">33</option>
+                                    <option value="34">34</option>
+                                    <option value="35">35</option>
+                                    <option value="36">36</option>
+                                    <option value="37">37</option>
+                                    <option value="38">38</option>
+                                    <option value="41">41</option>
+                                    <option value="42">42</option>
+                                    <option value="43">43</option>
+                                    <option value="44">44</option>
+                                    <option value="45">45</option>
+                                    <option value="46">46</option>
+                                    <option value="47">47</option>
+                                    <option value="48">48</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Cara *</label>
+                                <div id="listaCaras"></div>
+                                <button type="button" id="agregarCara" class="btn btn-sm btn-muted">+ Agregar cara</button>
+                                <template id="plantillaCara">
+                                    <div class="input-row">
+                                        <select class="cara-select" aria-label="Cara" required="required">
+                                            <option value="">-- Seleccionar --</option>
+                                            <option value="Mesial">Mesial</option>
+                                            <option value="Distal">Distal</option>
+                                            <option value="Bucal">Bucal</option>
+                                            <option value="Lingual">Lingual</option>
+                                            <option value="Oclusal/Incisal">Oclusal/Incisal</option>
+                                        </select>
+                                        <button type="button" class="btn btn-sm btn-success" data-accion="quitar-cara" aria-label="Quitar cara">−</button>
+                                    </div>
+                                </template>
+                            </div>
+                            <div class="form-group">
+                                <label for="color">Color *</label>
+                                <select id="color" name="color" required="required">
+                                    <option value="">-- Seleccionar --</option>
+                                    <option value="Rojo">Rojo — Caries/Fractura</option>
+                                    <option value="Azul">Azul — Restauración</option>
+                                    <option value="Amarillo">Amarillo — Puente</option>
+                                    <option value="Negro">Negro — Ausencia</option>
+                                    <option value="Verde">Verde — Implante</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="diagnostico">Diagnóstico *</label>
+                                <textarea id="diagnostico" name="diagnostico" required="required" placeholder="Diagnóstico planteado"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="procedimiento">Procedimiento</label>
+                                <textarea id="procedimiento" name="procedimiento" placeholder="Procedimiento planteado"></textarea>
+                            </div>
+                        </div>
+                        <div class="btn-group" style="margin-top:14px">
+                            <button type="submit" class="btn btn-primary">Agregar registro al odontograma</button>
+                            <button type="reset" class="btn btn-muted">Limpiar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalModificar" class="modal-overlay" style="display:none">
+    <div class="card modal-card">
+        <div class="card-header"><h2>Modificar registro de odontograma</h2></div>
+        <div class="card-body">
+            <form id="formModificar">
+                <input type="hidden" id="modIdRegistro"/>
+                <div class="form-grid cols-1">
+                    <div class="form-group">
+                        <label>Pieza *</label>
+                        <select id="modPiezaDental" name="piezaDental" required="required">
+                            <option value="">-- Seleccionar --</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="21">21</option>
+                            <option value="22">22</option>
+                            <option value="23">23</option>
+                            <option value="24">24</option>
+                            <option value="25">25</option>
+                            <option value="26">26</option>
+                            <option value="27">27</option>
+                            <option value="28">28</option>
+                            <option value="31">31</option>
+                            <option value="32">32</option>
+                            <option value="33">33</option>
+                            <option value="34">34</option>
+                            <option value="35">35</option>
+                            <option value="36">36</option>
+                            <option value="37">37</option>
+                            <option value="38">38</option>
+                            <option value="41">41</option>
+                            <option value="42">42</option>
+                            <option value="43">43</option>
+                            <option value="44">44</option>
+                            <option value="45">45</option>
+                            <option value="46">46</option>
+                            <option value="47">47</option>
+                            <option value="48">48</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Cara *</label>
+                        <div id="modListaCaras"></div>
+                        <button type="button" id="modAgregarCara" class="btn btn-sm btn-muted">+ Agregar cara</button>
+                        <template id="modPlantillaCara">
+                            <div class="input-row">
+                                <select class="cara-select" aria-label="Cara" required>
+                                    <option value="">-- Seleccionar --</option>
+                                    <option value="Mesial">Mesial</option>
+                                    <option value="Distal">Distal</option>
+                                    <option value="Bucal">Bucal</option>
+                                    <option value="Lingual">Lingual</option>
+                                    <option value="Oclusal/Incisal">Oclusal/Incisal</option>
+                                </select>
+
+                                <button type="button"
+                                        class="btn btn-sm btn-success"
+                                        data-accion="quitar-cara"
+                                        aria-label="Quitar cara">
+                                    −
+                                </button>
+                            </div>
+                        </template>
+                    </div>
+                    <div class="form-group">
+                        <label>Color *</label>
+                        <select id="modColor" name="color" required="required">
+                            <option value="">-- Seleccionar --</option>
+                            <option value="Rojo">Rojo — Caries/Fractura</option>
+                            <option value="Azul">Azul — Restauración</option>
+                            <option value="Amarillo">Amarillo — Puente</option>
+                            <option value="Negro">Negro — Ausencia</option>
+                            <option value="Verde">Verde — Implante</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Diagnóstico *</label>
+                        <textarea id="modDiagnostico" name="diagnostico" required="required" placeholder="Diagnóstico planteado"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Procedimiento</label>
+                        <textarea id="modProcedimiento" name="procedimiento" placeholder="Procedimiento planteado"></textarea>
+                    </div>
+                </div>
+                <div class="btn-group" style="margin-top:14px">
+                    <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                    <button type="button" class="btn btn-muted" id="btnCancelarModificar">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Confirmación de eliminar: se abre con :target (solo CSS) -->
+<div id="confirmar-eliminar" class="confirm-overlay">
+    <div class="confirm-box">
+        <h3>Confirmar eliminación</h3>
+        <p>Esta acción es <strong>permanente e irreversible</strong>. El registro será eliminado del sistema.</p>
+        <div class="btn-group">
+            <form id="formEliminar">
+                <button type="submit" class="btn btn-danger">Confirmar eliminación</button>
+                <button type="reset" class="btn btn-muted">Cancelar</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

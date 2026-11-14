@@ -4,24 +4,24 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
-@Table(name="Archivo")
+@Table(name="archivo")
 public class Archivo {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "id_Archivo",nullable = false)
+    @Column(name = "Id_Archivo",nullable = false)
     private int idArchivo;
 
     @Size(max=100)
     @NotNull
-    @Column(name = "Nombre_Archivo",nullable = false,length = 100)
-    private String nombreArchivo;
+    @Column(name = "Nombre",nullable = false,length = 100)
+    private String nombre;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "Fecha")
-    private Date fecha;
+    private LocalDate fecha;
 
     @Size(max=30)
     @Column(name = "Tipo",length = 30)
@@ -32,7 +32,7 @@ public class Archivo {
     private String ruta;
 
     @ManyToOne
-    @JoinColumn(name = "id_Expediente",nullable = false)
+    @JoinColumn(name = "Id_Expediente",nullable = false)
     private Expediente expediente;
 
     public int getIdArchivo() {
@@ -42,17 +42,17 @@ public class Archivo {
         this.idArchivo = idArchivo;
     }
 
-    public String getNombreArchivo() {
-        return nombreArchivo;
+    public String getNombre() {
+        return nombre;
     }
-    public void setNombreArchivo(String nombreArchivo) {
-        this.nombreArchivo = nombreArchivo;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public Date getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
-    public void setFecha(Date fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 

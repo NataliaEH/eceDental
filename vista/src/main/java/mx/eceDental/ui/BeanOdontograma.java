@@ -4,15 +4,19 @@ import jakarta.annotation.PostConstruct;
 
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
+import mx.eceDental.entity.RegistroOdontograma;
 import mx.eceDental.helper.HelperOdontograma;
 import mx.eceDental.entity.Odontograma;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Named("odontogramaUI")
 @ViewScoped
-public class BeanOdontograma implements Serializable {
+public class BeanOdontograma {
     private HelperOdontograma helperOdontograma;
     private Odontograma odontograma;
+    private RegistroOdontograma registro;
 
     public BeanOdontograma() {
         helperOdontograma = new HelperOdontograma();
@@ -21,23 +25,28 @@ public class BeanOdontograma implements Serializable {
     @PostConstruct
     public void init(){
         odontograma = new Odontograma();
+        registro = new RegistroOdontograma();
     }
 
-    public void registrarRegistro(){
-        boolean registrado = helperOdontograma.registrar(odontograma);
+    public boolean registrarRegistro(){
+        return helperOdontograma.registrarRegistro(odontograma.getExpediente().getIdExpediente(), registro.getPiezaDental(), registro.getCara(), registro.getColor(), registro.getDiagnostico(),registro.getProcedimiento());
     }
-
-    public boolean modificarRegistro(int id){
-        return helperOdontograma.modificarRegistro(id);
+    public boolean modificarRegistro(){
+        return helperOdontograma.modificarRegistro(registro.getIdRegistro(), registro.getPiezaDental(), registro.getCara(), registro.getColor(), registro.getDiagnostico(),registro.getProcedimiento());
     }
-
     public boolean eliminarRegistro(int id){
         return helperOdontograma.eliminarRegistro(id);
     }
-
-    public List<Odontograma> consultarReg(int idExpediente){
-        return helperOdontograma.consultar(idExpediente);
+    public List<RegistroOdontograma> consultarReg(int idExpediente){
+        return helperOdontograma.consultarReg(idExpediente);
     }
-
+    public RegistroOdontograma buscarRegistro(int id){
+        return helperOdontograma.buscarRegistro(id);
+    }
     public Odontograma getOdontograma(){ return odontograma;}
+    public RegistroOdontograma getRegistro() {return registro;}
+
+    public void agregarCara(String cara) {
+        registro.getCara().add(cara);
+    }
 }

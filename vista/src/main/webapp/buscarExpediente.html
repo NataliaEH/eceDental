@@ -41,19 +41,6 @@
                             <label for="nombrePaciente">Nombre paciente</label>
                             <input type="text" id="nombrePaciente" name="nombrePaciente" placeholder="Nombre o apellido..."/>
                         </div>
-                        <div class="form-group ">
-                            <label for="fechaUltimaConsulta">Última consulta (última nota de evolución)</label>
-                            <input type="date" id="fechaUltimaConsulta" name="fechaUltimaConsulta"/>
-                        </div>
-                        <div class="form-group ">
-                            <label for="ordenExpedientes">Ordenar por</label>
-                            <select id="ordenExpedientes" name="orden">
-                                <option value="nombre-asc" selected="selected">Nombre (A-Z)</option>
-                                <option value="nombre-desc">Nombre (Z-A)</option>
-                                <option value="ultimaConsulta-desc">Fecha de consulta (más reciente)</option>
-                                <option value="ultimaConsulta-asc">Fecha de consulta (más antigua)</option>
-                            </select>
-                        </div>
                     </div>
                     <div class="btn-group" style="margin-top:14px">
                         <button type="submit" class="btn btn-primary">Buscar</button>
@@ -67,8 +54,8 @@
                 <table>
                     <thead>
                     <tr>
-                        <th><a href="#" class="sort-link" data-sort="nombre" data-order="asc">Paciente <span class="sort-icon" aria-hidden="true">↕</span></a></th>
-                        <th><a href="#" class="sort-link" data-sort="ultimaConsulta" data-order="desc">Fecha de consulta <span class="sort-icon" aria-hidden="true">↕</span></a></th>
+                        <th><a href="#" class="sort-link" data-sort="nombre" data-order="asc">Paciente <span class="sort-icon" aria-hidden="true"></span></a></th>
+                        <th><a href="#" class="sort-link" data-sort="ultimaConsulta" data-order="desc">Fecha de consulta <span class="sort-icon" aria-hidden="true"></span></a></th>
                         <th>Fecha de creación</th>
                         <th>Acciones</th>
                     </tr>

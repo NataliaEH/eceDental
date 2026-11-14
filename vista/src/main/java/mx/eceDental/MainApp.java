@@ -6,11 +6,8 @@ import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import java.net.URL;
 import javafx.concurrent.Worker;
+import mx.eceDental.ui.*;
 import netscape.javascript.JSObject;
-import mx.eceDental.ui.BeanExpediente;
-import mx.eceDental.ui.BeanPaciente;
-import mx.eceDental.ui.BeanInterrogatorio;
-import mx.eceDental.ui.BeanDiagnosticoYPlan;
 
 public class MainApp extends Application{
     @Override
@@ -24,6 +21,14 @@ public class MainApp extends Application{
         beanInterrogatorio.init();
         BeanDiagnosticoYPlan beanDiagnosticoYPlan = new BeanDiagnosticoYPlan();
         beanDiagnosticoYPlan.init();
+        BeanAbono beanAbono = new BeanAbono();
+        beanAbono.init();
+        BeanArchivo beanArchivo = new BeanArchivo();
+        beanArchivo.init();
+        BeanNotaEvolucion beanNotaEvolucion = new BeanNotaEvolucion();
+        beanNotaEvolucion.init();
+        BeanOdontograma beanOdontograma = new BeanOdontograma();
+        beanOdontograma.init();
 
         webView.getEngine().getLoadWorker().stateProperty().addListener(
                 (observable, estadoAnterior, estadoNuevo) -> {
@@ -34,6 +39,10 @@ public class MainApp extends Application{
                         window.setMember("pacienteUI", beanPaciente);
                         window.setMember("diagYPlanUI", beanDiagnosticoYPlan);
                         window.setMember("interrogatorioUI", beanInterrogatorio);
+                        window.setMember("abonoUI", beanAbono);
+                        window.setMember("archivoUI", beanArchivo);
+                        window.setMember("notaEvolucionUI", beanNotaEvolucion);
+                        window.setMember("odontogramaUI", beanOdontograma);
 
                         System.out.println("Página actual: " + webView.getEngine().getLocation());
 
@@ -51,6 +60,14 @@ public class MainApp extends Application{
                             webView.getEngine().executeScript("if (typeof inicializarInterrogatorio === 'function') {" + "    inicializarInterrogatorio();" + "}");
                         }else if(webView.getEngine().getLocation().endsWith("panelPrincipal.html")) {
                             webView.getEngine().executeScript("if (typeof inicializarPanelPrincipal === 'function') {" + "    inicializarPanelPrincipal();" + "}");
+                        }else if(webView.getEngine().getLocation().endsWith("pagos.html")) {
+                            webView.getEngine().executeScript("if (typeof inicializarPagos === 'function') {" + "    inicializarPagos();" + "}");
+                        }else if(webView.getEngine().getLocation().endsWith("archivos.html")) {
+                            webView.getEngine().executeScript("if (typeof inicializarArchivos === 'function') {" + "    inicializarArchivos();" + "}");
+                        }else if(webView.getEngine().getLocation().endsWith("notas.html")) {
+                            webView.getEngine().executeScript("if (typeof inicializarNotas === 'function') {" + "    inicializarNotas();" + "}");
+                        }else if(webView.getEngine().getLocation().endsWith("odontograma.html")) {
+                            webView.getEngine().executeScript("if (typeof inicializarOdontograma === 'function') {" + "    inicializarOdontograma();" + "}");
                         }
                     }
                 }

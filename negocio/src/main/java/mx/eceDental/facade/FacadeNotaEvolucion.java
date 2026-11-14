@@ -2,6 +2,8 @@ package mx.eceDental.facade;
 
 import java.util.List;
 import mx.eceDental.delegate.DelegateNotaEvolucion;
+import mx.eceDental.entity.NotaEvolucion;
+import mx.eceDental.entity.RegistroOdontograma;
 
 
 public class FacadeNotaEvolucion {
@@ -24,10 +26,12 @@ public class FacadeNotaEvolucion {
         return delegateNotaEvolucion.eliminar(id);
     }
 
-    public NotaEvolucion buscarUltima() {
-        return delegateNotaEvolucion.buscarUltima();
+    public NotaEvolucion buscarUltima(int idExpediente) {
+        return delegateNotaEvolucion.buscarUltima(idExpediente);
     }
-
+    public NotaEvolucion buscar(int idRegistro){
+        return delegateNotaEvolucion.buscar(idRegistro);
+    }
     public List<NotaEvolucion> consultar(int idExpediente) {
         return delegateNotaEvolucion.consultar(idExpediente);
     }

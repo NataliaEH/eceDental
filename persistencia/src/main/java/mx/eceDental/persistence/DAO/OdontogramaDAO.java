@@ -1,22 +1,22 @@
-package mx.eceDental.persistence.dao;
+package mx.eceDental.persistence.DAO;
 
 import jakarta.persistence.EntityManager;
-import mx.eceDental.entity.Cara;
+import mx.eceDental.entity.Odontograma;
 import mx.eceDental.persistence.persistence.AbstractDAO;
 
 import java.util.List;
 
-public class CaraDAO extends AbstractDAO<Cara> {
+public class OdontogramaDAO extends AbstractDAO<Odontograma> {
     private final EntityManager entityManager;
 
-    public CaraDAO(EntityManager em) {
-        super(Cara.class);
+    public OdontogramaDAO(EntityManager em) {
+        super(Odontograma.class);
         this.entityManager = em;
     }
 
-    public List<Cara> obtenerTodos(){
+    public List<Odontograma> obtenerTodos(){
         return entityManager
-                .createQuery("SELECT u FROM Cara u", Cara.class)
+                .createQuery("SELECT u FROM Odontograma u", Odontograma.class)
                 .getResultList();
     }
 

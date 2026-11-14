@@ -1,6 +1,7 @@
 package mx.eceDental.helper;
 
-
+import mx.eceDental.entity.NotaEvolucion;
+import mx.eceDental.entity.RegistroOdontograma;
 import mx.eceDental.integration.ServiceFacadeLocator;
 import java.util.List;
 
@@ -17,11 +18,14 @@ public class HelperNotaEvolucion {
         return ServiceFacadeLocator.getInstanceFacadeNotaEvolucion().eliminar(idNota);
     }
 
-    public NotaEvolucion buscarUltima(){
-        return ServiceFacadeLocator.getInstanceFacadeNotaEvolucion().buscarUltima();
+    public NotaEvolucion buscarUltima(int idExpediente){
+        return ServiceFacadeLocator.getInstanceFacadeNotaEvolucion().buscarUltima(idExpediente);
     }
 
     public List<NotaEvolucion> consultar(int idExpediente){
         return ServiceFacadeLocator.getInstanceFacadeNotaEvolucion().consultar(idExpediente);
+    }
+    public NotaEvolucion buscar(int idRegistro){
+        return ServiceFacadeLocator.getInstanceFacadeNotaEvolucion().buscar(idRegistro);
     }
 }
