@@ -110,10 +110,6 @@
                     <form id="formRegistroOdontograma">
                         <div class="form-grid cols-1">
                             <div class="form-group">
-                                <label for="fecha">Fecha de registro *</label>
-                                <input type="date" id="fecha" name="fecha" required="required"/>
-                            </div>
-                            <div class="form-group">
                                 <label for="piezaDental">Pieza *</label>
                                 <select id="piezaDental" name="piezaDental" required="required">
                                     <option value="">-- Seleccionar --</option>
@@ -199,5 +195,118 @@
         </div>
     </div>
 </div>
+
+<div id="modalModificar" class="modal-overlay" style="display:none">
+    <div class="card modal-card">
+        <div class="card-header"><h2>Modificar registro de odontograma</h2></div>
+        <div class="card-body">
+            <form id="formModificar">
+                <input type="hidden" id="modIdRegistro"/>
+                <div class="form-grid cols-1">
+                    <div class="form-group">
+                        <label>Pieza *</label>
+                        <select id="modPiezaDental" name="piezaDental" required="required">
+                            <option value="">-- Seleccionar --</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="21">21</option>
+                            <option value="22">22</option>
+                            <option value="23">23</option>
+                            <option value="24">24</option>
+                            <option value="25">25</option>
+                            <option value="26">26</option>
+                            <option value="27">27</option>
+                            <option value="28">28</option>
+                            <option value="31">31</option>
+                            <option value="32">32</option>
+                            <option value="33">33</option>
+                            <option value="34">34</option>
+                            <option value="35">35</option>
+                            <option value="36">36</option>
+                            <option value="37">37</option>
+                            <option value="38">38</option>
+                            <option value="41">41</option>
+                            <option value="42">42</option>
+                            <option value="43">43</option>
+                            <option value="44">44</option>
+                            <option value="45">45</option>
+                            <option value="46">46</option>
+                            <option value="47">47</option>
+                            <option value="48">48</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Cara *</label>
+                        <div id="modListaCaras"></div>
+                        <button type="button" id="modAgregarCara" class="btn btn-sm btn-muted">+ Agregar cara</button>
+                        <template id="modPlantillaCara">
+                            <div class="input-row">
+                                <select class="cara-select" aria-label="Cara" required>
+                                    <option value="">-- Seleccionar --</option>
+                                    <option value="Mesial">Mesial</option>
+                                    <option value="Distal">Distal</option>
+                                    <option value="Bucal">Bucal</option>
+                                    <option value="Lingual">Lingual</option>
+                                    <option value="Oclusal/Incisal">Oclusal/Incisal</option>
+                                </select>
+
+                                <button type="button"
+                                        class="btn btn-sm btn-success"
+                                        data-accion="quitar-cara"
+                                        aria-label="Quitar cara">
+                                    −
+                                </button>
+                            </div>
+                        </template>
+                    </div>
+                    <div class="form-group">
+                        <label>Color *</label>
+                        <select id="modColor" name="color" required="required">
+                            <option value="">-- Seleccionar --</option>
+                            <option value="Rojo">Rojo — Caries/Fractura</option>
+                            <option value="Azul">Azul — Restauración</option>
+                            <option value="Amarillo">Amarillo — Puente</option>
+                            <option value="Negro">Negro — Ausencia</option>
+                            <option value="Verde">Verde — Implante</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Diagnóstico *</label>
+                        <textarea id="modDiagnostico" name="diagnostico" required="required" placeholder="Diagnóstico planteado"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Procedimiento</label>
+                        <textarea id="modProcedimiento" name="procedimiento" placeholder="Procedimiento planteado"></textarea>
+                    </div>
+                </div>
+                <div class="btn-group" style="margin-top:14px">
+                    <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                    <button type="button" class="btn btn-muted" id="btnCancelarModificar">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Confirmación de eliminar: se abre con :target (solo CSS) -->
+<div id="confirmar-eliminar" class="confirm-overlay">
+    <div class="confirm-box">
+        <h3>Confirmar eliminación</h3>
+        <p>Esta acción es <strong>permanente e irreversible</strong>. El registro será eliminado del sistema.</p>
+        <div class="btn-group">
+            <form id="formEliminar">
+                <button type="submit" class="btn btn-danger">Confirmar eliminación</button>
+                <button type="reset" class="btn btn-muted">Cancelar</button>
+            </form>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>

@@ -1,6 +1,8 @@
 package mx.eceDental.delegate;
 
 import mx.eceDental.entity.Expediente;
+import mx.eceDental.entity.NotaEvolucion;
+import mx.eceDental.entity.RegistroOdontograma;
 import mx.eceDental.persistence.integration.ServiceLocator;
 
 import java.time.LocalDate;
@@ -83,9 +85,9 @@ public class DelegateNotaEvolucion {
         }
     }
 
-    public NotaEvolucion buscarUltima() {
+    public NotaEvolucion buscarUltima(int idExpediente) {
         try {
-            List<NotaEvolucion> todas = ServiceLocator.getInstanceNotaEvolucionDAO().findAll();
+            List<NotaEvolucion> todas = consultar(idExpediente);
             NotaEvolucion ultima = null;
 
             for (NotaEvolucion nota : todas) {
@@ -100,9 +102,7 @@ public class DelegateNotaEvolucion {
                     ultima = nota;
                 }
             }
-
             return ultima;
-
         } catch (Exception e) {
             return null;
         }
@@ -124,11 +124,19 @@ public class DelegateNotaEvolucion {
                     resultado.add(nota);
                 }
             }
-
             return resultado;
-
         } catch (Exception e) {
             return new ArrayList<>();
+        }
+    }
+    public NotaEvolucion buscar(int idRegistro){
+        if (idRegistro <= 0) {
+            return null;
+        }
+        try {
+            return ServiceLocator.getInstanceNotaEvolucionDAO().find(idRegistro).orElse(null);
+        } catch (Exception e) {
+            return null;
         }
     }
 }

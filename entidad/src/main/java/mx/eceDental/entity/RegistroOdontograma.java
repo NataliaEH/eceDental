@@ -4,23 +4,24 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name="registro_odontograma")
+@Table(name="registroodnt")
 public class RegistroOdontograma {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "id_Registro",nullable = false)
+    @Column(name = "Id_Registro",nullable = false)
     private int idRegistro;
 
     @Column(name = "Pieza_Dental")
-    private int piezaDental;
+    private String piezaDental;
 
     @ElementCollection
-    @CollectionTable(name = "Registro_Cara",joinColumns = @JoinColumn(name = "id_Registro"))
+    @CollectionTable(name = "cara",joinColumns = @JoinColumn(name = "Id_Registro_Odnt"))
     @Column(name = "Cara",length = 20)
-    private List<String> cara;
+    private List<String> caras = new ArrayList<>();
 
     @Size(max=30)
     @Column(name = "Color",length = 30)
@@ -36,7 +37,7 @@ public class RegistroOdontograma {
     private LocalDate fecha;
 
     @ManyToOne
-    @JoinColumn(name = "id_Odontograma",nullable = false)
+    @JoinColumn(name = "Id_Odontograma",nullable = false)
     private Odontograma odontograma;
 
     public int getIdRegistro() {
@@ -46,18 +47,18 @@ public class RegistroOdontograma {
         this.idRegistro = idRegistro;
     }
 
-    public int getPiezaDental() {
+    public String getPiezaDental() {
         return piezaDental;
     }
-    public void setPiezaDental(int piezaDental) {
+    public void setPiezaDental(String piezaDental) {
         this.piezaDental = piezaDental;
     }
 
     public List<String> getCara() {
-        return cara;
+        return caras;
     }
-    public void setCara(List<String> cara) {
-        this.cara = cara;
+    public void setCara(List<String> caras) {
+        this.caras = caras;
     }
 
     public String getColor() {

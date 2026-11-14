@@ -27,7 +27,7 @@ function cargarPagos() {
 
         document.getElementById("nombrePaciente").textContent = paciente.getNombre();
         const tabla = document.getElementById("tablaPagos");
-        let registros = pagoUI.consultar(idExpediente);
+        let registros = abonoUI.consultar(idExpediente);
         tabla.innerHTML = "";
 
         for (let i = 0; i < registros.size(); i++) {
@@ -55,18 +55,17 @@ function cargarPagos() {
             botonModificar.style.marginRight = "6px";
             botonModificar.textContent = "Modificar";
             botonModificar.addEventListener("click", function () {
-                abrirModalModificar(registro);
+                const id = registro.getIdAbono();
+                const registroModificar = abonoUI.buscar(id);
+                abrirModalModificar(registroModificar);
             });
             const botonEliminar = document.createElement("button");
             botonEliminar.type = "button";
             botonEliminar.className = "btn btn-sm btn-muted";
             botonEliminar.textContent = "Eliminar";
             botonEliminar.addEventListener("click", function () {
-                if (!confirm("¿Deseas eliminar este pago?")) {
-                    return;
-                }
-                window.pagoUI.eliminar(registro.getIdPago());
-                cargarPagos();
+                document.getElementById("confirmar-eliminar").style.display = "flex";
+                inicializarEliminar(registro);
             });
 
             tdAcciones.appendChild(botonModificar);
@@ -81,6 +80,7 @@ function cargarPagos() {
         }
     } catch (error) {
         mostrarMensaje("No fue posible cargar los datos del paciente.","danger");
+        mostrarMensaje(error, "danger")
     }
 }
 
@@ -101,7 +101,7 @@ function guardarPagos() {
             }
 
             const expediente = expedienteUI.buscar(parseInt(idExpediente));
-            const pago = pagoUI.getPago();
+            const pago = abonoUI.getAbono();
             const monto = document.getElementById("monto").value.trim();
             const concepto = document.getElementById("concepto").value.trim();
 
@@ -109,22 +109,27 @@ function guardarPagos() {
             pago.setConcepto(concepto);
             pago.setExpediente(expediente);
 
-            pagoUI.registrar();
+            abonoUI.registrar();
 
             mostrarMensaje("Diagnóstico y plan registrados correctamente.","success");
             cargarPagos();
             formulario.reset();
         } catch (error) {
             mostrarMensaje("No fue posible registrar el pago.","danger");
+            mostrarMensaje(error, "danger")
         }
     });
 }
 //ESTAS SON PARA LA MODIFICACION
 function abrirModalModificar(registro) {
-    document.getElementById("modIdPago").value = registro.getIdPago();
-    document.getElementById("modMonto").value = registro.getMonto();
-    document.getElementById("modConcepto").value = registro.getConcepto();
-    document.getElementById("modalModificar").style.display = "flex";
+    try{
+        document.getElementById("modIdPago").value = registro.getIdAbono();
+        document.getElementById("modMonto").value = registro.getMonto();
+        document.getElementById("modConcepto").value = registro.getConcepto();
+        document.getElementById("modalModificar").style.display = "flex";
+    }catch (error){
+        mostrarMensaje(error);
+    }
 }
 
 function cerrarModalModificar() {
@@ -155,16 +160,34 @@ function modificarPagos() {
             const monto = document.getElementById("modMonto").value.trim();
             const concepto = document.getElementById("modConcepto").value.trim();
 
-            const registro = pagoUI.buscar(id);
+            const registro = abonoUI.buscar(id);
             registro.setMonto(monto);
             registro.setConcepto(concepto);
-            pagoUI.modificar(registro);
+            abonoUI.modificar(registro);
 
             cerrarModalModificar();
-            mostrarMensaje("Diagnóstico y plan modificados correctamente.", "success");
+            mostrarMensaje("Pago modificado correctamente.", "success");
             cargarPagos();
         } catch (error) {
             mostrarMensaje("No fue posible modificar el pago.", "danger");
         }
+    });
+}
+
+//ELIMINACION
+function inicializarEliminar(registro){
+    const formulario = document.getElementById("formEliminar");
+    if (!formulario) return;
+
+    formulario.addEventListener("submit", function(event) {
+        event.preventDefault();
+        window.abonoUI.eliminar(registro.getIdAbono());
+        document.getElementById("confirmar-eliminar").style.display = "none";
+        cargarPagos();
+    });
+    formulario.addEventListener("reset", function(event) {
+        event.preventDefault();
+        document.getElementById("confirmar-eliminar").style.display = "none";
+        window.location.hash = "";
     });
 }

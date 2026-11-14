@@ -55,18 +55,17 @@ function cargarDiagnosticos() {
             botonModificar.style.marginRight = "6px";
             botonModificar.textContent = "Modificar";
             botonModificar.addEventListener("click", function () {
-                abrirModalModificar(registro);
+                const id = registro.getIdDiagnosticoPlan();
+                const registroModificar = diagYPlanUI.buscar(id);
+                abrirModalModificar(registroModificar);
             });
             const botonEliminar = document.createElement("button");
             botonEliminar.type = "button";
             botonEliminar.className = "btn btn-sm btn-muted";
             botonEliminar.textContent = "Eliminar";
             botonEliminar.addEventListener("click", function () {
-                if (!confirm("¿Deseas eliminar este diagnóstico y plan?")) {
-                    return;
-                }
-                window.diagYPlanUI.eliminar(registro.getIdDiagnosticoPlan());
-                cargarDiagnosticos();
+                document.getElementById("confirmar-eliminar").style.display = "flex";
+                inicializarEliminar(registro);
             });
 
             tdAcciones.appendChild(botonModificar);
@@ -166,5 +165,23 @@ function modificarDiagnosticos() {
         } catch (error) {
             mostrarMensaje("No fue posible modificar el diagnóstico.", "danger");
         }
+    });
+}
+
+//ELIMINACION
+function inicializarEliminar(registro){
+    const formulario = document.getElementById("formEliminar");
+    if (!formulario) return;
+
+    formulario.addEventListener("submit", function(event) {
+        event.preventDefault();
+        window.diagYPlanUI.eliminarRegistro(registro.getIdDiagnosticoPlan());
+        document.getElementById("confirmar-eliminar").style.display = "none";
+        cargarDiagnosticos();
+    });
+    formulario.addEventListener("reset", function(event) {
+        event.preventDefault();
+        document.getElementById("confirmar-eliminar").style.display = "none";
+        window.location.hash = "";
     });
 }

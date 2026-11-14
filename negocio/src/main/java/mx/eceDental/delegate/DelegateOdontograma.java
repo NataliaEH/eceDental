@@ -1,6 +1,9 @@
 package mx.eceDental.delegate;
 
 import mx.eceDental.entity.Expediente;
+import mx.eceDental.entity.Interrogatorio;
+import mx.eceDental.entity.Odontograma;
+import mx.eceDental.entity.RegistroOdontograma;
 import mx.eceDental.persistence.integration.ServiceLocator;
 
 import java.time.LocalDate;
@@ -9,14 +12,16 @@ import java.util.List;
 
 public class DelegateOdontograma {
 
-    public boolean registrarRegistro(int idExpediente, int piezaDental, String cara,
-                                     String diagnostico, String procedimiento) {
+    public boolean registrarRegistro(int idExpediente, String piezaDental, List<String> cara,
+                                     String color, String diagnostico, String procedimiento) {
 
         if (idExpediente <= 0
-                || piezaDental <= 0
-                || cara == null || cara.trim().isEmpty()
+                || piezaDental == null || piezaDental.isEmpty()
+                || cara == null || cara.isEmpty()
+                || color == null || color.isEmpty()
                 || diagnostico == null || diagnostico.trim().isEmpty()
                 || procedimiento == null || procedimiento.trim().isEmpty()) {
+            System.out.println("fisrt if false");
             return false;
         }
 
@@ -24,6 +29,7 @@ public class DelegateOdontograma {
             Expediente expediente = ServiceLocator.getInstanceExpedienteDAO().find(idExpediente).orElse(null);
 
             if (expediente == null) {
+                System.out.println("expediente null false");
                 return false;
             }
 
@@ -41,27 +47,30 @@ public class DelegateOdontograma {
 
             RegistroOdontograma registro = new RegistroOdontograma();
             registro.setPiezaDental(piezaDental);
-            registro.setCara(cara.trim());
+            registro.setCara(cara);
+            registro.setColor(color);
             registro.setDiagnostico(diagnostico.trim());
             registro.setProcedimiento(procedimiento.trim());
             registro.setFecha(LocalDate.now());
             registro.setOdontograma(odontograma);
 
             ServiceLocator.getInstanceRegistroOdntDAO().save(registro);
-
+            System.out.println("returning true delegate");
             return true;
-
         } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("returning error delegate");
             return false;
         }
     }
 
-    public boolean modificarRegistro(int idRegistro, int piezaDental, String cara,
-                                     String diagnostico, String procedimiento) {
+    public boolean modificarRegistro(int idRegistro, String piezaDental, List<String> cara,
+                                     String color, String diagnostico, String procedimiento) {
 
         if (idRegistro <= 0
-                || piezaDental <= 0
-                || cara == null || cara.trim().isEmpty()
+                || piezaDental == null || piezaDental.isEmpty()
+                || cara == null || cara.isEmpty()
+                || color == null || color.isEmpty()
                 || diagnostico == null || diagnostico.trim().isEmpty()
                 || procedimiento == null || procedimiento.trim().isEmpty()) {
             return false;
@@ -76,7 +85,8 @@ public class DelegateOdontograma {
             }
 
             registro.setPiezaDental(piezaDental);
-            registro.setCara(cara.trim());
+            registro.setCara(cara);
+            registro.setColor(color);
             registro.setDiagnostico(diagnostico.trim());
             registro.setProcedimiento(procedimiento.trim());
 
@@ -90,7 +100,6 @@ public class DelegateOdontograma {
             }
 
             return true;
-
         } catch (Exception e) {
             return false;
         }
@@ -142,6 +151,17 @@ public class DelegateOdontograma {
 
         } catch (Exception e) {
             return new ArrayList<>();
+        }
+    }
+
+    public RegistroOdontograma buscarRegistro(int idRegistro){
+        if (idRegistro <= 0) {
+            return null;
+        }
+        try {
+            return ServiceLocator.getInstanceRegistroOdntDAO().find(idRegistro).orElse(null);
+        } catch (Exception e) {
+            return null;
         }
     }
 }

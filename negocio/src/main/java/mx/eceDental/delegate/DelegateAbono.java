@@ -1,7 +1,9 @@
 package mx.eceDental.delegate;
 
 
+import mx.eceDental.entity.Abono;
 import mx.eceDental.entity.Expediente;
+import mx.eceDental.entity.NotaEvolucion;
 import mx.eceDental.persistence.integration.ServiceLocator;
 
 import java.time.LocalDate;
@@ -10,9 +12,9 @@ import java.util.List;
 
 public class DelegateAbono {
 
-    public boolean registrar(int idExpediente, double abono, String concepto) {
+    public boolean registrar(int idExpediente, double monto, String concepto) {
         if (idExpediente <= 0
-                || abono <= 0
+                || monto <= 0
                 || concepto == null || concepto.trim().isEmpty()
                 || concepto.trim().length() > 100) {
             return false;
@@ -27,7 +29,7 @@ public class DelegateAbono {
 
             Abono pago = new Abono();
             pago.setFecha(LocalDate.now());
-            pago.setAbono(abono);
+            pago.setMonto(monto);
             pago.setConcepto(concepto.trim());
             pago.setExpediente(expediente);
 
@@ -40,9 +42,9 @@ public class DelegateAbono {
         }
     }
 
-    public boolean modificar(int idAbono, double abono, String concepto) {
+    public boolean modificar(int idAbono, double monto, String concepto) {
         if (idAbono <= 0
-                || abono <= 0
+                || monto <= 0
                 || concepto == null || concepto.trim().isEmpty()
                 || concepto.trim().length() > 100) {
             return false;
@@ -55,7 +57,7 @@ public class DelegateAbono {
                 return false;
             }
 
-            pago.setAbono(abono);
+            pago.setMonto(monto);
             pago.setConcepto(concepto.trim());
 
             ServiceLocator.getInstanceAbonoDAO().update(pago);
@@ -109,6 +111,16 @@ public class DelegateAbono {
 
         } catch (Exception e) {
             return new ArrayList<>();
+        }
+    }
+    public Abono buscar(int idRegistro){
+        if (idRegistro <= 0) {
+            return null;
+        }
+        try {
+            return ServiceLocator.getInstanceAbonoDAO().find(idRegistro).orElse(null);
+        } catch (Exception e) {
+            return null;
         }
     }
 }

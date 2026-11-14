@@ -96,6 +96,31 @@ function inicializarBuscador() {
         cargarExpedientes()
         document.getElementById("nombrePaciente").value = "";
         document.getElementById("fechaUltimaConsulta").value = "";
+        document.getElementById("ordenExpedientes").value = "ultimaConsulta-desc";
     });
 }
+//para el orden del buscador
+function ordenarExpedientes(lista, criterio) {
+    lista.sort(function (a, b) {
+        let resultado = 0;
 
+        if (criterio === "nombre-asc" || criterio === "nombre-desc") {
+            const nombreA = a.getPaciente().getNombre();
+            const nombreB = b.getPaciente().getNombre();
+            resultado = nombreA.localeCompare(nombreB, "es", { sensitivity: "base" });
+        } else {
+            const fechaA = obtenerFechaConsulta(a);
+            const fechaB = obtenerFechaConsulta(b);
+            if (fechaA < fechaB) {
+                resultado = -1;
+            } else if (fechaA > fechaB) {
+                resultado = 1;
+            }
+        }
+
+        if (criterio.endsWith("-desc")) {
+            resultado = -resultado;
+        }
+        return resultado;
+    });
+}

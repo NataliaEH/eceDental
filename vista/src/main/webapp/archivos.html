@@ -45,9 +45,8 @@
                         <h2>Filtrar tipo de archivo</h2>
                         <select id="tipoFiltro" name="tipo">
                             <option value="">-- Seleccionar --</option>
-                            <option value="Odontograma">Odontograma</option>
-                            <option value="Radiografía">Radiografía</option>
-                            <option value="Fotografía clínica">Fotografía clínica</option>
+                            <option value="Radiografia">Radiografía</option>
+                            <option value="Fotografia Clinica">Fotografía clínica</option>
                             <option value="Receta">Receta</option>
                             <option value="Consentimiento informado">Consentimiento informado</option>
                             <option value="Otro">Otro</option>
@@ -78,9 +77,8 @@
                                 <label for="tipoArchivo">Tipo de archivo *</label>
                                 <select id="tipoArchivo" name="tipo" required="required">
                                     <option value="">-- Seleccionar --</option>
-                                    <option value="Odontograma">Odontograma</option>
-                                    <option value="Radiografía">Radiografía</option>
-                                    <option value="Fotografía clínica">Fotografía clínica</option>
+                                    <option value="Radiografia">Radiografía</option>
+                                    <option value="Fotografia Clinica">Fotografía clínica</option>
                                     <option value="Receta">Receta</option>
                                     <option value="Consentimiento informado">Consentimiento informado</option>
                                     <option value="Otro">Otro</option>
@@ -88,8 +86,9 @@
                             </div>
                             <div class="form-group">
                                 <label for="archivo">Archivo *</label>
-                                <input type="file" id="archivo" name="archivo" accept=".pdf,.jpg,.jpeg,.png,.gif,.bmp,.doc,.docx,.xls,.xlsx" required="required"/>
-                                <span class="field-hint">PDF, imágenes o documentos. Máx. 15 MB.</span>
+                                <button type="button" id="archivo" name="archivo" class="btn btn-muted">Seleccionar archivo</button>
+                                <span id="nombreArchivoElegido" class="field-hint">Ningún archivo seleccionado</span>
+                                <span class="field-hint">PDF, imágenes o documentos.</span>
                             </div>
                             <div class="form-group">
                                 <label for="nombreArchivo">Nombre / descripción *</label>
@@ -106,5 +105,20 @@
         </div>
     </div>
 </div>
+
+<!-- Confirmación de eliminar: se abre con :target (solo CSS) -->
+<div id="confirmar-eliminar" class="confirm-overlay">
+    <div class="confirm-box">
+        <h3>Confirmar eliminación</h3>
+        <p>Esta acción es <strong>permanente e irreversible</strong>. El archivo será eliminado del sistema.</p>
+        <div class="btn-group">
+            <form id="formEliminar">
+                <button type="submit" class="btn btn-danger">Confirmar eliminación</button>
+                <button type="reset" class="btn btn-muted">Cancelar</button>
+            </form>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>

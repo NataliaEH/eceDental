@@ -1,4 +1,4 @@
-package mx.eceDental.persistence.dao;
+package mx.eceDental.persistence.DAO;
 
 import jakarta.persistence.EntityManager;
 import mx.eceDental.entity.Medicacion;

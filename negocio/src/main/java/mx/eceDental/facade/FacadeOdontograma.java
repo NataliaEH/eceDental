@@ -2,6 +2,7 @@ package mx.eceDental.facade;
 
 import java.util.List;
 import mx.eceDental.delegate.DelegateOdontograma;
+import mx.eceDental.entity.RegistroOdontograma;
 
 
 public class FacadeOdontograma {
@@ -12,16 +13,14 @@ public class FacadeOdontograma {
         this.delegateOdontograma = new DelegateOdontograma();
     }
 
-    public boolean registrarRegistro(int idExpediente, int piezaDental, String cara,
-                                     String diagnostico, String procedimiento) {
-        return delegateOdontograma.registrarRegistro(idExpediente, piezaDental, cara,
-                diagnostico, procedimiento);
+    public boolean registrarRegistro(int idExpediente, String piezaDental, List<String> cara,
+                                     String color, String diagnostico, String procedimiento) {
+        return delegateOdontograma.registrarRegistro(idExpediente, piezaDental, cara, color, diagnostico, procedimiento);
     }
 
-    public boolean modificarRegistro(int idRegistro, int piezaDental, String cara,
-                                     String diagnostico, String procedimiento) {
-        return delegateOdontograma.modificarRegistro(idRegistro, piezaDental, cara,
-                diagnostico, procedimiento);
+    public boolean modificarRegistro(int idRegistro, String piezaDental, List<String> cara,
+                                     String color, String diagnostico, String procedimiento) {
+        return delegateOdontograma.modificarRegistro(idRegistro, piezaDental, cara, color, diagnostico, procedimiento);
     }
 
     public boolean eliminarRegistro(int id) {
@@ -30,5 +29,8 @@ public class FacadeOdontograma {
 
     public List<RegistroOdontograma> consultarReg(int idExpediente) {
         return delegateOdontograma.consultarReg(idExpediente);
+    }
+    public RegistroOdontograma buscarRegistro(int idRegistro){
+        return delegateOdontograma.buscarRegistro(idRegistro);
     }
 }

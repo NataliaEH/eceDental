@@ -27,7 +27,7 @@ function cargarNotas() {
 
         document.getElementById("nombrePaciente").textContent = paciente.getNombre();
         const tabla = document.getElementById("tablaNotas");
-        let registros = notasUI.consultar(idExpediente);
+        let registros = notaEvolucionUI.consultar(idExpediente);
         tabla.innerHTML = "";
 
         for (let i = 0; i < registros.size(); i++) {
@@ -60,11 +60,8 @@ function cargarNotas() {
             botonEliminar.className = "btn btn-sm btn-muted";
             botonEliminar.textContent = "Eliminar";
             botonEliminar.addEventListener("click", function () {
-                if (!confirm("¿Deseas eliminar esta nota de evolución?")) {
-                    return;
-                }
-                window.notasUI.eliminar(registro.getIdNota());
-                cargarNotas();
+                document.getElementById("confirmar-eliminar").style.display = "flex";
+                inicializarEliminar(registro);
             });
 
             tdAcciones.appendChild(botonModificar);
@@ -82,7 +79,7 @@ function cargarNotas() {
 }
 
 function guardarNotas() {
-    const formulario = document.getElementById("formNotas");
+    const formulario = document.getElementById("formNotaEvolucion");
     formulario.addEventListener("submit", function (event) {
         event.preventDefault();
 
@@ -98,19 +95,20 @@ function guardarNotas() {
             }
 
             const expediente = expedienteUI.buscar(parseInt(idExpediente));
-            const nota = notasUI.getNota();
+            const nota = notaEvolucionUI.getNotaEvolucion();
             const contenido = document.getElementById("contenido").value.trim();
 
             nota.setContenido(contenido);
             nota.setExpediente(expediente);
 
-            notasUI.registrar();
+            notaEvolucionUI.registrar();
 
             mostrarMensaje("Nota de evolución registrada correctamente.","success");
             cargarNotas();
             formulario.reset();
         } catch (error) {
             mostrarMensaje("No fue posible registrar la nota de evolución.","danger");
+            mostrarMensaje(error, "danger")
         }
     });
 }
@@ -148,9 +146,9 @@ function modificarNotas() {
             const id = parseInt(document.getElementById("modIdNota").value);
             const contenido = document.getElementById("modContenido").value.trim();
 
-            const registro = notasUI.buscar(id);
+            const registro = notaEvolucionUI.buscar(id);
             registro.setContenido(contenido);
-            notasUI.modificar(registro);
+            notaEvolucionUI.modificar(registro);
 
             cerrarModalModificar();
             mostrarMensaje("Nota de evolución modificada correctamente.", "success");
@@ -158,5 +156,23 @@ function modificarNotas() {
         } catch (error) {
             mostrarMensaje("No fue posible modificar la nota de evolución.", "danger");
         }
+    });
+}
+
+//ELIMINACION
+function inicializarEliminar(registro){
+    const formulario = document.getElementById("formEliminar");
+    if (!formulario) return;
+
+    formulario.addEventListener("submit", function(event) {
+        event.preventDefault();
+        window.notaEvolucionUI.eliminar(registro.getIdNota());
+        document.getElementById("confirmar-eliminar").style.display = "none";
+        cargarNotas();
+    });
+    formulario.addEventListener("reset", function(event) {
+        event.preventDefault();
+        document.getElementById("confirmar-eliminar").style.display = "none";
+        window.location.hash = "";
     });
 }

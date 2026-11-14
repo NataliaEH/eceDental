@@ -44,17 +44,44 @@ function inicializarDashboardExpediente() {
                 document.getElementById("btnEliminar").style.display = "none";
             }
         }
+        //notas
+        inicializarNotasGenerales(paciente);
+        document.getElementById("notas").value = paciente.getNotas();
+        //alergias
+        const alergias = expediente.getInterrogatorio().getAlergiasString();
+        document.getElementById("alergias").value = alergias;
+
+        //notaevolucion
+        const tabla = document.getElementById("tablaNotas");
+        tabla.innerHTML = "";
+        let ultima = notaEvolucionUI.buscarUltima(idExpediente);
+        if(ultima!=null){
+            const fila = document.createElement("tr");
+            const fechaTexto = ultima.getFecha();
+            const tdFecha = document.createElement("td");
+            tdFecha.textContent = fechaTexto;
+            const tdContenido = document.createElement("td");
+            tdContenido.textContent = ultima.getContenido();
+
+            fila.appendChild(tdFecha);
+            fila.appendChild(tdContenido);
+
+            tabla.appendChild(fila);
+        }
+
+        guardarNotas();
     } catch (error) {
         mostrarMensaje("Ocurrió un error al cargar el expediente.","danger");
+        mostrarMensaje(error, "danger")
     }
 }
-function inicializarEliminarExpediente(){
+function inicializarEliminarExpediente(paciente){
     const formulario = document.getElementById("formEliminarExpediente");
     if (!formulario) return;
 
     formulario.addEventListener("submit", function(event) {
         event.preventDefault();
-        const idExpediente = sessionStorage.getItem("expedienteActualId");
+        const texto = sessionStorage.getItem("expedienteActualId");
         expedienteUI.eliminar(parseInt(idExpediente));
         window.location.hash = "";
         window.location.href = "buscarExpediente.html";
@@ -64,3 +91,54 @@ function inicializarEliminarExpediente(){
         window.location.hash = "";
     });
 }
+function inicializarNotasGenerales(paciente){
+    const formulario = document.getElementById("formNotasGenerales");
+    if (!formulario) return;
+
+    formulario.addEventListener("submit", function(event) {
+        event.preventDefault();
+        try{
+            const texto = document.getElementById("notas").value.trim();
+            pacienteUI.agregarNotas(paciente.getIdPaciente(), texto);
+            window.location.hash = "";
+            mostrarMensaje("Notas generales guardadas correctamente.","success");
+        } catch (error) {
+            mostrarMensaje("No fue posible guardar las notas generales.","danger");
+        }
+    });
+}
+function guardarNotas() {
+    const formulario = document.getElementById("formNotaEvolucion");
+    formulario.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        if (!formulario.reportValidity()) {
+            return;
+        }
+
+        try {
+            const idExpediente = sessionStorage.getItem("expedienteActualId");
+            if (!idExpediente) {
+                mostrarMensaje("No se ha seleccionado ningún expediente.","danger");
+                return;
+            }
+
+            const expediente = expedienteUI.buscar(parseInt(idExpediente));
+            const nota = notaEvolucionUI.getNotaEvolucion();
+            const contenido = document.getElementById("contenido").value.trim();
+
+            nota.setContenido(contenido);
+            nota.setExpediente(expediente);
+
+            notaEvolucionUI.registrar();
+
+            mostrarMensaje("Nota de evolución registrada correctamente.","success");
+            cargarNotas();
+            formulario.reset();
+        } catch (error) {
+            mostrarMensaje("No fue posible registrar la nota de evolución.","danger");
+            mostrarMensaje(error, "danger")
+        }
+    });
+}
+

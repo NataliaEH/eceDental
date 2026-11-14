@@ -167,7 +167,7 @@ public class DelegatePaciente {
         try {
             return ServiceLocator.getInstancePacienteDAO().findAll();
         } catch (Exception e) {
-            return new ArrayList<>();
+            return null;
         }
     }
 }
