@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Mis Datos - eceDental</title>
+    <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&amp;family=Source+Sans+3:wght@300;400;600&amp;display=swap" rel="stylesheet"/><link rel="stylesheet" href="resources/css/estilos.css"/>
+    <script src="resources/js/alertas.js"></script>
+    <script src="resources/js/misDatos.js"></script>
+</head>
+<body>
+<aside class="sidebar">
+    <div class="sidebar-brand">
+        <img src="resources/img/logo.png" alt="eceDental - Gestión de expedientes" class="sidebar-logo"/>
+        <p class="sidebar-user">Natalia Escobar Hernández</p>
+    </div>
+    <nav>
+        <div class="nav-section-label">General</div>
+        <a href="panelPrincipal.html" class="nav-link">Panel Principal</a>
+        <div class="nav-section-label">Expedientes</div>
+        <a href="registrarPaciente.html" class="nav-link">Registrar Paciente</a>
+        <a href="buscarExpediente.html" class="nav-link">Buscar Expediente</a>
+        <div class="nav-section-label">Herramientas</div>
+        <a href="recordatorios.html" class="nav-link">Recordatorios</a>
+        <a href="misDatos.html" class="nav-link active">Mis Datos</a>
+    </nav>
+    <div class="sidebar-footer">Sistema v1.2 - LSC</div>
+</aside>
+<div class="main">
+    <div class="content">
+        <div class="page-header"><div><h2>Mis Datos</h2><p>Datos del doctor</p></div></div>
+        <div id="contenedorMensajes"></div>
+        <div class="alert alert-info">Los cambios se aplicarán al guardar. Se le pedirá confirmación antes de modificar.</div>
+        <form id="formMisDatos">
+            <fieldset class="form-section">
+                <legend>Datos Personales</legend>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="nombreCompleto">Nombre completo *</label>
+                        <input type="text" id="nombreCompleto" name="nombreCompleto" required="required"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="titulo">Título / especialidad</label>
+                        <input type="text" id="titulo" name="titulo" placeholder="Ej. Cirujano Dentista"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="cedula">Cédula profesional *</label>
+                        <input type="text" id="cedula" name="cedula" required="required" placeholder="Ej. 12345678"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="rfc">RFC *</label>
+                        <input type="text" id="rfc" name="rfc" required="required" placeholder="Ej. AAAA123456AAABBBB1"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="correo">Correo electrónico</label>
+                        <input type="email" id="correo" name="correo" placeholder="Ej. correo@ejemplo.com"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="telefonoEstablecimiento">Teléfono de contacto</label>
+                        <input type="tel" id="telefonoEstablecimiento" name="telefonoEstablecimiento" placeholder="686-XXX-XXXX"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="nombreEstablecimiento">Nombre del consultorio</label>
+                        <input type="text" id="nombreEstablecimiento" name="nombreEstablecimiento" placeholder="Ej. Clínica Dental Ejemplo"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="domicilioEstablecimiento">Domicilio del consultorio</label>
+                        <input type="text" id="domicilioEstablecimiento" name="domicilioEstablecimiento" placeholder="Calle, Número, Colonia, Municipio"/>
+                    </div>
+                </div>
+            </fieldset>
+            <div class="btn-group">
+                <a href="#confirmar-guardar" class="btn btn-primary">Guardar cambios</a>
+                <a href="panelPrincipal.html" class="btn btn-muted">Cancelar</a>
+            </div>
+            <div id="confirmar-guardar" class="confirm-overlay">
+                <div class="confirm-box info">
+                    <h3>Confirmar modificación</h3>
+                    <p>Se actualizarán los datos del doctor.</p>
+                    <div class="btn-group">
+                        <button type="submit" class="btn btn-primary">Confirmar modificación</button>
+                        <a href="#" class="btn btn-muted">Cancelar</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
