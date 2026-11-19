@@ -5,7 +5,6 @@ import mx.eceDental.persistence.integration.ServiceLocator;
 
 public class DelegateDoctor {
 
-    private static final int ID_DOCTOR = 1;
 
     public boolean modificar(String nombreCompleto, String titulo, String cedula, String rfc,
                              String domicilioEstablecimiento, String nombreEstablecimiento,
@@ -28,7 +27,7 @@ public class DelegateDoctor {
         }
 
         try {
-            Doctor doctor = ServiceLocator.getInstanceDoctorDAO().find(ID_DOCTOR).orElse(null);
+            Doctor doctor = ServiceLocator.getInstanceDoctorDAO().findFirst().orElse(null);
 
             if (doctor == null) {
                 return false;
@@ -44,7 +43,6 @@ public class DelegateDoctor {
             doctor.setCorreo(correo.trim());
 
             ServiceLocator.getInstanceDoctorDAO().update(doctor);
-
             return true;
 
         } catch (Exception e) {
@@ -54,7 +52,7 @@ public class DelegateDoctor {
 
     public Doctor consultarDatos() {
         try {
-            return ServiceLocator.getInstanceDoctorDAO().find(ID_DOCTOR).orElse(null);
+            return ServiceLocator.getInstanceDoctorDAO().findFirst().orElse(null);
         } catch (Exception e) {
             return null;
         }
