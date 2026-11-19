@@ -14,4 +14,13 @@ public class FacadeRecordatorio {
     public boolean registrar(String contenido, LocalDate fechaLimite) {
         return delegateRecordatorio.registrar(contenido, fechaLimite);
     }
+
+    public List<Recordatorio> buscarUrgentes() {
+        return delegateRecordatorio.buscarUrgentes();
+    }
+
+    public List<Recordatorio> consultar() {
+        return delegateRecordatorio.consultar();
+    }
+
 }
