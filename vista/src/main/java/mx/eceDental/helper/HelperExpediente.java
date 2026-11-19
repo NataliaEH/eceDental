@@ -1,9 +1,10 @@
 package mx.eceDental.helper;
-import mx.eceDental.entity.Expediente;
-import mx.eceDental.facade.FacadeExpediente;
-import mx.eceDental.integration.ServiceFacadeLocator;
-import java.io.Serializable;
+
+import java.io.File;
+import java.time.LocalDate;
 import java.util.List;
+import mx.eceDental.entity.Expediente;
+import mx.eceDental.integration.ServiceFacadeLocator;
 
 public class HelperExpediente {
     public Expediente buscar(int id){
@@ -12,8 +13,8 @@ public class HelperExpediente {
     public Expediente buscarPorPaciente(int idPaciente){
         return ServiceFacadeLocator.getInstanceFacadeExpediente().buscarPorPaciente(idPaciente);
     }
-    public boolean exportar(int idExpediente){
-        return ServiceFacadeLocator.getInstanceFacadeExpediente().exportar(idExpediente);
+    public boolean exportar(int idExpediente, File destino, List<String> modulos, LocalDate desde, LocalDate hasta){
+        return ServiceFacadeLocator.getInstanceFacadeExpediente().exportar(idExpediente, destino, modulos, desde, hasta);
     }
 
     public boolean eliminar(int id){

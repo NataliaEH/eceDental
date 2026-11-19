@@ -1,14 +1,14 @@
 package mx.eceDental.ui;
 
 import jakarta.annotation.PostConstruct;
-import jakarta.faces.application.FacesMessage;
-import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
-import mx.eceDental.helper.HelperExpediente;
-import mx.eceDental.entity.Expediente;
-
+import java.io.File;
+import java.time.LocalDate;
 import java.util.List;
+import javafx.stage.FileChooser;
+import mx.eceDental.entity.Expediente;
+import mx.eceDental.helper.HelperExpediente;
 
 @Named("expedienteUI")
 @ViewScoped
@@ -34,8 +34,14 @@ public class BeanExpediente {
     public List<Expediente> consultar(){
         return helperExpediente.consultar();
     }
-    public boolean exportar(int idExpediente){
-        return helperExpediente.exportar(idExpediente);
+    public boolean exportar(int idExpediente, List<String> modulos, LocalDate desde, LocalDate hasta){
+        FileChooser selector = new FileChooser();
+        selector.setInitialFileName("expediente_" + idExpediente + ".pdf");
+        File destino = selector.showSaveDialog(null);
+        if (destino == null) {
+            return false;
+        }
+        return helperExpediente.exportar(idExpediente, destino, modulos, desde, hasta);
     }
     public boolean eliminar(int id){
         return helperExpediente.eliminar(id);

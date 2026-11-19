@@ -45,4 +45,31 @@ public class ServiceLocator {
     public static RegistroOdontDAO getInstanceRegistroOdntDAO(){
         return new RegistroOdontDAO(getEntityManager());
     }
+
+    public static CaraDAO getInstanceCaraDAO(){
+        return new CaraDAO(getEntityManager());
+    }
+
+    public static DoctorDAO getInstanceDoctorDAO(){
+        return new DoctorDAO(getEntityManager());
+    }
+
+    public static RecordatorioDAO getInstanceRecordatorioDAO(){
+        return new RecordatorioDAO(getEntityManager());
+    }
+
+
+
+    /*
+    Ya estaba esto, lo deje por si acaso
+    public static UsuarioDAO getInstanceUsuarioDAO () {
+        if (usuarioDAO == null) {
+            usuarioDAO = new UsuarioDAO(getEntityManager());
+            return usuarioDAO;
+        } else {
+            return usuarioDAO;
+        }
+    }
+    */
+
 }
