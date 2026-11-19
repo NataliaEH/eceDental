@@ -30,6 +30,27 @@ public class DelegateRecordatorio {
         }
     }
 
+    public boolean eliminar(int id) {
+        if (id <= 0) {
+            return false;
+        }
+
+        try {
+            Recordatorio recordatorio = ServiceLocator.getInstanceRecordatorioDAO().find(id).orElse(null);
+
+            if (recordatorio == null) {
+                return false;
+            }
+
+            ServiceLocator.getInstanceRecordatorioDAO().delete(recordatorio);
+
+            return true;
+
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     public List<Recordatorio> buscarUrgentes() {
         List<Recordatorio> resultado = new ArrayList<>();
 

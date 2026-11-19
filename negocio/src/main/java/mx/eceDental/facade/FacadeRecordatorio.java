@@ -15,6 +15,10 @@ public class FacadeRecordatorio {
         return delegateRecordatorio.registrar(contenido, fechaLimite);
     }
 
+    public boolean eliminar(int id) {
+        return delegateRecordatorio.eliminar(id);
+    }
+
     public List<Recordatorio> buscarUrgentes() {
         return delegateRecordatorio.buscarUrgentes();
     }
