@@ -6,6 +6,8 @@ import jakarta.inject.Named;
 import mx.eceDental.entity.Recordatorio;
 import mx.eceDental.helper.HelperRecordatorio;
 
+import java.util.List;
+
 @Named("recordatorioUI")
 @ViewScoped
 public class BeanRecordatorio {
@@ -25,8 +27,13 @@ public class BeanRecordatorio {
         return helperRecordatorio.registrar(recordatorio.getContenido(), recordatorio.getFechaLimite());
     }
 
-    public Recordatorio getRecordatorio(){ return recordatorio;}
-    public void setRecordatorio(Recordatorio recordatorio) {
-        this.recordatorio = recordatorio;
+    public List<Recordatorio> buscarUrgentes(){
+        return helperRecordatorio.buscarUrgentes();
     }
+
+    public List<Recordatorio> consultar(){
+        return helperRecordatorio.consultar();
+    }
+
+    public Recordatorio getRecordatorio(){ return recordatorio;}
 }
