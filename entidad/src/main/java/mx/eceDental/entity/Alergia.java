@@ -24,7 +24,6 @@ public class Alergia {
     public int getIdAlergia() {
         return idAlergia;
     }
-
     public void setIdAlergia(int idAlergia) {
         this.idAlergia = idAlergia;
     }
@@ -32,7 +31,6 @@ public class Alergia {
     public String getNombre() {
         return nombre;
     }
-
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
@@ -40,7 +38,6 @@ public class Alergia {
     public Interrogatorio getInterrogatorio() {
         return interrogatorio;
     }
-
     public void setInterrogatorio(Interrogatorio interrogatorio) {
         this.interrogatorio = interrogatorio;
     }

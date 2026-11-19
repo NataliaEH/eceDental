@@ -1,11 +1,11 @@
 package mx.eceDental.delegate;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import mx.eceDental.entity.Paciente;
 import mx.eceDental.entity.TelefonosPaciente;
 import mx.eceDental.persistence.integration.ServiceLocator;
+
+import java.util.List;
 
 public class DelegatePaciente {
 
@@ -116,37 +116,26 @@ public class DelegatePaciente {
     }
 
     public boolean agregarNotas(int idPaciente, String texto) {
-        if (idPaciente <= 0 || texto == null || texto.trim().isEmpty()) {
+        if (idPaciente <= 0 || texto == null) {
             return false;
         }
 
         try {
             Paciente paciente = ServiceLocator.getInstancePacienteDAO().find(idPaciente).orElse(null);
-
             if (paciente == null) {
                 return false;
             }
 
-            String actual = paciente.getNotas();
-            String nuevas;
-
-            if (actual == null || actual.trim().isEmpty()) {
-                nuevas = texto.trim();
-            } else {
-                nuevas = actual + "\n" + texto.trim();
-            }
-
+            String nuevas = texto.trim();
             if (nuevas.length() > 500) {
                 return false;
             }
 
             paciente.setNotas(nuevas);
-
             ServiceLocator.getInstancePacienteDAO().update(paciente);
-
             return true;
-
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }
@@ -167,7 +156,7 @@ public class DelegatePaciente {
         try {
             return ServiceLocator.getInstancePacienteDAO().findAll();
         } catch (Exception e) {
-            return new ArrayList<>();
+            return null;
         }
     }
 }

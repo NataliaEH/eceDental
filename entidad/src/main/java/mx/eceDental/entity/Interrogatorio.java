@@ -92,6 +92,19 @@ public class Interrogatorio {
     public void setAlergias(List<Alergia> alergias) {
         this.alergias = alergias;
     }
+    public String getAlergiasString(){
+        if (alergias == null || alergias.isEmpty()) {
+            return null;
+        }
+
+        StringBuilder resultado = new StringBuilder();
+        for (Alergia alergia : alergias) {
+            if (!resultado.isEmpty())
+                resultado.append(", ");
+            resultado.append(alergia.getNombre());
+        }
+        return resultado.toString();
+    }
 
     public boolean isHemorragia() {
         return hemorragia;

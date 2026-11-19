@@ -11,6 +11,11 @@
     <class>mx.eceDental.entity.Paciente</class>
     <class>mx.eceDental.entity.Interrogatorio</class>
     <class>mx.eceDental.entity.DiagnosticoYPlan</class>
+    <class>mx.eceDental.entity.Abono</class>
+    <class>mx.eceDental.entity.Archivo</class>
+    <class>mx.eceDental.entity.NotaEvolucion</class>
+    <class>mx.eceDental.entity.Odontograma</class>
+    <class>mx.eceDental.entity.RegistroOdontograma</class>
     <class>mx.eceDental.entity.Alergia</class>
     <class>mx.eceDental.entity.Medicacion</class>
     <class>mx.eceDental.entity.Enfermedad</class>

@@ -37,7 +37,7 @@ public class DelegateExpediente {
             if (expediente == null || expediente.getFechaCreacion() == null) {
                 return false;
             }
-            // Solo se pueden eliminar expedientes con 5 años o más (esto puede cambiar, checar NOM)
+
             LocalDate limite = LocalDate.now().minusYears(5);
             if (expediente.getFechaCreacion().isAfter(limite)) {
                 return false;

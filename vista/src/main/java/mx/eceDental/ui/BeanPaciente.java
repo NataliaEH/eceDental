@@ -63,6 +63,10 @@ public class BeanPaciente {
         paciente.getTelefonos().add(telefono);
     }
 
+    public boolean agregarNotas(int idPaciente, String texto){
+        return helperPaciente.agregarNotas(idPaciente, texto);
+    }
+
     public Paciente getPaciente(){ return paciente;}
     public void setPaciente(Paciente paciente) {
         this.paciente = paciente;
