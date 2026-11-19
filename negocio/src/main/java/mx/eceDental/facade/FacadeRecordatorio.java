@@ -1,0 +1,17 @@
+package mx.eceDental.facade;
+
+import java.time.LocalDate;
+import mx.eceDental.delegate.DelegateRecordatorio;
+
+public class FacadeRecordatorio {
+
+    private final DelegateRecordatorio delegateRecordatorio;
+
+    public FacadeRecordatorio() {
+        this.delegateRecordatorio = new DelegateRecordatorio();
+    }
+
+    public boolean registrar(String contenido, LocalDate fechaLimite) {
+        return delegateRecordatorio.registrar(contenido, fechaLimite);
+    }
+}
