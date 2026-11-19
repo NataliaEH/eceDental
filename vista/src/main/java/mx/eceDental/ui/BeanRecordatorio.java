@@ -27,6 +27,10 @@ public class BeanRecordatorio {
         return helperRecordatorio.registrar(recordatorio.getContenido(), recordatorio.getFechaLimite());
     }
 
+    public boolean eliminar(int id){
+        return helperRecordatorio.eliminar(id);
+    }
+
     public List<Recordatorio> buscarUrgentes(){
         return helperRecordatorio.buscarUrgentes();
     }

@@ -10,6 +10,10 @@ public class HelperRecordatorio {
         return ServiceFacadeLocator.getInstanceFacadeRecordatorio().registrar(contenido, fechaLimite);
     }
 
+    public boolean eliminar(int id){
+        return ServiceFacadeLocator.getInstanceFacadeRecordatorio().eliminar(id);
+    }
+
     public List<Recordatorio> buscarUrgentes(){
         return ServiceFacadeLocator.getInstanceFacadeRecordatorio().buscarUrgentes();
     }
