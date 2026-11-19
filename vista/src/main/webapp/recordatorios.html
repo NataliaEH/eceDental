@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Recordatorios - eceDental</title>
+    <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&amp;family=Source+Sans+3:wght@300;400;600&amp;display=swap" rel="stylesheet"/><link rel="stylesheet" href="resources/css/estilos.css"/>
+    <script src="resources/js/alertas.js"></script>
+    <script src="resources/js/recordatorios.js"></script>
+</head>
+<body>
+<aside class="sidebar">
+    <div class="sidebar-brand">
+        <img src="resources/img/logo.png" alt="eceDental - Gestión de expedientes" class="sidebar-logo"/>
+        <p class="sidebar-user">Natalia Escobar Hernández</p>
+    </div>
+    <nav>
+        <div class="nav-section-label">General</div>
+        <a href="panelPrincipal.html" class="nav-link">Panel Principal</a>
+        <div class="nav-section-label">Expedientes</div>
+        <a href="registrarPaciente.html" class="nav-link">Registrar Paciente</a>
+        <a href="buscarExpediente.html" class="nav-link">Buscar Expediente</a>
+        <div class="nav-section-label">Herramientas</div>
+        <a href="recordatorios.html" class="nav-link active">Recordatorios</a>
+        <a href="misDatos.html" class="nav-link">Mis Datos</a>
+    </nav>
+    <div class="sidebar-footer">Sistema v1.2 - LSC</div>
+</aside>
+<div class="main">
+    <div class="content">
+        <div class="page-header"><div><h2>Recordatorios</h2><p>Avisos y recordatorios de citas o seguimiento</p></div></div>
+        <div id="contenedorMensajes"></div>
+        <div class="split">
+            <div>
+                <div class="card">
+                    <form id="formFiltroRecordatorios" class="filter-bar">
+                        <h2>Filtrar Urgencia</h2>
+                        <select id="urgenciaFiltro" name="urgencia">
+                            <option value="">-- Seleccionar --</option>
+                            <option value="Alta">Alta</option>
+                            <option value="Media">Media</option>
+                            <option value="Baja">Baja</option>
+                        </select>
+                        <button type="submit" class="btn btn-primary btn-sm">Buscar</button>
+                        <button type="reset" class="btn btn-muted btn-sm">Limpiar</button>
+                    </form>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h2>Recordatorios Activos</h2></div>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                            <tr>
+                                <th><a href="#" class="sort-link" data-sort="urgencia" data-order="asc">Urgencia <span class="sort-icon" aria-hidden="true">↕</span></a></th>
+                                <th><a href="#" class="sort-link" data-sort="fechaLimite" data-order="asc">Fecha límite <span class="sort-icon" aria-hidden="true">↕</span></a></th>
+                                <th>Contenido</th>
+                                <th>Acciones</th>
+                            </tr>
+                            </thead>
+                            <tbody id="tablaRecordatorios">
+                            <tr id="filaSinRecordatorios"><td colspan="4" class="empty">No hay recordatorios activos.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <template id="plantillaFilaRecordatorio">
+                        <tr>
+                            <td class="celda-urgencia"><span class="badge"></span></td>
+                            <td class="celda-fecha-limite"></td>
+                            <td class="celda-contenido"></td>
+                            <td>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-sm btn-primary" data-accion="eliminar">Eliminar</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </template>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header"><h2>Nuevo Recordatorio</h2></div>
+                <div class="card-body">
+                    <form id="formRecordatorio">
+                        <div class="form-grid cols-1">
+                            <div class="form-group">
+                                <label for="fechaLimite">Fecha límite *</label>
+                                <input type="date" id="fechaLimite" name="fechaLimite" required="required"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="contenido">Contenido del recordatorio *</label>
+                                <textarea id="contenido" name="contenido" required="required" placeholder="Descripción del recordatorio, cita, tarea pendiente..."></textarea>
+                            </div>
+                        </div>
+                        <div class="btn-group" style="margin-top:14px">
+                            <button type="submit" class="btn btn-primary">Guardar Recordatorio</button>
+                            <button type="reset" class="btn btn-muted">Limpiar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="confirmar-eliminar" class="confirm-overlay">
+    <div class="confirm-box">
+        <h3>Confirmar eliminación</h3>
+        <p>Esta acción es <strong>permanente e irreversible</strong>. El recordatorio será eliminado del sistema.</p>
+        <div class="btn-group">
+            <form id="formEliminar">
+                <button type="submit" class="btn btn-danger">Confirmar eliminación</button>
+                <button type="reset" class="btn btn-muted">Cancelar</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
