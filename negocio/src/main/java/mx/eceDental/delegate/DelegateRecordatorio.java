@@ -75,6 +75,47 @@ public class DelegateRecordatorio {
         }
     }
 
+    public List<Recordatorio> buscarPorUrgencia(String urgencia) {
+        List<Recordatorio> resultado = new ArrayList<>();
+
+        if (urgencia == null || urgencia.trim().isEmpty()) {
+            return resultado;
+        }
+
+        try {
+            List<Recordatorio> todos = ServiceLocator.getInstanceRecordatorioDAO().findAll();
+            LocalDate hoy = LocalDate.now();
+
+            for (Recordatorio recordatorio : todos) {
+                if (recordatorio.getFechaLimite() == null) {
+                    continue;
+                }
+
+                int diferencia = Math.toIntExact(recordatorio.getFechaLimite().toEpochDay() - hoy.toEpochDay());
+                String calculada;
+
+                if (diferencia < 0) {
+                    calculada = "Vencida";
+                } else if (diferencia <= 2) {
+                    calculada = "Alta";
+                } else if (diferencia > 7) {
+                    calculada = "Baja";
+                } else {
+                    calculada = "Media";
+                }
+
+                if (calculada.equalsIgnoreCase(urgencia.trim())) {
+                    resultado.add(recordatorio);
+                }
+            }
+
+            return resultado;
+
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
+    }
+
     public List<Recordatorio> consultar() {
         try {
             return ServiceLocator.getInstanceRecordatorioDAO().findAll();
