@@ -1,7 +1,9 @@
 package mx.eceDental.facade;
 
 import java.time.LocalDate;
+import java.util.List;
 import mx.eceDental.delegate.DelegateRecordatorio;
+import mx.eceDental.entity.Recordatorio;
 
 public class FacadeRecordatorio {
 
@@ -23,8 +25,11 @@ public class FacadeRecordatorio {
         return delegateRecordatorio.buscarUrgentes();
     }
 
+    public List<Recordatorio> buscarPorUrgencia(String urgencia) {
+        return delegateRecordatorio.buscarPorUrgencia(urgencia);
+    }
+
     public List<Recordatorio> consultar() {
         return delegateRecordatorio.consultar();
     }
-
 }

@@ -18,6 +18,10 @@ public class HelperRecordatorio {
         return ServiceFacadeLocator.getInstanceFacadeRecordatorio().buscarUrgentes();
     }
 
+    public List<Recordatorio> buscarPorUrgencia(String urgencia){
+        return ServiceFacadeLocator.getInstanceFacadeRecordatorio().buscarPorUrgencia(urgencia);
+    }
+
     public List<Recordatorio> consultar(){
         return ServiceFacadeLocator.getInstanceFacadeRecordatorio().consultar();
     }

@@ -35,6 +35,10 @@ public class BeanRecordatorio {
         return helperRecordatorio.buscarUrgentes();
     }
 
+    public List<Recordatorio> buscarPorUrgencia(String urgencia){
+        return helperRecordatorio.buscarPorUrgencia(urgencia);
+    }
+
     public List<Recordatorio> consultar(){
         return helperRecordatorio.consultar();
     }
