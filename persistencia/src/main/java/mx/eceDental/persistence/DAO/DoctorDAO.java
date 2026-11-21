@@ -20,6 +20,10 @@ public class DoctorDAO extends AbstractDAO<Doctor> {
                 .getResultList();
     }
 
+    public Doctor findFirst(){
+        return obtenerTodos().getFirst();
+    }
+
     @Override
     public EntityManager getEntityManager() {
         return entityManager;
