@@ -7,11 +7,12 @@ import mx.eceDental.entity.Expediente;
 import mx.eceDental.persistence.integration.ServiceLocator;
 
 public class DelegateDiagnosticoYPlan {
-
     public boolean registrar(int idExpediente, String diagnostico, String procedimiento) {
         if (idExpediente <= 0
                 || diagnostico == null || diagnostico.trim().isEmpty()
-                || procedimiento == null || procedimiento.trim().isEmpty()) {
+                || diagnostico.trim().length() > 50
+                || procedimiento == null || procedimiento.trim().isEmpty()
+                || procedimiento.trim().length() > 50) {
             return false;
         }
 
@@ -37,7 +38,61 @@ public class DelegateDiagnosticoYPlan {
         }
     }
 
-    public List<DiagnosticoYPlan> consultar(int idExpediente){
+    public boolean modificar(int idDiagnosticoPlan, String diagnostico, String procedimiento) {
+        if (idDiagnosticoPlan <= 0
+                || diagnostico == null || diagnostico.trim().isEmpty()
+                || procedimiento == null || procedimiento.trim().isEmpty()) {
+            return false;
+        }
+
+        try {
+            DiagnosticoYPlan diagnosticoPlan = ServiceLocator.getInstanceDiagnosticoYPlanDAO()
+                    .find(idDiagnosticoPlan).orElse(null);
+
+            if (diagnosticoPlan == null) {
+                return false;
+            }
+
+            diagnosticoPlan.setDiagnostico(diagnostico.trim());
+            diagnosticoPlan.setProcedimiento(procedimiento.trim());
+
+            ServiceLocator.getInstanceDiagnosticoYPlanDAO().update(diagnosticoPlan);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+    public boolean eliminar(int id) {
+        if (id <= 0) {
+            return false;
+        }
+
+        try {
+            DiagnosticoYPlan diagnosticoPlan = ServiceLocator.getInstanceDiagnosticoYPlanDAO().find(id).orElse(null);
+            if (diagnosticoPlan == null) {
+                return false;
+            }
+
+            Expediente exp = diagnosticoPlan.getExpediente();
+            if (exp != null && exp.getDiagnosticos() != null) {
+                exp.getDiagnosticos().removeIf(d -> d.getIdDiagnosticoPlan() == id);
+                ServiceLocator.getInstanceExpedienteDAO().update(exp);
+            }
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+
+    public List<DiagnosticoYPlan> consultar(int idExpediente) {
+        if (idExpediente <= 0) {
+            return null;
+        }
+
         try {
             Expediente expediente = ServiceLocator.getInstanceExpedienteDAO().find(idExpediente).orElse(null);
 
@@ -45,7 +100,19 @@ public class DelegateDiagnosticoYPlan {
                 return null;
             }
 
-            return ServiceLocator.getInstanceDiagnosticoYPlanDAO().findFromWhere("expediente","idExpediente", String.valueOf(idExpediente));
+            return ServiceLocator.getInstanceDiagnosticoYPlanDAO()
+                    .findFromWhere("expediente", "idExpediente", String.valueOf(idExpediente));
+
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    public DiagnosticoYPlan buscar(int idRegistro){
+        if (idRegistro <= 0) {
+            return null;
+        }
+        try {
+            return ServiceLocator.getInstanceDiagnosticoYPlanDAO().find(idRegistro).orElse(null);
         } catch (Exception e) {
             return null;
         }

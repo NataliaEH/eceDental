@@ -13,6 +13,8 @@ function inicializarRegistrarPaciente() {
             ocupacion: document.getElementById("ocupacion").value.trim(),
             domicilio: document.getElementById("domicilio").value.trim(),
             telefonoPrincipal: document.getElementById("tel").value.trim(),
+            codigoTelPrincipal: document.getElementById("codigoTel").value.trim(),
+            codigoTelAlternativo: document.getElementById("codigoTelAlt").value.trim(),
             telefonoAlternativo: document.getElementById("telAlt").value.trim(),
             correo: document.getElementById("correo").value.trim(),
         };
@@ -28,7 +30,11 @@ function inicializarRegistrarPaciente() {
             paciente.setCorreo(datos.correo);
 
             const registrado = pacienteUI.registrar();
-            const registradoTels = pacienteUI.registrarTelefonos(datos.telefonoPrincipal, datos.telefonoAlternativo);
+
+            const telPrincipal = datos.codigoTelPrincipal + " " + datos.telefonoPrincipal;
+            const telAlternativo = datos.codigoTelAlternativo + " " + datos.telefonoAlternativo;
+
+            const registradoTels = pacienteUI.registrarTelefonos(telPrincipal, telAlternativo);
             if(registrado && registradoTels){
                 mostrarMensaje("Expediente registrado", "success");
 

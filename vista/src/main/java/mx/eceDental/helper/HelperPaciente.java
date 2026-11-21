@@ -26,6 +26,10 @@ public class HelperPaciente {
         return ServiceFacadeLocator.getInstanceFacadePaciente().registrarTelefonos(idPaciente, telefonoPrincipal, telefonoAlternativo);
     }
 
+    public boolean agregarNotas(int idPaciente, String texto){
+        return ServiceFacadeLocator.getInstanceFacadePaciente().agregarNotas(idPaciente, texto);
+    }
+
     public boolean modificar(int idPaciente, String nombre, int edad, String sexo, String correo, String domicilio, String edoCivil, String ocupacion, List<TelefonosPaciente> telefonos){
         return ServiceFacadeLocator.getInstanceFacadePaciente().modificar(idPaciente, nombre, edad, sexo, correo, domicilio, edoCivil, ocupacion, telefonos);
     }

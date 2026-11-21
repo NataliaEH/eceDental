@@ -30,7 +30,6 @@ public class FacadePaciente {
     }
 
     public boolean agregarNotas(int idPaciente, String texto) {
-
         return delegatePaciente.agregarNotas(idPaciente, texto);
     }
 
