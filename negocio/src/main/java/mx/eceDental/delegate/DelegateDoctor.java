@@ -4,8 +4,6 @@ import mx.eceDental.entity.Doctor;
 import mx.eceDental.persistence.integration.ServiceLocator;
 
 public class DelegateDoctor {
-
-
     public boolean modificar(String nombreCompleto, String titulo, String cedula, String rfc,
                              String domicilioEstablecimiento, String nombreEstablecimiento,
                              String telefonoEstablecimiento, String correo) {
@@ -27,34 +25,48 @@ public class DelegateDoctor {
         }
 
         try {
-            Doctor doctor = ServiceLocator.getInstanceDoctorDAO().findFirst().orElse(null);
+            Doctor doctor = ServiceLocator.getInstanceDoctorDAO().findFirst();
 
             if (doctor == null) {
-                return false;
+                doctor = new Doctor();
+                doctor.setNombreCompleto(nombreCompleto.trim());
+                doctor.setTitulo(titulo.trim());
+                doctor.setCedula(cedula.trim());
+                doctor.setRfc(rfc.trim());
+                doctor.setDomicilioEstablecimiento(domicilioEstablecimiento.trim());
+                doctor.setNombreEstablecimiento(nombreEstablecimiento.trim());
+                doctor.setTelefonoEstablecimiento(telefonoEstablecimiento.trim());
+                doctor.setCorreo(correo.trim());
+
+                ServiceLocator.getInstanceDoctorDAO().save(doctor);
+            }else{
+                doctor.setNombreCompleto(nombreCompleto.trim());
+                doctor.setTitulo(titulo.trim());
+                doctor.setCedula(cedula.trim());
+                doctor.setRfc(rfc.trim());
+                doctor.setDomicilioEstablecimiento(domicilioEstablecimiento.trim());
+                doctor.setNombreEstablecimiento(nombreEstablecimiento.trim());
+                doctor.setTelefonoEstablecimiento(telefonoEstablecimiento.trim());
+                doctor.setCorreo(correo.trim());
+
+                ServiceLocator.getInstanceDoctorDAO().update(doctor);
             }
-
-            doctor.setNombreCompleto(nombreCompleto.trim());
-            doctor.setTitulo(titulo.trim());
-            doctor.setCedula(cedula.trim());
-            doctor.setRFC(rfc.trim());
-            doctor.setDomicilioEstablecimiento(domicilioEstablecimiento.trim());
-            doctor.setNombreEstablecimiento(nombreEstablecimiento.trim());
-            doctor.setTelefonoEstablecimiento(telefonoEstablecimiento.trim());
-            doctor.setCorreo(correo.trim());
-
-            ServiceLocator.getInstanceDoctorDAO().update(doctor);
             return true;
-
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }
 
     public Doctor consultarDatos() {
         try {
-            return ServiceLocator.getInstanceDoctorDAO().findFirst().orElse(null);
+            Doctor doctor = ServiceLocator.getInstanceDoctorDAO().findFirst();
+            if(doctor==null)
+                return new Doctor();
+            return doctor;
         } catch (Exception e) {
-            return null;
+            e.printStackTrace();
+            return new Doctor();
         }
     }
 }

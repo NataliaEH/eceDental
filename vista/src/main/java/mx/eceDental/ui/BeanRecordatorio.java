@@ -6,6 +6,7 @@ import jakarta.inject.Named;
 import mx.eceDental.entity.Recordatorio;
 import mx.eceDental.helper.HelperRecordatorio;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Named("recordatorioUI")
@@ -44,4 +45,14 @@ public class BeanRecordatorio {
     }
 
     public Recordatorio getRecordatorio(){ return recordatorio;}
+
+    public boolean setFechaLimite(String fecha) {
+        if (fecha == null || fecha.isBlank())
+            return false;
+        LocalDate fechaLimite = LocalDate.parse(fecha);
+        if(fechaLimite.isBefore(LocalDate.now()))
+            return false;
+        recordatorio.setFechaLimite(fechaLimite);
+        return true;
+    }
 }

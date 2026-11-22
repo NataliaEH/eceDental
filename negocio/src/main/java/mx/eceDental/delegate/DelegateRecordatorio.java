@@ -24,8 +24,8 @@ public class DelegateRecordatorio {
             ServiceLocator.getInstanceRecordatorioDAO().save(recordatorio);
 
             return true;
-
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }
@@ -69,7 +69,6 @@ public class DelegateRecordatorio {
             }
 
             return resultado;
-
         } catch (Exception e) {
             return new ArrayList<>();
         }

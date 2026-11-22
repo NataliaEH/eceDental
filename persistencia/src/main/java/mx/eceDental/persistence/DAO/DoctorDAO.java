@@ -21,7 +21,10 @@ public class DoctorDAO extends AbstractDAO<Doctor> {
     }
 
     public Doctor findFirst(){
-        return obtenerTodos().getFirst();
+        List<Doctor> lista = obtenerTodos();
+        if(lista.isEmpty())
+            return null;
+        return lista.getFirst();
     }
 
     @Override

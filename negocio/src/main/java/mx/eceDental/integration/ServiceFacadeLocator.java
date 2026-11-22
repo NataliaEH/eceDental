@@ -13,6 +13,7 @@ public class ServiceFacadeLocator {
     private static FacadeDiagnosticoYPlan facadeDiagnosticoYPlan;
     private static FacadeNotaEvolucion facadeNotaEvolucion;
     private static FacadeOdontograma facadeOdontograma;
+    private static FacadeDoctor facadeDoctor;
     private static FacadeRecordatorio facadeRecordatorio;
     public static FacadeAbono getInstanceFacadeAbono() {
         if (facadeAbono == null) {
@@ -66,6 +67,13 @@ public class ServiceFacadeLocator {
             facadeOdontograma = new FacadeOdontograma();
         }
         return facadeOdontograma;
+    }
+
+    public static FacadeDoctor getInstanceFacadeDoctor() {
+        if (facadeDoctor == null) {
+            facadeDoctor = new FacadeDoctor();
+        }
+        return facadeDoctor;
     }
 
     public static FacadeRecordatorio getInstanceFacadeRecordatorio() {

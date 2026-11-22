@@ -13,6 +13,13 @@ function inicializarArchivos() {
             document.getElementById("nombreArchivoElegido").textContent = nombreElegido;
         }
     });
+
+    try {
+        const nombre = window.doctorUI.consultarDatos().getNombreCompleto();
+        document.getElementById("usuario").textContent = nombre;
+    } catch (error) {
+        //
+    }
 }
 
 function cargarArchivos() {

@@ -5,16 +5,16 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Entity
-@Table(name="Doctor")
+@Table(name="doctor")
 public class Doctor {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "id_Doctor",nullable = false)
+    @Column(name = "Id_Doctor",nullable = false)
     private int idDoctor;
 
     @Size(max=100)
     @NotNull
-    @Column(name = "Nombre_Completo",nullable = false,length = 100)
+    @Column(name = "Nombre",nullable = false,length = 100)
     private String nombreCompleto;
 
     @Size(max=50)
@@ -30,15 +30,15 @@ public class Doctor {
     private String rfc;
 
     @Size(max=150)
-    @Column(name = "Domicilio_Establecimiento",length = 150)
+    @Column(name = "Domicilio_Est",length = 150)
     private String domicilioEstablecimiento;
 
     @Size(max=100)
-    @Column(name = "Nombre_Establecimiento",length = 100)
+    @Column(name = "Nombre_Est",length = 100)
     private String nombreEstablecimiento;
 
     @Size(max=20)
-    @Column(name = "Telefono_Establecimiento",length = 20)
+    @Column(name = "Telefono",length = 20)
     private String telefonoEstablecimiento;
 
     @Size(max=100)

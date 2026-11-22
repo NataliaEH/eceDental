@@ -5,6 +5,13 @@ function inicializarBuscarExpedientes() {
     cargarExpedientes();
     inicializarBuscador();
     inicializarOrden();
+
+    try {
+        const nombre = window.doctorUI.consultarDatos().getNombreCompleto();
+        document.getElementById("usuario").textContent = nombre;
+    } catch (error) {
+        //
+    }
 }
 
 function cargarExpedientes() {

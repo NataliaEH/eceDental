@@ -1,4 +1,11 @@
 function inicializarDashboardExpediente() {
+    try {
+        const nombre = window.doctorUI.consultarDatos().getNombreCompleto();
+        document.getElementById("usuario").textContent = nombre;
+    } catch (error) {
+        //
+    }
+
     const idExpediente = new URLSearchParams(window.location.search).get("id") || sessionStorage.getItem("expedienteActualId");
     if (!idExpediente) {
         mostrarMensaje("No se encontró el expediente seleccionado.","danger");

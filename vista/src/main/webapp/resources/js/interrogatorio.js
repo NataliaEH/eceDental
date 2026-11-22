@@ -1,6 +1,13 @@
 function inicializarInterrogatorio() {
     cargarInterrogatorio();
     guardarInterrogatorio();
+
+    try {
+        const nombre = window.doctorUI.consultarDatos().getNombreCompleto();
+        document.getElementById("usuario").textContent = nombre;
+    } catch (error) {
+        //
+    }
 }
 function cargarInterrogatorio() {
     const formulario = document.getElementById("formInterrogatorio");

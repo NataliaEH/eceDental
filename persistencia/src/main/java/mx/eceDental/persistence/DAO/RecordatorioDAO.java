@@ -3,10 +3,9 @@ package mx.eceDental.persistence.DAO;
 import jakarta.persistence.EntityManager;
 import mx.eceDental.entity.Recordatorio;
 import mx.eceDental.persistence.persistence.AbstractDAO;
-
 import java.util.List;
 
-public class RecordatorioDAO extends RecordatorioDAO<Doctor> {
+public class RecordatorioDAO extends AbstractDAO<Recordatorio> {
     private final EntityManager entityManager;
 
     public RecordatorioDAO(EntityManager em) {

@@ -95,7 +95,7 @@ public class DelegateExpediente {
                     doctor.getNombreCompleto(),
                     doctor.getTitulo(),
                     "Cédula: " + doctor.getCedula(),
-                    "RFC: " + doctor.getRFC(),
+                    "RFC: " + doctor.getRfc(),
                     doctor.getNombreEstablecimiento(),
                     doctor.getDomicilioEstablecimiento(),
                     doctor.getCorreo(),
@@ -205,14 +205,14 @@ public class DelegateExpediente {
                 }
             }
 
-            if (incluirAbonos && expediente.getAbonos() != null) {
+            if (incluirAbonos && expediente.getAbono() != null) {
                 documento.add(new Paragraph(" "));
                 documento.add(new Paragraph("PAGOS Y ABONOS"));
-                for (Abono a : expediente.getAbonos()) {
+                for (Abono a : expediente.getAbono()) {
                     LocalDate f = a.getFecha();
                     if ((desde == null || (f != null && !f.isBefore(desde)))
                             && (hasta == null || (f != null && !f.isAfter(hasta)))) {
-                        documento.add(new Paragraph(f + " | $" + a.getAbono()
+                        documento.add(new Paragraph(f + " | $" + a.getMonto()
                                 + " | " + a.getConcepto()));
                     }
                 }

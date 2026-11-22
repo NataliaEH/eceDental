@@ -3,18 +3,27 @@ let idRecordatorioAEliminar = 0;
 function inicializarRecordatorios() {
     cargarRecordatorios();
     guardarRecordatorios();
+    inicializarFiltro();
     inicializarOrden();
     inicializarEliminar();
+
+    try {
+        const nombre = window.doctorUI.consultarDatos().getNombreCompleto();
+        document.getElementById("usuario").textContent = nombre;
+    } catch (error) {
+        //
+    }
 }
 
 function cargarRecordatorios() {
     try {
         const tabla = document.getElementById("tablaRecordatorios");
+        const urgenciaFiltro = document.getElementById("urgenciaFiltro").value;
         let registros;
-        if (tipoFiltro === "") {
+        if (urgenciaFiltro === "") {
             registros = recordatorioUI.consultar();
         } else {
-            registros = recordatorioUI.buscarPorUrgencia(tipoFiltro);
+            registros = recordatorioUI.buscarPorUrgencia(urgenciaFiltro);
         }
         tabla.innerHTML = "";
 
@@ -23,7 +32,7 @@ function cargarRecordatorios() {
             const registro = registros.get(i);
             lista.push({
                 id: Number(registro.getIdRecordatorio()),
-                fecha: String(registro.getFecha()),
+                fecha: String(registro.getFechaLimite()),
                 contenido: String(registro.getContenido())
             });
         }
@@ -80,6 +89,7 @@ function cargarRecordatorios() {
             tdAcciones.appendChild(botonEliminar);
 
             fila.appendChild(tdFecha);
+            fila.appendChild(tdUrgencia);
             fila.appendChild(tdContenido);
             fila.appendChild(tdAcciones);
 
@@ -102,14 +112,14 @@ function guardarRecordatorios() {
         }
 
         try {
-            const recordatorio = recordatorioUI.getRecordatorio();
-            const fecha = document.getElementById("fecha").value.trim();
+            const recordatorio = window.recordatorioUI.getRecordatorio();
+            const fecha = document.getElementById("fechaLimite").value;
             const contenido = document.getElementById("contenido").value.trim();
-            recordatorio.setFecha(fecha);
+            const fechaReg = recordatorioUI.setFechaLimite(fecha);
             recordatorio.setContenido(contenido);
 
-            const registrado = recordatorioUI.registrar();
-            if(registrado){
+            const registrado = window.recordatorioUI.registrar();
+            if(registrado && fechaReg){
                 mostrarMensaje("Recordatorio registrado correctamente.","success");
                 cargarRecordatorios();
                 formulario.reset();
@@ -138,7 +148,20 @@ function actualizarIconoOrden() {
         icono.textContent = ordenFecha === "asc" ? "▲" : "▼";
     }
 }
+function inicializarFiltro(){
+    const formulario = document.getElementById("formFiltroRecordatorios");
+    if (!formulario) return;
 
+    formulario.addEventListener("submit", function (event) {
+        event.preventDefault();
+        cargarRecordatorios();
+    });
+    formulario.addEventListener("reset", function (event) {
+        event.preventDefault();
+        document.getElementById("urgenciaFiltro").value = "";
+        cargarRecordatorios();
+    });
+}
 //ELIMINACION
 function inicializarEliminar(){
     const formulario = document.getElementById("formEliminar");

@@ -1,4 +1,11 @@
 function inicializarRegistrarPaciente() {
+    try {
+        const nombre = window.doctorUI.consultarDatos().getNombreCompleto();
+        document.getElementById("usuario").textContent = nombre;
+    } catch (error) {
+        //
+    }
+
     const formulario = document.getElementById("formPaciente");
     if (!formulario) return;
 

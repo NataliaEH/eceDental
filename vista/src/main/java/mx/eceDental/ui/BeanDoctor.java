@@ -22,7 +22,7 @@ public class BeanDoctor {
     }
 
     public boolean modificar(){
-        return helperDoctor.modificar(doctor.getNombreCompleto(), doctor.getTitulo(), doctor.getCedula(), doctor.getRFC(), doctor.getDomicilioEstablecimiento(), doctor.getNombreEstablecimiento(), doctor.getTelefonoEstablecimiento(), doctor.getCorreo());
+        return helperDoctor.modificar(doctor.getNombreCompleto(), doctor.getTitulo(), doctor.getCedula(), doctor.getRfc(), doctor.getDomicilioEstablecimiento(), doctor.getNombreEstablecimiento(), doctor.getTelefonoEstablecimiento(), doctor.getCorreo());
     }
 
     public Doctor consultarDatos(){
@@ -31,4 +31,5 @@ public class BeanDoctor {
     }
 
     public Doctor getDoctor(){ return doctor;}
+    public void setDoctor(Doctor doctor){this.doctor = doctor;}
 }

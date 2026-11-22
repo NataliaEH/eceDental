@@ -1,6 +1,13 @@
 function inicializarDatosGenerales() {
     cargarDatosGenerales();
     guardarDatosGenerales();
+
+    try {
+        const nombre = window.doctorUI.consultarDatos().getNombreCompleto();
+        document.getElementById("usuario").textContent = nombre;
+    } catch (error) {
+        //
+    }
 }
 
 function cargarDatosGenerales(){

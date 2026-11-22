@@ -6,6 +6,13 @@ function inicializarNotas() {
     modificarNotas();
     inicializarOrden();
     inicializarEliminar();
+
+    try {
+        const nombre = window.doctorUI.consultarDatos().getNombreCompleto();
+        document.getElementById("usuario").textContent = nombre;
+    } catch (error) {
+        //
+    }
 }
 
 function cargarNotas() {

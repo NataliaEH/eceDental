@@ -10,7 +10,7 @@
 <aside class="sidebar">
     <div class="sidebar-brand">
         <img src="resources/img/logo.png" alt="eceDental - Gestión de expedientes" class="sidebar-logo"/>
-        <p class="sidebar-user">Natalia Escobar Hernández</p>
+        <p class="sidebar-user" id="usuario">Usuario</p>
     </div>
     <nav>
         <div class="nav-section-label">General</div>
@@ -28,7 +28,6 @@
     <div class="content">
         <div class="page-header"><div><h2>Mis Datos</h2><p>Datos del doctor</p></div></div>
         <div id="contenedorMensajes"></div>
-        <div class="alert alert-info">Los cambios se aplicarán al guardar. Se le pedirá confirmación antes de modificar.</div>
         <form id="formMisDatos">
             <fieldset class="form-section">
                 <legend>Datos Personales</legend>
@@ -68,18 +67,8 @@
                 </div>
             </fieldset>
             <div class="btn-group">
-                <a href="#confirmar-guardar" class="btn btn-primary">Guardar cambios</a>
-                <a href="panelPrincipal.html" class="btn btn-muted">Cancelar</a>
-            </div>
-            <div id="confirmar-guardar" class="confirm-overlay">
-                <div class="confirm-box info">
-                    <h3>Confirmar modificación</h3>
-                    <p>Se actualizarán los datos del doctor.</p>
-                    <div class="btn-group">
-                        <button type="submit" class="btn btn-primary">Confirmar modificación</button>
-                        <a href="#" class="btn btn-muted">Cancelar</a>
-                    </div>
-                </div>
+                <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                <a href="misDatos.html" class="btn btn-muted">Cancelar</a>
             </div>
         </form>
     </div>

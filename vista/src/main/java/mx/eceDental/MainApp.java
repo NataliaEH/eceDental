@@ -29,6 +29,10 @@ public class MainApp extends Application{
         beanNotaEvolucion.init();
         BeanOdontograma beanOdontograma = new BeanOdontograma();
         beanOdontograma.init();
+        BeanDoctor beanDoctor = new BeanDoctor();
+        beanDoctor.init();
+        BeanRecordatorio beanRecordatorio = new BeanRecordatorio();
+        beanRecordatorio.init();
 
         webView.getEngine().getLoadWorker().stateProperty().addListener(
                 (observable, estadoAnterior, estadoNuevo) -> {
@@ -43,6 +47,8 @@ public class MainApp extends Application{
                         window.setMember("archivoUI", beanArchivo);
                         window.setMember("notaEvolucionUI", beanNotaEvolucion);
                         window.setMember("odontogramaUI", beanOdontograma);
+                        window.setMember("doctorUI", beanDoctor);
+                        window.setMember("recordatorioUI", beanRecordatorio);
 
                         System.out.println("Página actual: " + webView.getEngine().getLocation());
 
@@ -68,11 +74,14 @@ public class MainApp extends Application{
                             webView.getEngine().executeScript("if (typeof inicializarNotas === 'function') {" + "    inicializarNotas();" + "}");
                         }else if(webView.getEngine().getLocation().endsWith("odontograma.html")) {
                             webView.getEngine().executeScript("if (typeof inicializarOdontograma === 'function') {" + "    inicializarOdontograma();" + "}");
+                        }else if(webView.getEngine().getLocation().endsWith("misDatos.html")) {
+                            webView.getEngine().executeScript("if (typeof inicializarMisDatos === 'function') {" + "    inicializarMisDatos();" + "}");
+                        }else if(webView.getEngine().getLocation().endsWith("recordatorios.html")) {
+                            webView.getEngine().executeScript("if (typeof inicializarRecordatorios === 'function') {" + "    inicializarRecordatorios();" + "}");
                         }
                     }
                 }
         );
-
 
         URL pagina = getClass().getResource("/panelPrincipal.html");
 

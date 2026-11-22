@@ -1,4 +1,11 @@
 function inicializarPanelPrincipal() {
+    try {
+        const nombre = window.doctorUI.consultarDatos().getNombreCompleto();
+        document.getElementById("usuario").textContent = nombre;
+    } catch (error) {
+        //
+    }
+
     const totalElement = document.getElementById("totalExpedientes");
     const viejosElement = document.getElementById("expedientesViejos");
     const recPendientes = document.getElementById("recordatoriosPendientes");
@@ -27,23 +34,27 @@ function inicializarPanelPrincipal() {
         }
     }
 
-    const tabla = document.getElementById("tablaPagos");
+    const tabla = document.getElementById("tablaRecordatorios");
     tabla.innerHTML = "";
-    for(let i = 0; i < recordatoriosUrgentes.size(); i++){
-        const registro = registros.get(i);
+    if(recordatoriosUrgentes.size()<=0){
+        mostrarMensaje("No hay recordatorios urgentes.","info");
+    }else{
+        for(let i = 0; i < recordatoriosUrgentes.size(); i++){
+            const registro = registros.get(i);
 
-        const fila = document.createElement("tr");
-        const tdFecha = document.createElement("td");
-        tdFecha.textContent = registro.getFecha();
-        const tdUrgencia = document.createElement("td");
-        tdUrgencia.textContent = registro.getUrgencia();
-        const tdContenido = document.createElement("td");
-        tdContenido.textContent = registro.getContenido();
+            const fila = document.createElement("tr");
+            const tdFecha = document.createElement("td");
+            tdFecha.textContent = registro.getFecha();
+            const tdUrgencia = document.createElement("td");
+            tdUrgencia.textContent = registro.getUrgencia();
+            const tdContenido = document.createElement("td");
+            tdContenido.textContent = registro.getContenido();
 
-        fila.appendChild(tdFecha);
-        fila.appendChild(tdUrgencia);
-        fila.appendChild(tdContenido);
-        tabla.appendChild(fila);
+            fila.appendChild(tdFecha);
+            fila.appendChild(tdUrgencia);
+            fila.appendChild(tdContenido);
+            tabla.appendChild(fila);
+        }
     }
 
     totalElement.textContent = total;

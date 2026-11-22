@@ -1,24 +1,31 @@
 function inicializarMisDatos() {
     cargarMisDatos();
     guardarMisDatos();
+
+    try {
+        const nombre = window.doctorUI.consultarDatos().getNombreCompleto();
+        document.getElementById("usuario").textContent = nombre;
+    } catch (error) {
+        //
+    }
 }
 
 function cargarMisDatos(){
     try {
         const doctor = window.doctorUI.consultarDatos();
         if (!doctor) {
-            mostrarMensaje("No se encontró el doctor.","danger");
+            mostrarMensaje("Datos vacíos, por favor llenar.","warn");
             return;
         }
 
-        document.getElementById("nombreCompleto").value = doctor.getNombre() || "";
+        document.getElementById("nombreCompleto").value = doctor.getNombreCompleto() || "";
         document.getElementById("titulo").value = doctor.getTitulo() || "";
         document.getElementById("cedula").value = doctor.getCedula() || "";
-        document.getElementById("rfc").value = doctor.getRFC() || "";
+        document.getElementById("rfc").value = doctor.getRfc() || "";
         document.getElementById("correo").value = doctor.getCorreo() || "";
-        document.getElementById("telefonoEstablecimiento").value = doctor.getTelefonoEst() || "";
-        document.getElementById("nombreEstablecimiento").value = doctor.getNombreEst() || "";
-        document.getElementById("domicilioEstablecimiento").value = doctor.getDomicilioEst() || "";
+        document.getElementById("telefonoEstablecimiento").value = doctor.getTelefonoEstablecimiento() || "";
+        document.getElementById("nombreEstablecimiento").value = doctor.getNombreEstablecimiento() || "";
+        document.getElementById("domicilioEstablecimiento").value = doctor.getDomicilioEstablecimiento() || "";
     } catch (error) {
         mostrarMensaje("No fue posible cargar los datos del doctor.","danger");
     }
@@ -44,23 +51,24 @@ function guardarMisDatos() {
         try {
             const doctor = window.doctorUI.consultarDatos();
 
-            doctor.setNombre(datos.nombre);
+            doctor.setNombreCompleto(datos.nombre);
             doctor.setTitulo(datos.titulo);
             doctor.setCedula(datos.cedula);
-            doctor.setRFC(datos.rfc);
+            doctor.setRfc(datos.rfc);
             doctor.setCorreo(datos.correo);
-            doctor.setTelefono(datos.telEst);
-            doctor.setNombreEst(datos.nombreEst);
-            doctor.setDomicilioEst(datos.domicilioEst);
+            doctor.setTelefonoEstablecimiento(datos.telEst);
+            doctor.setNombreEstablecimiento(datos.nombreEst);
+            doctor.setDomicilioEstablecimiento(datos.domicilioEst);
 
             doctorUI.setDoctor(doctor);
-            const modificado = doctorUI.modificar(doctor.getIdPaciente());
+            const modificado = doctorUI.modificar();
             if(modificado){
                 mostrarMensaje("Se han modificado los datos correctamente.","success");
             }else{
                 mostrarMensaje("Ha ocurrido un error en la modificación.","danger");
             }
         } catch (error) {
+            mostrarMensaje(error)
             mostrarMensaje("No se pudo hacer la modificación.","danger")
         }
     });

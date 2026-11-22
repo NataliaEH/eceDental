@@ -20,6 +20,8 @@
     <class>mx.eceDental.entity.Medicacion</class>
     <class>mx.eceDental.entity.Enfermedad</class>
     <class>mx.eceDental.entity.TelefonosPaciente</class>
+    <class>mx.eceDental.entity.Doctor</class>
+    <class>mx.eceDental.entity.Recordatorio</class>
 
     <properties>
       <property name="jakarta.persistence.jdbc.driver" value="org.sqlite.JDBC"/>

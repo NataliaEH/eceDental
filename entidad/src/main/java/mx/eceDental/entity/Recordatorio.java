@@ -6,11 +6,11 @@ import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Entity
-@Table(name="Recordatorio")
+@Table(name="recordatorio")
 public class Recordatorio {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "id_Recordatorio",nullable = false)
+    @Column(name = "Id_Recordatorio",nullable = false)
     private int idRecordatorio;
 
     @NotNull
