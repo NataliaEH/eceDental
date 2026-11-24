@@ -40,13 +40,33 @@ function inicializarPanelPrincipal() {
         mostrarMensaje("No hay recordatorios urgentes.","info");
     }else{
         for(let i = 0; i < recordatoriosUrgentes.size(); i++){
-            const registro = registros.get(i);
+            const registro = recordatoriosUrgentes.get(i);
 
             const fila = document.createElement("tr");
             const tdFecha = document.createElement("td");
-            tdFecha.textContent = registro.getFecha();
+            tdFecha.textContent = registro.getFechaLimite();
+
             const tdUrgencia = document.createElement("td");
-            tdUrgencia.textContent = registro.getUrgencia();
+
+            const fecha = new Date(registro.getFechaLimite());
+            const hoy = new Date();
+            fecha.setHours(0, 0, 0, 0);
+            hoy.setHours(0, 0, 0, 0);
+            const diferencia = Math.floor((fecha - hoy) / (1000 * 60 * 60 * 24));
+            let textoUrgencia;
+            let claseUrgencia;
+            if (diferencia < 0) {
+                textoUrgencia = "Vencida";
+                claseUrgencia = "urgencia-vencida";
+            } else if (diferencia <= 2) {
+                textoUrgencia = "Alta";
+                claseUrgencia = "urgencia-alta";
+            }
+            const capsula = document.createElement("span");
+            capsula.className = "urgencia-badge " + claseUrgencia;
+            capsula.textContent = textoUrgencia;
+            tdUrgencia.appendChild(capsula);
+
             const tdContenido = document.createElement("td");
             tdContenido.textContent = registro.getContenido();
 
@@ -59,5 +79,5 @@ function inicializarPanelPrincipal() {
 
     totalElement.textContent = total;
     viejosElement.textContent = viejos;
-    recPendientes.textContent = recordatorioUI.consultar().size();
+    recPendientes.textContent = window.recordatorioUI.consultar().size();
 }

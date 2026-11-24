@@ -78,6 +78,8 @@ public class MainApp extends Application{
                             webView.getEngine().executeScript("if (typeof inicializarMisDatos === 'function') {" + "    inicializarMisDatos();" + "}");
                         }else if(webView.getEngine().getLocation().endsWith("recordatorios.html")) {
                             webView.getEngine().executeScript("if (typeof inicializarRecordatorios === 'function') {" + "    inicializarRecordatorios();" + "}");
+                        }else if(webView.getEngine().getLocation().endsWith("exportaciones.html")) {
+                            webView.getEngine().executeScript("if (typeof inicializarExportacion === 'function') {" + "    inicializarExportacion();" + "}");
                         }
                     }
                 }

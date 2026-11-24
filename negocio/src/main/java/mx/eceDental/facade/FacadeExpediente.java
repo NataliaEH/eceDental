@@ -22,8 +22,8 @@ public class FacadeExpediente {
         return delegateExpediente.eliminar(id);
     }
 
-    public boolean exportar(int id, File destino, List<String> modulos, LocalDate desde, LocalDate hasta) {
-        return delegateExpediente.exportar(id, destino, modulos, desde, hasta);
+    public boolean exportar(int id, File destino, List<String> modulos, LocalDate desde, LocalDate hasta, String imagenOdontograma) {
+        return delegateExpediente.exportar(id, destino, modulos, desde, hasta, imagenOdontograma);
     }
 
     public Expediente buscar(int id) {

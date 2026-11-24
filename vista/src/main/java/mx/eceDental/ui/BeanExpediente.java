@@ -5,8 +5,10 @@ import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 import java.io.File;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
-import javafx.stage.FileChooser;
+
+import javafx.stage.DirectoryChooser;
 import mx.eceDental.entity.Expediente;
 import mx.eceDental.helper.HelperExpediente;
 
@@ -34,14 +36,16 @@ public class BeanExpediente {
     public List<Expediente> consultar(){
         return helperExpediente.consultar();
     }
-    public boolean exportar(int idExpediente, List<String> modulos, LocalDate desde, LocalDate hasta){
-        FileChooser selector = new FileChooser();
-        selector.setInitialFileName("expediente_" + idExpediente + ".pdf");
-        File destino = selector.showSaveDialog(null);
+    public boolean exportar(int idExpediente, String modulos, LocalDate desde, LocalDate hasta, String imagenOdontograma){
+        List<String> lista = Arrays.asList(modulos.split(","));
+
+        DirectoryChooser selector = new DirectoryChooser();
+        selector.setTitle("Selecciona la carpeta de exportación");
+        File destino = selector.showDialog(null);
         if (destino == null) {
             return false;
         }
-        return helperExpediente.exportar(idExpediente, destino, modulos, desde, hasta);
+        return helperExpediente.exportar(idExpediente, destino, lista, desde, hasta, imagenOdontograma);
     }
     public boolean eliminar(int id){
         return helperExpediente.eliminar(id);

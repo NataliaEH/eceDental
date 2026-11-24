@@ -31,11 +31,6 @@ function inicializarDashboardExpediente() {
         document.getElementById("nombrePaciente").textContent = paciente.getNombre();
         sessionStorage.setItem("expedienteActualId", idExpediente);
 
-        // Botón exportar
-        document.getElementById("btnExportar").addEventListener("click", () => {
-            window.expedienteUI.exportar(parseInt(idExpediente));
-        });
-
         const hoy = new Date();
         const fechaCreacion = expediente.getFechaCreacion().toString();
 

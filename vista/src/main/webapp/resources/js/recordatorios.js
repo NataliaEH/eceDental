@@ -63,15 +63,25 @@ function cargarRecordatorios() {
             fecha.setHours(0, 0, 0, 0);
             hoy.setHours(0, 0, 0, 0);
             const diferencia = Math.floor((fecha - hoy) / (1000 * 60 * 60 * 24));
+            let textoUrgencia;
+            let claseUrgencia;
             if (diferencia < 0) {
-                tdUrgencia.textContent = "Vencida";
+                textoUrgencia = "Vencida";
+                claseUrgencia = "urgencia-vencida";
             } else if (diferencia <= 2) {
-                tdUrgencia.textContent = "Alta";
+                textoUrgencia = "Alta";
+                claseUrgencia = "urgencia-alta";
             } else if (diferencia > 7) {
-                tdUrgencia.textContent = "Baja";
+                textoUrgencia = "Baja";
+                claseUrgencia = "urgencia-baja";
             } else {
-                tdUrgencia.textContent = "Media";
+                textoUrgencia = "Media";
+                claseUrgencia = "urgencia-media";
             }
+            const capsula = document.createElement("span");
+            capsula.className = "urgencia-badge " + claseUrgencia;
+            capsula.textContent = textoUrgencia;
+            tdUrgencia.appendChild(capsula);
 
             const tdContenido = document.createElement("td");
             tdContenido.textContent = recordatorio.contenido;

@@ -13,8 +13,8 @@ public class HelperExpediente {
     public Expediente buscarPorPaciente(int idPaciente){
         return ServiceFacadeLocator.getInstanceFacadeExpediente().buscarPorPaciente(idPaciente);
     }
-    public boolean exportar(int idExpediente, File destino, List<String> modulos, LocalDate desde, LocalDate hasta){
-        return ServiceFacadeLocator.getInstanceFacadeExpediente().exportar(idExpediente, destino, modulos, desde, hasta);
+    public boolean exportar(int idExpediente, File destino, List<String> modulos, LocalDate desde, LocalDate hasta, String imagenOdontograma){
+        return ServiceFacadeLocator.getInstanceFacadeExpediente().exportar(idExpediente, destino, modulos, desde, hasta, imagenOdontograma);
     }
 
     public boolean eliminar(int id){

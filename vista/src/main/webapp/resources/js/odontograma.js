@@ -1,5 +1,6 @@
 let ordenFecha = "desc";
 let idRegistroAEliminar = 0;
+const MAX_CARAS = 5;
 function inicializarOdontograma() {
     dibujarSimbolos();
     cargarOdontograma();
@@ -275,6 +276,11 @@ function agregarCara() {
     const plantilla = document.getElementById("plantillaCara");
     const contenedor = document.getElementById("listaCaras");
 
+    if (contenedor.querySelectorAll(".cara-select").length >= MAX_CARAS) {
+        mostrarMensaje("Solo puedes agregar un máximo de " + MAX_CARAS + " caras.", "warn");
+        return;
+    }
+
     const nuevaCara = plantilla.content.cloneNode(true);
     contenedor.appendChild(nuevaCara);
 }
@@ -313,6 +319,12 @@ function obtenerCaras() {
 function agregarCaraModal(valor = "") {
     const plantilla = document.getElementById("modPlantillaCara");
     const contenedor = document.getElementById("modListaCaras");
+
+    if (contenedor.querySelectorAll(".cara-select").length >= MAX_CARAS) {
+        mostrarMensaje("Solo puedes agregar un máximo de " + MAX_CARAS + " caras.", "warn");
+        return;
+    }
+
     const nuevaCara = plantilla.content.cloneNode(true);
     const select = nuevaCara.querySelector(".cara-select");
     select.value = valor;
@@ -386,24 +398,6 @@ function inicializarEliminar(){
 }
 
 //EL SIGUIENTE CODIGO ES PARA LA VISUALIZACION DEL ODONTOGRAMA, LOS SIMBOLOS, ETC.
-const COLORES_ODONTOGRAMA = {
-    "Rojo": "#c0392b",
-    "Azul": "#2c6fa8",
-    "Amarillo": "#e0b528",
-    "Negro": "#1c1c1c",
-    "Verde": "#3d8b4f"
-};
-const RELLENO_VACIO = "#fdfcfa";
-function punto(cx, cy, r, grados) {
-    const rad = grados * Math.PI / 180;
-    return (cx + r * Math.cos(rad)).toFixed(2) + " " + (cy + r * Math.sin(rad)).toFixed(2);
-}
-function sectorAnillo(cx, cy, rInterno, rExterno, a1, a2) {
-    return "M " + punto(cx, cy, rExterno, a1) +
-        " A " + rExterno + " " + rExterno + " 0 0 1 " + punto(cx, cy, rExterno, a2) +
-        " L " + punto(cx, cy, rInterno, a2) +
-        " A " + rInterno + " " + rInterno + " 0 0 0 " + punto(cx, cy, rInterno, a1) + " Z";
-}
 function crearSimboloDiente(pieza) {
     const NS = "http://www.w3.org/2000/svg";
     const svg = document.createElementNS(NS, "svg");
@@ -438,18 +432,6 @@ function dibujarSimbolos() {
         if (span.querySelector("svg")) return;   // evita duplicar
         span.appendChild(crearSimboloDiente(pieza));
     });
-}
-function posicionDeCara(cara, pieza) {
-    const cuadrante = Math.floor(Number(pieza) / 10);
-    const superior = cuadrante === 1 || cuadrante === 2;
-    const mesialADerecha = cuadrante === 1 || cuadrante === 4;
-
-    if (cara === "Oclusal/Incisal") return "center";
-    if (cara === "Mesial") return mesialADerecha ? "right" : "left";
-    if (cara === "Distal") return mesialADerecha ? "left" : "right";
-    if (cara === "Bucal") return superior ? "top" : "bottom";
-    if (cara === "Lingual") return superior ? "bottom" : "top";
-    return "";
 }
 
 // toma la lista de registros para sacar colores y caras de piezas

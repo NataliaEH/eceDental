@@ -60,19 +60,25 @@
                     <div class="form-grid cols-1">
                         <div class="form-group "><label>Contenido de la nota *</label><textarea required="required" id="contenido" placeholder="Descripción del procedimiento, observaciones clínicas..."></textarea></div></div>
                     <div class="btn-group" style="margin-top:14px"><button type="submit" class="btn btn-primary">Registrar nota</button><button type="reset" class="btn btn-muted">Limpiar</button></div></form></div></div>
-                <div class="card"><div class="card-header"><h2>Últimas notas de evolución</h2><a href="notas.html" class="btn btn-primary btn-sm">Ver todas</a></div><div class="table-wrap">
-                    <table>
-                        <thead><tr><th>Fecha</th><th>Contenido</th></tr></thead>
-                        <tbody id="tablaNotas">
-                        </tbody>
-                    </table>
-                </div></div>
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Última nota de evolución</h2>
+                        <a href="notas.html" class="btn btn-primary btn-sm">Ver todas</a>
+                    </div>
+                    <div class="table-wrap">
+                        <table>
+                            <thead><tr><th>Fecha</th><th>Contenido</th></tr></thead>
+                            <tbody id="tablaNotas">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
             <div class="card">
                 <div class="card-header"><h2>Acciones</h2></div>
                 <div class="card-body">
                     <div class="btn-group">
-                        <button type="button" id="btnExportar" class="btn btn-primary">Exportar expediente</button>
+                        <a href="exportaciones.html" class="btn btn-primary btn-sm">Exportar expediente</a>
                         <a href="#confirmar-eliminar" id="btnEliminar" class="btn btn-primary">Eliminar expediente</a>
                     </div>
                 </div>

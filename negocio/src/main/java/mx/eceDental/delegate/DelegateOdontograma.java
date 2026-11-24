@@ -1,7 +1,6 @@
 package mx.eceDental.delegate;
 
 import mx.eceDental.entity.Expediente;
-import mx.eceDental.entity.Interrogatorio;
 import mx.eceDental.entity.Odontograma;
 import mx.eceDental.entity.RegistroOdontograma;
 import mx.eceDental.persistence.integration.ServiceLocator;
@@ -11,17 +10,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DelegateOdontograma {
+    public boolean registrar(int idExpediente){
+        try {
+            Expediente expediente = ServiceLocator.getInstanceExpedienteDAO().find(idExpediente).orElse(null);
+            if (expediente == null || expediente.getInterrogatorio() != null) {
+                return false;
+            }
+
+            Odontograma odontograma = new Odontograma();
+            odontograma.setFechaActualizacion(LocalDate.now());
+            odontograma.setExpediente(expediente);
+            ServiceLocator.getInstanceOdontogramaDAO().save(odontograma);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
     public boolean registrarRegistro(int idExpediente, String piezaDental, List<String> cara,
                                      String color, String diagnostico, String procedimiento) {
-
         if (idExpediente <= 0
                 || piezaDental == null || piezaDental.isEmpty()
                 || cara == null || cara.isEmpty()
                 || color == null || color.isEmpty()
                 || diagnostico == null || diagnostico.trim().isEmpty()
                 || procedimiento == null || procedimiento.trim().isEmpty()) {
-            System.out.println("fisrt if false");
             return false;
         }
 
@@ -29,17 +42,13 @@ public class DelegateOdontograma {
             Expediente expediente = ServiceLocator.getInstanceExpedienteDAO().find(idExpediente).orElse(null);
 
             if (expediente == null) {
-                System.out.println("expediente null false");
                 return false;
             }
 
             Odontograma odontograma = expediente.getOdontograma();
 
             if (odontograma == null) {
-                odontograma = new Odontograma();
-                odontograma.setFechaActualizacion(LocalDate.now());
-                odontograma.setExpediente(expediente);
-                ServiceLocator.getInstanceOdontogramaDAO().save(odontograma);
+                return false;
             } else {
                 odontograma.setFechaActualizacion(LocalDate.now());
                 ServiceLocator.getInstanceOdontogramaDAO().update(odontograma);

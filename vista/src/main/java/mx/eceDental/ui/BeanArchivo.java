@@ -82,11 +82,21 @@ public class BeanArchivo{
 
     public String seleccionarArchivo() {
         FileChooser selector = new FileChooser();
+        selector.setTitle("Selecciona un archivo");
+        selector.getExtensionFilters().add(new FileChooser.ExtensionFilter("Imágenes, PDF y texto", "*.png", "*.jpg", "*.jpeg", "*.pdf", "*.txt"));
         File elegido = selector.showOpenDialog(null);
         if (elegido == null) {
             return "";
         }
+        if (!extensionPermitida(elegido.getName())) {
+            return "";
+        }
         archivoSeleccionado = elegido;
         return elegido.getName();
+    }
+
+    private boolean extensionPermitida(String nombre) {
+        String n = nombre.toLowerCase();
+        return n.endsWith(".png") || n.endsWith(".jpg") || n.endsWith(".jpeg") || n.endsWith(".pdf") || n.endsWith(".txt");
     }
 }

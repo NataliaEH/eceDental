@@ -39,7 +39,9 @@ function inicializarRegistrarPaciente() {
             const registrado = pacienteUI.registrar();
 
             const telPrincipal = datos.codigoTelPrincipal + " " + datos.telefonoPrincipal;
-            const telAlternativo = datos.codigoTelAlternativo + " " + datos.telefonoAlternativo;
+            const telAlternativo = datos.telefonoAlternativo === ""
+                ? null
+                : datos.codigoTelAlternativo + " " + datos.telefonoAlternativo;
 
             const registradoTels = pacienteUI.registrarTelefonos(telPrincipal, telAlternativo);
             if(registrado && registradoTels){
