@@ -1,7 +1,6 @@
 function inicializarDashboardExpediente() {
     try {
-        const nombre = window.doctorUI.consultarDatos().getNombreCompleto();
-        document.getElementById("usuario").textContent = nombre;
+        document.getElementById("usuario").textContent = window.doctorUI.consultarDatos().getNombreCompleto();
     } catch (error) {
         //
     }
@@ -80,10 +79,14 @@ function inicializarEliminarExpediente(){
 
     formulario.addEventListener("submit", function(event) {
         event.preventDefault();
-        const texto = sessionStorage.getItem("expedienteActualId");
-        expedienteUI.eliminar(parseInt(idExpediente));
-        window.location.hash = "";
-        window.location.href = "buscarExpediente.html";
+        try{
+            const idExpediente = sessionStorage.getItem("expedienteActualId");
+            expedienteUI.eliminar(parseInt(idExpediente));
+            window.location.hash = "";
+            window.location.href = "buscarExpediente.html";
+        }catch(error){
+            mostrarMensaje(error);
+        }
     });
     formulario.addEventListener("reset", function(event) {
         event.preventDefault();

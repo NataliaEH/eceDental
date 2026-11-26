@@ -13,6 +13,8 @@ public class FacadeOdontograma {
         this.delegateOdontograma = new DelegateOdontograma();
     }
 
+    public boolean registrar(int idExpediente){return delegateOdontograma.registrar(idExpediente);}
+
     public boolean registrarRegistro(int idExpediente, String piezaDental, List<String> cara,
                                      String color, String diagnostico, String procedimiento) {
         return delegateOdontograma.registrarRegistro(idExpediente, piezaDental, cara, color, diagnostico, procedimiento);

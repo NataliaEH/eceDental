@@ -5,7 +5,6 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -298,13 +297,34 @@ public class DelegateExpediente {
                     carpetaArchivos.mkdirs();
                 }
 
+                Path carpetaBase = Paths.get(System.getProperty("user.home"), "eceDental");
+
                 for (Archivo f : expediente.getArchivo()) {
                     documento.add(new Paragraph(f.getFecha() + " | " + f.getNombre()
                             + " | " + f.getTipo(), FUENTE_NORMAL));
                     try {
+                        Path origen = carpetaBase.resolve(f.getRuta());
+                        if (!Files.isRegularFile(origen)) {
+                            continue;
+                        }
+
+                        String rutaTxt = f.getRuta();
+                        int punto = rutaTxt.lastIndexOf('.');
+                        String extension = punto >= 0 ? rutaTxt.substring(punto) : "";
+
                         String nombreSeguro = f.getNombre().replaceAll("[\\\\/:*?\"<>|]", "_");
+                        if (!nombreSeguro.toLowerCase().endsWith(extension.toLowerCase())) {
+                            nombreSeguro += extension;
+                        }
+
                         Path copia = carpetaArchivos.toPath().resolve(nombreSeguro);
-                        Files.copy(Paths.get(f.getRuta()), copia, StandardCopyOption.REPLACE_EXISTING);
+                        int n = 1;
+                        while (Files.exists(copia)) {
+                            String base = nombreSeguro.substring(0, nombreSeguro.length() - extension.length());
+                            copia = carpetaArchivos.toPath().resolve(base + " (" + n++ + ")" + extension);
+                        }
+
+                        Files.copy(origen, copia);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

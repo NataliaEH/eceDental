@@ -3,7 +3,6 @@ package mx.eceDental.helper;
 import mx.eceDental.entity.Paciente;
 import mx.eceDental.entity.TelefonosPaciente;
 import mx.eceDental.integration.ServiceFacadeLocator;
-import java.io.Serializable;
 import java.util.List;
 
 public class HelperPaciente {
@@ -15,11 +14,25 @@ public class HelperPaciente {
         if (!ServiceFacadeLocator.getInstanceFacadeExpediente().registrar(idPaciente)) {
             return -1;
         }
-        int idExpediente = ServiceFacadeLocator.getInstanceFacadeExpediente().buscarPorPaciente(idPaciente).getIdExpediente();
-        if (!ServiceFacadeLocator.getInstanceFacadeInterrogatorio().registrar(idExpediente)) {
+        int idExpediente = -1;
+        try {
+            idExpediente = ServiceFacadeLocator.getInstanceFacadeExpediente().buscarPorPaciente(idPaciente).getIdExpediente();
+
+            if (!ServiceFacadeLocator.getInstanceFacadeInterrogatorio().registrar(idExpediente)) {
+                throw new IllegalStateException("Falló interrogatorio");
+            }if (!ServiceFacadeLocator.getInstanceFacadeOdontograma().registrar(idExpediente)) {
+                throw new IllegalStateException("Falló odontograma");
+            }
+            return idPaciente;
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                ServiceFacadeLocator.getInstanceFacadeExpediente().eliminar(idExpediente);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
             return -1;
         }
-        return idPaciente;
     }
 
     public boolean registrarTelefonos(int idPaciente, String telefonoPrincipal, String telefonoAlternativo){

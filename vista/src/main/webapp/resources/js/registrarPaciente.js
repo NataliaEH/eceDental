@@ -1,7 +1,6 @@
 function inicializarRegistrarPaciente() {
     try {
-        const nombre = window.doctorUI.consultarDatos().getNombreCompleto();
-        document.getElementById("usuario").textContent = nombre;
+        document.getElementById("usuario").textContent = window.doctorUI.consultarDatos().getNombreCompleto();
     } catch (error) {
         //
     }
@@ -38,19 +37,25 @@ function inicializarRegistrarPaciente() {
 
             const registrado = pacienteUI.registrar();
 
-            const telPrincipal = datos.codigoTelPrincipal + " " + datos.telefonoPrincipal;
-            const telAlternativo = datos.telefonoAlternativo === ""
-                ? null
-                : datos.codigoTelAlternativo + " " + datos.telefonoAlternativo;
+            if(registrado){
+                const telPrincipal = datos.codigoTelPrincipal + " " + datos.telefonoPrincipal;
+                const telAlternativo = datos.telefonoAlternativo === ""
+                    ? null
+                    : datos.codigoTelAlternativo + " " + datos.telefonoAlternativo;
 
-            const registradoTels = pacienteUI.registrarTelefonos(telPrincipal, telAlternativo);
-            if(registrado && registradoTels){
-                mostrarMensaje("Expediente registrado", "success");
+                const registradoTels = pacienteUI.registrarTelefonos(telPrincipal, telAlternativo);
+                if(registradoTels){
+                    mostrarMensaje("Expediente registrado", "success");
 
-                const pacienteId = pacienteUI.getPaciente().getIdPaciente();
-                const expediente = expedienteUI.buscarPorPaciente(pacienteId);
-                sessionStorage.setItem("expedienteActualId", expediente.getIdExpediente());
-                window.location.href = "dashboardExpediente.html";
+                    const pacienteId = pacienteUI.getPaciente().getIdPaciente();
+                    const expediente = expedienteUI.buscarPorPaciente(pacienteId);
+                    sessionStorage.setItem("expedienteActualId", expediente.getIdExpediente());
+                    window.location.href = "dashboardExpediente.html";
+                }else{
+                    const exp = pacienteUI.getPaciente().getExpediente();
+                    expedienteUI.eliminar(exp.getIdExpediente());
+                    mostrarMensaje("No se pudo registrar el paciente.", "danger");
+                }
             }else{
                 mostrarMensaje("No se pudo registrar el paciente.", "danger");
             }

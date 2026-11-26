@@ -13,7 +13,7 @@ public class DelegateOdontograma {
     public boolean registrar(int idExpediente){
         try {
             Expediente expediente = ServiceLocator.getInstanceExpedienteDAO().find(idExpediente).orElse(null);
-            if (expediente == null || expediente.getInterrogatorio() != null) {
+            if (expediente == null || expediente.getOdontograma() != null) {
                 return false;
             }
 
